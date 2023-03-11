@@ -17,6 +17,8 @@
     "react/no-access-state-in-setstate": "warn",
     "react/no-unescaped-entities": "off",
     "react/react-in-jsx-scope": "off",
-    "react/state-in-constructor": "off"
+    "react/state-in-constructor": "off",
+    "import/no-named-as-default": "off",
+    "import/no-named-as-default-member": "off"
   }
 }
