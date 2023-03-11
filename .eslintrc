@@ -1,9 +1,10 @@
 {
   "env": {
     "browser": true,
+    "es2021": true,
     "jest": true
   },
-  "extends": ["airbnb", "react-app"],
+  "extends": ["airbnb", "plugin:react/recommended", "prettier"],
   "plugins": ["prettier"],
   "rules": {
     "react/destructuring-assignment": "warn",
