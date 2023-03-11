@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/eco-friendly-app/static/css/main.073c9b0a.css",
+    "main.js": "/eco-friendly-app/static/js/main.745ae3f1.js",
+    "static/js/596.d2457049.chunk.js": "/eco-friendly-app/static/js/596.d2457049.chunk.js",
+    "static/media/logo.svg": "/eco-friendly-app/static/media/logo.6ce24c58023cc2f8fd88fe9d219db6c6.svg",
+    "index.html": "/eco-friendly-app/index.html",
+    "main.073c9b0a.css.map": "/eco-friendly-app/static/css/main.073c9b0a.css.map",
+    "main.745ae3f1.js.map": "/eco-friendly-app/static/js/main.745ae3f1.js.map",
+    "596.d2457049.chunk.js.map": "/eco-friendly-app/static/js/596.d2457049.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.073c9b0a.css",
+    "static/js/main.745ae3f1.js"
+  ]
+}
