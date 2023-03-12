@@ -17,9 +17,11 @@ import Avatar from '@mui/material/Avatar';
 const pages = ['Maison', 'Santé', 'Bien-être', 'Alimentation'];
 
 function Navbar() {
+  const isLogged = false;
+
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
+      <AppBar>
         <Container maxWidth="xl">
           <Toolbar disableGutters>
             <LocalFloristIcon
@@ -69,11 +71,11 @@ function Navbar() {
                 Eco-Friendly
               </Typography>
             </Box>
-            {false ? <UserMenu /> : <Button color="inherit">Login</Button>}
+            {isLogged ? <UserMenu /> : <Button color="inherit">Login</Button>}
           </Toolbar>
         </Container>
+        <AppMenu />
       </AppBar>
-      <AppMenu />
     </Box>
   );
 }
@@ -86,7 +88,7 @@ function AppMenu() {
     fontFamily: 'monospace',
     fontWeight: 500,
     letterSpacing: '.3rem',
-    color: 'inherit',
+    color: '#000',
     textDecoration: 'none',
     borderBottom: 1,
     borderColor: 'transparent',
@@ -107,6 +109,7 @@ function AppMenu() {
         justifyContent: 'center',
         borderBottom: 1,
         borderColor: 'divider',
+        backgroundColor: 'white',
       }}
     >
       <Link color="inherit" href="/" sx={link}>
