@@ -7,18 +7,23 @@ import {
 } from '../actions/commonActions';
 
 import config from '../config';
+import data from '../data';
 
 const commonMiddleware = (store) => (next) => (action) => {
   switch (action.type) {
     case GET_ALL_CATEGORIES:
-      axios
-        .get(`${config.apiURL}/categories`)
-        .then((response) => {
-          store.dispatch(getAllCategoriesSuccess(response.data));
-        })
-        .catch((error) => {
-          store.dispatch(getAllCategoriesError(error));
-        });
+      if (config.env === 'dev') {
+        store.dispatch(getAllCategoriesSuccess(data.categories));
+      } else {
+        axios
+          .get(`${config.apiURL}/categories`)
+          .then((response) => {
+            store.dispatch(getAllCategoriesSuccess(response.data));
+          })
+          .catch((error) => {
+            store.dispatch(getAllCategoriesError(error));
+          });
+      }
       break;
     default:
   }
