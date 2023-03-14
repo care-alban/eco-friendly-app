@@ -20,14 +20,17 @@ import LargeCard from '../components/Cards/LargeCard';
 import MediumCard from '../components/Cards/MediumCard';
 import SmallCard from '../components/Cards/SmallCard';
 
-import { getFisrtArrayItem, getArrayItems } from '../utils';
-
 export default function HomePage() {
-  const articles = useSelector((state) => state.articles.list);
-  const featuredArticle = getFisrtArrayItem(articles);
-  const featuredArticles = getArrayItems(articles, 1, 2);
-  const inShortArticles = getArrayItems(articles, 3, 3);
-  const recentArticles = getArrayItems(articles, 6, 12);
+  const featuredArticle = useSelector((state) => state.articles.list[0]);
+  const featuredArticles = useSelector((state) =>
+    state.articles.list.slice(1, 3),
+  );
+  const inShortArticles = useSelector((state) =>
+    state.articles.list.slice(3, 6),
+  );
+  const recentArticles = useSelector((state) =>
+    state.articles.list.slice(6, 18),
+  );
 
   return (
     <Layout>

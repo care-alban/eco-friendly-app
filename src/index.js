@@ -6,10 +6,6 @@ import { BrowserRouter } from 'react-router-dom';
 import configureStore from './store';
 import App from './components/App';
 
-import config from './config';
-
-console.log('Environnement :', config.env);
-
 const store = configureStore();
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
