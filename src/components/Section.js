@@ -18,6 +18,10 @@ Section.defaultProps = {
 const SectionSlyte = styled.section`
   margin-bottom: 2rem;
 
+  &:has(:last-child) {
+    margin-bottom: 0;
+  }
+
   &:not(:first-child) {
     border-top: 1px solid var(--color-divider);
     padding-top: 2rem;

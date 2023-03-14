@@ -39,15 +39,12 @@ const Main = styled.main`
   --navbar-height: 4rem;
   --footer-height: 1.25rem;
 
-  --margin-y: 2rem;
-  --margin: calc(var(--margin-y) + var(--navbar-height)) auto
-    calc(var(--margin-y) + var(--footer-height));
+  --margin: calc(2rem + var(--navbar-height)) auto var(--footer-height);
 
   margin: var(--margin);
   min-height: calc(100vh - var(--navbar-height) - var(--footer-height));
 
   @media screen and (min-width: 900px) {
     --navbar-height: 8.625rem;
-    --footer-height: 4.25rem;
   }
 `;
