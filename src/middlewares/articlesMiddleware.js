@@ -15,11 +15,12 @@ const articlesMiddleware = (store) => (next) => (action) => {
       if (config.env === 'dev') {
         store.dispatch(getArticlesSuccess(data.articles.home));
       } else {
-        const { limit, sorttype, order, category } = action;
+        const { params } = action;
+        const paramsString = params
+          .map((param) => `${param.name}=${param.value}`)
+          .join('&');
         axios
-          .get(
-            `${config.apiURL}/articles?limit=${limit}&sorttype=${sorttype}&order=${order}&category=${category}`,
-          )
+          .get(`${config.apiURL}/articles?${paramsString}`)
           .then((response) => {
             store.dispatch(getArticlesSuccess(response.data));
           })

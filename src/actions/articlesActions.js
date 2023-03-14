@@ -1,25 +1,14 @@
 /**
  * @name getArticles
  * @description Get articles
- * @param {Number} limit Limit of articles
- * @param {String} sorttype Sort type
- * @param {String} order Order type (ASC or DESC)
- * @param {Number} category Category id
+ * @param {Array} params Params to send
  * @returns {Object} Action
  */
 export const GET_ARTICLES = 'GET_ARTICLES';
 
-export const getArticles = (
-  limit = 1,
-  sorttype = 'created_at',
-  order = 'DESC',
-  category = 1,
-) => ({
+export const getArticles = (params = []) => ({
   type: GET_ARTICLES,
-  limit,
-  sorttype,
-  order,
-  category,
+  params,
 });
 
 /**
