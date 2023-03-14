@@ -10,6 +10,7 @@ import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
 import CardActionArea from '@mui/material/CardActionArea';
 import CardActions from '@mui/material/CardActions';
+import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Chip from '@mui/material/Chip';
@@ -35,21 +36,21 @@ export default function HomePage() {
 
   return (
     <Layout>
-      <Section id="articles">
+      <Section id="featured-articles">
         <Typography variant="h4" component="h2" color="t-primary">
           A la une
         </Typography>
-        <Grid container sx={{ paddingTop: 4 }}>
-          <Grid item xs={6} sx={{ paddingRight: 4 }}>
+        <Grid container sx={{ paddingY: 4 }}>
+          <Grid item xs={8} sx={{ paddingRight: 12 }}>
             <FeaturedArticle article={featuredArticle} />
           </Grid>
           <Grid
             item
-            xs={3}
+            xs={4}
             sx={{
               borderLeft: 1,
               borderColor: 'divider',
-              paddingX: 4,
+              paddingX: 12,
             }}
           >
             <Typography
@@ -68,32 +69,38 @@ export default function HomePage() {
               <FeaturedArticles key={article.id} article={article} />
             ))}
           </Grid>
-          <Grid
-            item
-            xs={3}
+        </Grid>
+      </Section>
+      <Section id="short-articles">
+        <Container maxWidth="xl">
+          <Typography
+            variant="h4"
+            component="h2"
+            color="t-primary"
             sx={{
-              borderLeft: 1,
+              marginBottom: 2,
+              borderBottom: 1,
               borderColor: 'divider',
-              paddingX: 4,
             }}
           >
-            <Typography
-              variant="h4"
-              component="h2"
-              color="t-primary"
-              sx={{
-                marginBottom: 2,
-                borderBottom: 1,
-                borderColor: 'divider',
-              }}
-            >
-              en bref
-            </Typography>
+            en bref
+          </Typography>
+          <Grid
+            container
+            spacing={2}
+            sx={{
+              dispalay: 'flex',
+              justifyContent: 'space-between',
+              paddingTop: 4,
+            }}
+          >
             {inShortArticles.map((article) => (
-              <InShortArticles key={article.id} article={article} />
+              <Grid item xs={4} key={article.id} flex={1}>
+                <InShortArticles article={article} />
+              </Grid>
             ))}
           </Grid>
-        </Grid>
+        </Container>
       </Section>
       <Section id="recent">
         <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -259,12 +266,22 @@ function InShortArticles({ article }) {
     hyphens: auto;
   `;
   return (
-    <SmallCard sx={{ border: 'none', boxShadow: 'none', marginBottom: 2 }}>
+    <SmallCard
+      sx={{
+        border: 'none',
+        boxShadow: 'none',
+        marginBottom: 2,
+        flex: 1,
+        borderRadius: 2,
+        backgroundColor: 'secondary.light',
+        color: 'secondary.contrastText',
+      }}
+    >
       <CardContent>
         <Typography gutterBottom variant="h6" component="div">
           {title}
         </Typography>
-        <Chip label={category.name} variant="outlined" color="secondary" />
+        <Chip label={category.name} variant="outlined" color="neutral" />
         <TruncateContent dangerouslySetInnerHTML={{ __html: content }} />
       </CardContent>
       <CardActions>
@@ -309,7 +326,14 @@ function RecentArticles({ article }) {
   `;
 
   return (
-    <Grid item xs={3} sx={{ paddingRight: 2, paddingBottom: 3 }}>
+    <Grid
+      item
+      xs={3}
+      sx={{
+        paddingRight: 2,
+        paddingBottom: 3,
+      }}
+    >
       <MediumCard>
         <CardMedia component="img" height="200" image={picture} alt={title} />
         <CardActionArea>
