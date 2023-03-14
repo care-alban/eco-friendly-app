@@ -14,69 +14,69 @@ import LocalFloristIcon from '@mui/icons-material/LocalFlorist';
 import Link from '@mui/material/Link';
 import Avatar from '@mui/material/Avatar';
 
+import config from '../config';
+
 const pages = ['Maison', 'Santé', 'Bien-être', 'Alimentation'];
 
 function Navbar() {
   const isLogged = false;
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
-      <AppBar>
-        <Container maxWidth="xl">
-          <Toolbar disableGutters>
+    <AppBar>
+      <Container maxWidth="xl">
+        <Toolbar disableGutters>
+          <LocalFloristIcon
+            sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }}
+          />
+          <Typography
+            variant="h6"
+            noWrap
+            component="a"
+            href={`${config.basePath}`}
+            sx={{
+              mr: 2,
+              display: { xs: 'none', md: 'flex' },
+              fontFamily: 'monospace',
+              fontWeight: 700,
+              letterSpacing: '.3rem',
+              color: 'inherit',
+              textDecoration: 'none',
+            }}
+          >
+            Eco-Friendly
+          </Typography>
+          <MobileNav />
+          <Box
+            sx={{
+              flexGrow: 1,
+              display: 'flex',
+              flexWrap: 'nowrap',
+              justifyContent: 'center',
+            }}
+          >
             <LocalFloristIcon
-              sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }}
+              sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }}
             />
             <Typography
               variant="h6"
               noWrap
-              component="a"
-              href="/"
               sx={{
-                mr: 2,
-                display: { xs: 'none', md: 'flex' },
+                display: { xs: 'flex', md: 'none' },
+                flexGrow: 1,
                 fontFamily: 'monospace',
-                fontWeight: 700,
+                fontWeight: 500,
                 letterSpacing: '.3rem',
                 color: 'inherit',
-                textDecoration: 'none',
               }}
             >
               Eco-Friendly
             </Typography>
-            <MobileNav />
-            <Box
-              sx={{
-                flexGrow: 1,
-                display: 'flex',
-                flexWrap: 'nowrap',
-                justifyContent: 'center',
-              }}
-            >
-              <LocalFloristIcon
-                sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }}
-              />
-              <Typography
-                variant="h6"
-                noWrap
-                sx={{
-                  display: { xs: 'flex', md: 'none' },
-                  flexGrow: 1,
-                  fontFamily: 'monospace',
-                  fontWeight: 500,
-                  letterSpacing: '.3rem',
-                  color: 'inherit',
-                }}
-              >
-                Eco-Friendly
-              </Typography>
-            </Box>
-            {isLogged ? <UserMenu /> : <Button color="inherit">Login</Button>}
-          </Toolbar>
-        </Container>
-        <AppMenu />
-      </AppBar>
-    </Box>
+          </Box>
+          {isLogged ? <UserMenu /> : <Button color="inherit">Login</Button>}
+        </Toolbar>
+      </Container>
+      <AppMenu />
+    </AppBar>
   );
 }
 
