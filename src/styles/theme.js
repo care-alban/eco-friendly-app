@@ -1,24 +1,25 @@
 import { createTheme } from '@mui/material/styles';
+import config from '../config';
 
-const globalTheme = createTheme({
+const GlobalTheme = createTheme({
   palette: {
     primary: {
-      light: '#a2cf6e',
-      main: '#8bc34a',
-      dark: '#618833',
-      contrastText: '#fff',
+      light: config.colors.primary.light,
+      main: config.colors.primary.main,
+      dark: config.colors.primary.dark,
+      contrastText: config.colors.primary.contrastText,
     },
     secondary: {
-      light: '#ffcf33',
-      main: '#ffc400',
-      dark: '#b28900',
-      contrastText: '#000',
+      light: config.colors.secondary.light,
+      main: config.colors.secondary.main,
+      dark: config.colors.secondary.dark,
+      contrastText: config.colors.secondary.contrastText,
     },
     neutral: {
-      main: '#fff',
-      contrastText: '#000',
+      main: config.colors.neutral.main,
+      contrastText: config.colors.neutral.contrastText,
     },
   },
 });
 
-export default globalTheme;
+export default GlobalTheme;
