@@ -13,7 +13,7 @@ export default {
       light: '#ffcf33',
       main: '#ffc400',
       dark: '#b28900',
-      contrastText: '#000',
+      contrastText: '#fff',
     },
     neutral: {
       main: '#f5f5f5',
