@@ -46,9 +46,8 @@ const Main = styled.main`
   margin: var(--margin);
   min-height: calc(100vh - var(--navbar-height) - var(--footer-height));
 
-  @media (min-width: var(--breakpoint-md)) {
+  @media screen and (min-width: 900px) {
     --navbar-height: 8.625rem;
-
-    min-height: calc(100vh - var(--navbar-height) - var(--footer-height));
+    --footer-height: 4.25rem;
   }
 `;

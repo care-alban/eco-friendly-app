@@ -17,12 +17,6 @@ const variables = css`
     --color-neutral-contrastText: ${config.colors.neutral.contrastText};
 
     --color-divider: ${config.colors.divider};
-
-    --breakpoint-xs: ${config.breakpoints.xs}px;
-    --breakpoint-sm: ${config.breakpoints.sm}px;
-    --breakpoint-md: ${config.breakpoints.md}px;
-    --breakpoint-lg: ${config.breakpoints.lg}px;
-    --breakpoint-xl: ${config.breakpoints.xl}px;
   }
 `;
 
