@@ -1,3 +1,7 @@
+/* eslint-disable camelcase */
+import { useSelector } from 'react-redux';
+import PropTypes from 'prop-types';
+import styled from '@emotion/styled';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';
@@ -9,7 +13,6 @@ import CardActions from '@mui/material/CardActions';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Chip from '@mui/material/Chip';
-
 import Layout from '../components/Layout';
 import Section from '../components/Section';
 import Quizz from '../components/Quizz';
@@ -17,7 +20,15 @@ import LargeCard from '../components/Cards/LargeCard';
 import MediumCard from '../components/Cards/MediumCard';
 import SmallCard from '../components/Cards/SmallCard';
 
+import { getFisrtArrayItem, getArrayItems } from '../utils';
+
 export default function HomePage() {
+  const articles = useSelector((state) => state.articles.list);
+  const featuredArticle = getFisrtArrayItem(articles);
+  const featuredArticles = getArrayItems(articles, 1, 2);
+  const inShortArticles = getArrayItems(articles, 3, 3);
+  const recentArticles = getArrayItems(articles, 6, 12);
+
   return (
     <Layout>
       <Section id="articles">
@@ -25,9 +36,59 @@ export default function HomePage() {
           A la une
         </Typography>
         <Grid container sx={{ paddingTop: 4 }}>
-          <FeaturedArticle />
-          <FeaturedArticles />
-          <InShort />
+          <Grid item xs={6} sx={{ paddingRight: 4 }}>
+            <FeaturedArticle article={featuredArticle} />
+          </Grid>
+          <Grid
+            item
+            xs={3}
+            sx={{
+              borderLeft: 1,
+              borderColor: 'divider',
+              paddingX: 4,
+            }}
+          >
+            <Typography
+              variant="h4"
+              component="h2"
+              color="t-primary"
+              sx={{
+                marginBottom: 4,
+                borderBottom: 1,
+                borderColor: 'divider',
+              }}
+            >
+              en vedette
+            </Typography>
+            {featuredArticles.map((article) => (
+              <FeaturedArticles key={article.id} article={article} />
+            ))}
+          </Grid>
+          <Grid
+            item
+            xs={3}
+            sx={{
+              borderLeft: 1,
+              borderColor: 'divider',
+              paddingX: 4,
+            }}
+          >
+            <Typography
+              variant="h4"
+              component="h2"
+              color="t-primary"
+              sx={{
+                marginBottom: 2,
+                borderBottom: 1,
+                borderColor: 'divider',
+              }}
+            >
+              en bref
+            </Typography>
+            {inShortArticles.map((article) => (
+              <InShortArticles key={article.id} article={article} />
+            ))}
+          </Grid>
         </Grid>
       </Section>
       <Section id="recent">
@@ -44,7 +105,11 @@ export default function HomePage() {
             </Typography>
           </Link>
         </Box>
-        <RecentArticles />
+        <Grid container sx={{ paddingTop: 4 }}>
+          {recentArticles.map((article) => (
+            <RecentArticles key={article.id} article={article} />
+          ))}
+        </Grid>
       </Section>
       <Section id="quizz">
         <Quizz />
@@ -69,278 +134,211 @@ export default function HomePage() {
   );
 }
 
-function FeaturedArticle() {
+function FeaturedArticle({ article }) {
+  const { title, picture, content, category, created_at } = article;
+  const TruncateContent = styled.div`
+    overflow: hidden;
+    overflow-wrap: break-word;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 9;
+    -webkit-box-orient: vertical;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+  `;
+
   return (
-    <Grid item xs={6} sx={{ paddingRight: 4 }}>
-      <LargeCard>
-        <Chip label="Bien-être" variant="outlined" color="secondary" />
-        <CardHeader
-          title="Shrimp and Chorizo Paella"
-          subheader="September 14, 2016"
-          sx={{ paddingY: 4, paddingX: 0 }}
-        />
-        <CardMedia
-          component="img"
-          height="400"
-          image="https://picsum.photos/400/200"
-          alt="Paella dish"
-        />
-        <CardContent sx={{ overflow: 'hidden', padding: 0 }}>
-          <Typography variant="body2" color="text.secondary" marginTop={2}>
-            This impressive paella is a perfect party dish and a fun meal to
-            cook together with your guests. Add 1 cup of frozen peas along with
-            the mussels, if you like.
-          </Typography>
-          <Typography variant="body2" color="text.secondary" marginTop={2}>
-            This impressive paella is a perfect party dish and a fun meal to
-            cook together with your guests. Add 1 cup of frozen peas along with
-            the mussels, if you like.
-          </Typography>
-        </CardContent>
-      </LargeCard>
-    </Grid>
+    <LargeCard>
+      <Chip label={category.name} variant="outlined" color="secondary" />
+      <CardHeader
+        title={title}
+        subheader={created_at}
+        sx={{ paddingY: 4, paddingX: 0 }}
+      />
+      <CardMedia component="img" height="400" image={picture} alt={title} />
+      <CardContent sx={{ overflow: 'hidden', padding: 0 }}>
+        <TruncateContent dangerouslySetInnerHTML={{ __html: content }} />
+      </CardContent>
+    </LargeCard>
   );
 }
 
-function FeaturedArticles() {
+FeaturedArticle.propTypes = {
+  article: PropTypes.shape({
+    title: PropTypes.string,
+    picture: PropTypes.string,
+    content: PropTypes.string,
+    category: PropTypes.shape({
+      name: PropTypes.string,
+    }),
+    created_at: PropTypes.string,
+  }),
+};
+
+FeaturedArticle.defaultProps = {
+  article: {
+    title: '',
+    picture: '',
+    content: '',
+    category: {
+      name: '',
+    },
+    created_at: '',
+  },
+};
+
+function FeaturedArticles({ article }) {
+  const { title, picture, content, category } = article;
+  const TruncateContent = styled.div`
+    overflow: hidden;
+    overflow-wrap: break-word;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+  `;
+
   return (
-    <Grid
-      item
-      xs={3}
-      sx={{
-        borderLeft: 1,
-        borderColor: 'divider',
-        paddingX: 4,
-      }}
-    >
-      <Typography
-        variant="h4"
-        component="h2"
-        color="t-primary"
-        sx={{
-          marginBottom: 4,
-          borderBottom: 1,
-          borderColor: 'divider',
-        }}
-      >
-        en vedette
-      </Typography>
-      <MediumCard sx={{ border: 'none', boxShadow: 'none', marginBottom: 2 }}>
+    <MediumCard sx={{ border: 'none', boxShadow: 'none', marginBottom: 2 }}>
+      <CardActionArea>
+        <CardMedia component="img" height="200" image={picture} alt={title} />
+        <CardContent>
+          <Chip label={category.name} variant="outlined" color="secondary" />
+          <Typography gutterBottom variant="h6" component="div">
+            {title}
+          </Typography>
+          <TruncateContent dangerouslySetInnerHTML={{ __html: content }} />
+        </CardContent>
+      </CardActionArea>
+    </MediumCard>
+  );
+}
+
+FeaturedArticles.propTypes = {
+  article: PropTypes.shape({
+    title: PropTypes.string,
+    picture: PropTypes.string,
+    content: PropTypes.string,
+    category: PropTypes.shape({
+      name: PropTypes.string,
+    }),
+  }),
+};
+
+FeaturedArticles.defaultProps = {
+  article: {
+    title: '',
+    picture: '',
+    content: '',
+    category: {
+      name: '',
+    },
+  },
+};
+
+function InShortArticles({ article }) {
+  const { title, content, category } = article;
+  const TruncateContent = styled.div`
+    overflow: hidden;
+    overflow-wrap: break-word;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+  `;
+  return (
+    <SmallCard sx={{ border: 'none', boxShadow: 'none', marginBottom: 2 }}>
+      <CardContent>
+        <Typography gutterBottom variant="h6" component="div">
+          {title}
+        </Typography>
+        <Chip label={category.name} variant="outlined" color="secondary" />
+        <TruncateContent dangerouslySetInnerHTML={{ __html: content }} />
+      </CardContent>
+      <CardActions>
+        <Button size="small">Share</Button>
+        <Button size="small">Learn More</Button>
+      </CardActions>
+    </SmallCard>
+  );
+}
+
+InShortArticles.propTypes = {
+  article: PropTypes.shape({
+    title: PropTypes.string,
+    content: PropTypes.string,
+    category: PropTypes.shape({
+      name: PropTypes.string,
+    }),
+  }),
+};
+
+InShortArticles.defaultProps = {
+  article: {
+    title: '',
+    content: '',
+    category: {
+      name: '',
+    },
+  },
+};
+
+function RecentArticles({ article }) {
+  const { title, picture, content, category } = article;
+  const TruncateContent = styled.div`
+    overflow: hidden;
+    overflow-wrap: break-word;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 5;
+    -webkit-box-orient: vertical;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+  `;
+
+  return (
+    <Grid item xs={3} sx={{ paddingRight: 2, paddingBottom: 3 }}>
+      <MediumCard>
+        <CardMedia component="img" height="200" image={picture} alt={title} />
         <CardActionArea>
-          <CardMedia
-            component="img"
-            height="140"
-            image="https://picsum.photos/200/100"
-            alt="green iguana"
-          />
           <CardContent>
-            <Typography gutterBottom variant="h5" component="div">
-              Lizard
+            <Chip label={category.name} variant="outlined" color="secondary" />
+            <Typography gutterBottom variant="h6" component="div">
+              {title}
             </Typography>
-            <Typography variant="body2" color="text.secondary">
-              Lizards are a widespread group of squamate reptiles, with over
-              6,000 species, ranging across all continents except Antarctica
-            </Typography>
+            <TruncateContent dangerouslySetInnerHTML={{ __html: content }} />
           </CardContent>
         </CardActionArea>
       </MediumCard>
-      <MediumCard sx={{ border: 'none', boxShadow: 'none', marginBottom: 2 }}>
-        <CardActionArea>
-          <CardMedia
-            component="img"
-            height="140"
-            image="https://picsum.photos/200/100"
-            alt="green iguana"
-          />
-          <CardContent>
-            <Typography gutterBottom variant="h5" component="div">
-              Lizard
-            </Typography>
-            <Typography variant="body2" color="text.secondary">
-              Lizards are a widespread group of squamate reptiles, with over
-              6,000 species, ranging across all continents except Antarctica
-            </Typography>
-          </CardContent>
-        </CardActionArea>
-      </MediumCard>
     </Grid>
   );
 }
 
-function InShort() {
-  return (
-    <Grid
-      item
-      xs={3}
-      sx={{
-        borderLeft: 1,
-        borderColor: 'divider',
-        paddingX: 4,
-      }}
-    >
-      <Typography
-        variant="h4"
-        component="h2"
-        color="t-primary"
-        sx={{
-          marginBottom: 2,
-          borderBottom: 1,
-          borderColor: 'divider',
-        }}
-      >
-        en bref
-      </Typography>
-      <SmallCard sx={{ border: 'none', boxShadow: 'none', marginBottom: 2 }}>
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="div">
-            Lizard
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            Lizards are a widespread group of squamate reptiles, with over 6,000
-            species, ranging across all continents except Antarctica
-          </Typography>
-        </CardContent>
-        <CardActions>
-          <Button size="small">Share</Button>
-          <Button size="small">Learn More</Button>
-        </CardActions>
-      </SmallCard>
-      <SmallCard sx={{ border: 'none', boxShadow: 'none', marginBottom: 2 }}>
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="div">
-            Lizard
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            Lizards are a widespread group of squamate reptiles, with over 6,000
-            species, ranging across all continents except Antarctica
-          </Typography>
-        </CardContent>
-        <CardActions>
-          <Button size="small">Share</Button>
-          <Button size="small">Learn More</Button>
-        </CardActions>
-      </SmallCard>
-      <SmallCard sx={{ border: 'none', boxShadow: 'none', marginBottom: 2 }}>
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="div">
-            Lizard
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            Lizards are a widespread group of squamate reptiles, with over 6,000
-            species, ranging across all continents except Antarctica
-          </Typography>
-        </CardContent>
-        <CardActions>
-          <Button size="small">Share</Button>
-          <Button size="small">Learn More</Button>
-        </CardActions>
-      </SmallCard>
-    </Grid>
-  );
-}
+RecentArticles.propTypes = {
+  article: PropTypes.shape({
+    title: PropTypes.string,
+    picture: PropTypes.string,
+    content: PropTypes.string,
+    category: PropTypes.shape({
+      name: PropTypes.string,
+    }),
+  }),
+};
 
-function RecentArticles() {
-  return (
-    <Grid container sx={{ paddingTop: 4 }}>
-      <Grid
-        item
-        xs={3}
-        sx={{ borderRight: 1, borderColor: 'divider', paddingRight: 3 }}
-      >
-        <MediumCard>
-          <CardMedia
-            component="img"
-            height="140"
-            image="https://picsum.photos/200/100"
-            alt="green iguana"
-          />
-          <CardActionArea>
-            <CardContent>
-              <Typography gutterBottom variant="h5" component="div">
-                Lizard
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                Lizards are a widespread group of squamate reptiles, with over
-                6,000 species, ranging across all continents except Antarctica
-              </Typography>
-            </CardContent>
-          </CardActionArea>
-        </MediumCard>
-      </Grid>
-      <Grid
-        item
-        xs={3}
-        sx={{ borderRight: 1, borderColor: 'divider', paddingX: 3 }}
-      >
-        <MediumCard>
-          <CardMedia
-            component="img"
-            height="140"
-            image="https://picsum.photos/200/100"
-            alt="green iguana"
-          />
-          <CardActionArea>
-            <CardContent>
-              <Typography gutterBottom variant="h5" component="div">
-                Lizard
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                Lizards are a widespread group of squamate reptiles, with over
-                6,000 species, ranging across all continents except Antarctica
-              </Typography>
-            </CardContent>
-          </CardActionArea>
-        </MediumCard>
-      </Grid>
-      <Grid
-        item
-        xs={3}
-        sx={{ borderRight: 1, borderColor: 'divider', paddingX: 3 }}
-      >
-        <MediumCard>
-          <CardMedia
-            component="img"
-            height="140"
-            image="https://picsum.photos/200/100"
-            alt="green iguana"
-          />
-          <CardActionArea>
-            <CardContent>
-              <Typography gutterBottom variant="h5" component="div">
-                Lizard
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                Lizards are a widespread group of squamate reptiles, with over
-                6,000 species, ranging across all continents except Antarctica
-              </Typography>
-            </CardContent>
-          </CardActionArea>
-        </MediumCard>
-      </Grid>
-      <Grid item xs={3} sx={{ paddingLeft: 3 }}>
-        <MediumCard>
-          <CardMedia
-            component="img"
-            height="140"
-            image="https://picsum.photos/200/100"
-            alt="green iguana"
-          />
-          <CardActionArea>
-            <CardContent>
-              <Typography gutterBottom variant="h5" component="div">
-                Lizard
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                Lizards are a widespread group of squamate reptiles, with over
-                6,000 species, ranging across all continents except Antarctica
-              </Typography>
-            </CardContent>
-          </CardActionArea>
-        </MediumCard>
-      </Grid>
-    </Grid>
-  );
-}
+RecentArticles.defaultProps = {
+  article: {
+    title: '',
+    picture: '',
+    content: '',
+    category: {
+      name: '',
+    },
+  },
+};
 
 function RecentAdvices() {
   return (
