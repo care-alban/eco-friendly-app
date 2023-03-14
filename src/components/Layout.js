@@ -1,15 +1,10 @@
 import { useEffect } from 'react';
-
 import PropTypes from 'prop-types';
-
 import { ThemeProvider } from '@mui/material/styles';
+import styled from 'styled-components';
 import CssBaseline from '@mui/material/CssBaseline';
 import Container from '@mui/material/Container';
-
-import styled from 'styled-components';
-
-import globalTheme from '../styles/theme';
-
+import { GlobalStyle, GlobalTheme } from '../styles';
 import Navbar from './Navbar';
 import Footer from './Footer';
 
@@ -24,12 +19,13 @@ export default function Layout({ children }) {
   });
 
   return (
-    <ThemeProvider theme={globalTheme}>
+    <ThemeProvider theme={GlobalTheme}>
+      <GlobalStyle />
       <CssBaseline />
       <Navbar />
-      <Container maxWidth="xl">
-        <Main>{children}</Main>
-      </Container>
+      <Main>
+        <Container maxWidth="xl">{children}</Container>
+      </Main>
       <Footer />
     </ThemeProvider>
   );
@@ -50,7 +46,7 @@ const Main = styled.main`
   margin: var(--margin);
   min-height: calc(100vh - var(--navbar-height) - var(--footer-height));
 
-  @media (min-width: 900px) {
+  @media (min-width: var(--breakpoint-md)) {
     --navbar-height: 8.625rem;
 
     min-height: calc(100vh - var(--navbar-height) - var(--footer-height));
