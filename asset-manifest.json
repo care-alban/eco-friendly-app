@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.js": "/eco-friendly-app/static/js/main.df1bed55.js",
+    "main.js": "/eco-friendly-app/static/js/main.cb5f3bb6.js",
     "index.html": "/eco-friendly-app/index.html",
-    "main.df1bed55.js.map": "/eco-friendly-app/static/js/main.df1bed55.js.map"
+    "main.cb5f3bb6.js.map": "/eco-friendly-app/static/js/main.cb5f3bb6.js.map"
   },
   "entrypoints": [
-    "static/js/main.df1bed55.js"
+    "static/js/main.cb5f3bb6.js"
   ]
 }
