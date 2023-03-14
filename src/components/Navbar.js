@@ -1,5 +1,7 @@
 import { useState } from 'react';
-
+import { useSelector } from 'react-redux';
+import { Link as RouterLink } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -16,11 +18,11 @@ import Avatar from '@mui/material/Avatar';
 
 import config from '../config';
 
-const pages = ['Maison', 'Santé', 'Bien-être', 'Alimentation'];
+// const pages = ['Maison', 'Santé', 'Bien-être', 'Alimentation'];
 
-function Navbar() {
-  const isLogged = false;
-
+export default function Navbar() {
+  const categories = useSelector((state) => state.common.categories);
+  const user = useSelector((state) => state.user.user);
   return (
     <AppBar>
       <Container maxWidth="xl">
@@ -45,7 +47,7 @@ function Navbar() {
           >
             Eco-Friendly
           </Typography>
-          <MobileNav />
+          <MobileNav categories={categories} />
           <Box
             sx={{
               flexGrow: 1,
@@ -72,17 +74,15 @@ function Navbar() {
               Eco-Friendly
             </Typography>
           </Box>
-          {isLogged ? <UserMenu /> : <Button color="inherit">Login</Button>}
+          {user ? <UserMenu /> : <Button color="inherit">Login</Button>}
         </Toolbar>
       </Container>
-      <AppMenu />
+      <AppMenu categories={categories} />
     </AppBar>
   );
 }
 
-export default Navbar;
-
-function AppMenu() {
+function AppMenu({ categories }) {
   const link = {
     mr: 3,
     fontFamily: 'monospace',
@@ -112,19 +112,34 @@ function AppMenu() {
         backgroundColor: 'white',
       }}
     >
-      <Link color="inherit" href="/" sx={link}>
+      <Link
+        component={RouterLink}
+        to={`${config.basePath}`}
+        color="inherit"
+        sx={link}
+      >
         Actualité
       </Link>
-      {pages.map((page) => (
-        <Link key={page} color="inherit" href="/" sx={link}>
-          {page}
+      {categories.map((category) => (
+        <Link
+          key={category.id}
+          component={RouterLink}
+          to={`${config.basePath}/categories/${category.slug}`}
+          color="inherit"
+          sx={link}
+        >
+          {category.name}
         </Link>
       ))}
     </Box>
   );
 }
 
-function MobileNav() {
+AppMenu.propTypes = {
+  categories: PropTypes.array.isRequired,
+};
+
+function MobileNav({ categories }) {
   const [anchorElNav, setAnchorElNav] = useState(null);
 
   const handleOpenNavMenu = (event) => {
@@ -168,15 +183,19 @@ function MobileNav() {
         <MenuItem onClick={handleCloseNavMenu}>
           <Typography textAlign="center">Actualité</Typography>
         </MenuItem>
-        {pages.map((page) => (
-          <MenuItem key={page} onClick={handleCloseNavMenu}>
-            <Typography textAlign="center">{page}</Typography>
+        {categories.map((category) => (
+          <MenuItem key={category.id} onClick={handleCloseNavMenu}>
+            <Typography textAlign="center">{category.name}</Typography>
           </MenuItem>
         ))}
       </Menu>
     </Box>
   );
 }
+
+MobileNav.propTypes = {
+  categories: PropTypes.array.isRequired,
+};
 
 function UserMenu() {
   const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
