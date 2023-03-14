@@ -31,6 +31,7 @@ export default function HomePage() {
   const recentArticles = useSelector((state) =>
     state.articles.list.slice(6, 18),
   );
+  const recentAdvices = useSelector((state) => state.advices.list);
 
   return (
     <Layout>
@@ -131,7 +132,11 @@ export default function HomePage() {
             </Typography>
           </Link>
         </Box>
-        <RecentAdvices />
+        <Grid container sx={{ paddingTop: 4 }}>
+          {recentAdvices.map((advice) => (
+            <RecentAdvices key={advice.id} advice={advice} />
+          ))}
+        </Grid>
       </section>
     </Layout>
   );
@@ -343,89 +348,54 @@ RecentArticles.defaultProps = {
   },
 };
 
-function RecentAdvices() {
+function RecentAdvices({ advice }) {
+  const { title, content, category } = advice;
+  const TruncateContent = styled.div`
+    overflow: hidden;
+    overflow-wrap: break-word;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 5;
+    -webkit-box-orient: vertical;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+  `;
+
   return (
-    <Grid container sx={{ paddingTop: 4 }}>
-      <Grid
-        item
-        xs={3}
-        sx={{ borderRight: 1, borderColor: 'divider', paddingRight: 3 }}
-      >
-        <SmallCard sx={{ border: 'none', boxShadow: 'none', marginBottom: 2 }}>
-          <CardContent>
-            <Typography gutterBottom variant="h5" component="div">
-              Lizard
-            </Typography>
-            <Typography variant="body2" color="text.secondary">
-              Lizards are a widespread group of squamate reptiles, with over
-              6,000 species, ranging across all continents except Antarctica
-            </Typography>
-          </CardContent>
-          <CardActions>
-            <Button size="small">Share</Button>
-            <Button size="small">Learn More</Button>
-          </CardActions>
-        </SmallCard>
-      </Grid>
-      <Grid
-        item
-        xs={3}
-        sx={{ borderRight: 1, borderColor: 'divider', paddingX: 3 }}
-      >
-        <SmallCard sx={{ border: 'none', boxShadow: 'none', marginBottom: 2 }}>
-          <CardContent>
-            <Typography gutterBottom variant="h5" component="div">
-              Lizard
-            </Typography>
-            <Typography variant="body2" color="text.secondary">
-              Lizards are a widespread group of squamate reptiles, with over
-              6,000 species, ranging across all continents except Antarctica
-            </Typography>
-          </CardContent>
-          <CardActions>
-            <Button size="small">Share</Button>
-            <Button size="small">Learn More</Button>
-          </CardActions>
-        </SmallCard>
-      </Grid>
-      <Grid
-        item
-        xs={3}
-        sx={{ borderRight: 1, borderColor: 'divider', paddingX: 3 }}
-      >
-        <SmallCard sx={{ border: 'none', boxShadow: 'none', marginBottom: 2 }}>
-          <CardContent>
-            <Typography gutterBottom variant="h5" component="div">
-              Lizard
-            </Typography>
-            <Typography variant="body2" color="text.secondary">
-              Lizards are a widespread group of squamate reptiles, with over
-              6,000 species, ranging across all continents except Antarctica
-            </Typography>
-          </CardContent>
-          <CardActions>
-            <Button size="small">Share</Button>
-            <Button size="small">Learn More</Button>
-          </CardActions>
-        </SmallCard>
-      </Grid>
-      <Grid item xs={3} sx={{ paddingLeft: 3 }}>
-        <SmallCard sx={{ border: 'none', boxShadow: 'none', marginBottom: 2 }}>
-          <CardContent>
-            <Typography gutterBottom variant="h5" component="div">
-              Lizard
-            </Typography>
-            <Typography variant="body2" color="text.secondary">
-              Lizards are a widespread group of squamate reptiles, with over
-              6,000 species, ranging across all continents except Antarctica
-            </Typography>
-          </CardContent>
-          <CardActions>
-            <Button size="small">Share</Button>
-            <Button size="small">Learn More</Button>
-          </CardActions>
-        </SmallCard>
-      </Grid>
+    <Grid item xs={3} sx={{ paddingRight: 2, paddingBottom: 3 }}>
+      <SmallCard sx={{ border: 'none', boxShadow: 'none', marginBottom: 2 }}>
+        <CardContent>
+          <Typography gutterBottom variant="h5" component="div">
+            {title}
+          </Typography>
+          <Chip label={category.name} variant="outlined" color="secondary" />
+          <TruncateContent dangerouslySetInnerHTML={{ __html: content }} />
+        </CardContent>
+        <CardActions>
+          <Button size="small">Share</Button>
+          <Button size="small">Learn More</Button>
+        </CardActions>
+      </SmallCard>
     </Grid>
   );
 }
+
+RecentAdvices.propTypes = {
+  advice: PropTypes.shape({
+    title: PropTypes.string,
+    content: PropTypes.string,
+    category: PropTypes.shape({
+      name: PropTypes.string,
+    }),
+  }),
+};
+
+RecentAdvices.defaultProps = {
+  advice: {
+    title: '',
+    content: '',
+    category: {
+      name: '',
+    },
+  },
+};
