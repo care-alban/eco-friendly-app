@@ -2,7 +2,6 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Routes, Route } from 'react-router-dom';
 
-import Layout from './Layout';
 import HomePage from '../pages/HomePage';
 
 import { getAllCategories } from '../actions/commonActions';
@@ -20,13 +19,11 @@ function App() {
   }, [categories]);
 
   return (
-    <Layout>
-      <Routes>
-        <Route>
-          <Route path={`${config.basePath}`} element={<HomePage />} />
-        </Route>
-      </Routes>
-    </Layout>
+    <Routes>
+      <Route>
+        <Route path={`${config.basePath}`} element={<HomePage />} />
+      </Route>
+    </Routes>
   );
 }
 
