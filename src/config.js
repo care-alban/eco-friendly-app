@@ -1,5 +1,5 @@
 export default {
-  env: 'dev', // 'dev' or 'prod'
+  env: 'prod', // 'dev' or 'prod'
   basePath: '/eco-friendly-app',
   apiURL: 'https://eco-friendly.fr/api',
   colors: {
