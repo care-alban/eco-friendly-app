@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link as RouterLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import AppBar from '@mui/material/AppBar';
@@ -16,13 +16,21 @@ import LocalFloristIcon from '@mui/icons-material/LocalFlorist';
 import Link from '@mui/material/Link';
 import Avatar from '@mui/material/Avatar';
 
+import { getAllCategories } from '../actions/commonActions';
+
 import config from '../config';
 
 // const pages = ['Maison', 'Santé', 'Bien-être', 'Alimentation'];
 
 export default function Navbar() {
+  const dispatch = useDispatch();
   const categories = useSelector((state) => state.common.categories);
   const user = useSelector((state) => state.user.user);
+
+  useEffect(() => {
+    if (categories.length === 0) dispatch(getAllCategories());
+  }, [categories]);
+
   return (
     <AppBar>
       <Container maxWidth="xl">

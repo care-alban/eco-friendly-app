@@ -5,7 +5,6 @@ import { Routes, Route } from 'react-router-dom';
 import HomePage from '../pages/HomePage';
 import CategoryPage from '../pages/CategoryPage';
 
-import { getAllCategories } from '../actions/commonActions';
 import { getArticles } from '../actions/articlesActions';
 import { getAdvices } from '../actions/advicesActions';
 
@@ -13,7 +12,6 @@ import config from '../config';
 
 function App() {
   const dispatch = useDispatch();
-  const categories = useSelector((state) => state.common.categories);
   const articles = useSelector((state) => state.articles.list);
   const advices = useSelector((state) => state.advices.list);
 
@@ -23,10 +21,9 @@ function App() {
       { name: 'sorttype', value: 'created_at' },
       { name: 'order', value: 'desc' },
     ];
-    if (categories.length === 0) dispatch(getAllCategories());
     if (articles.length === 0) dispatch(getArticles(params));
     if (advices.length === 0) dispatch(getAdvices(params));
-  }, [categories, articles, advices]);
+  }, [articles, advices]);
 
   return (
     <Routes>
