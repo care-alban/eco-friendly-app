@@ -19,6 +19,10 @@ export default {
       main: '#f5f5f5',
       contrastText: '#000',
     },
+    common: {
+      white: '#fff',
+      black: '#000',
+    },
     divider: '#e0e0e0',
     text: {
       primary: '#000',
