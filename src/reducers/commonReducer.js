@@ -1,14 +1,21 @@
 import {
+  SEARCH_BAR_ON_CHANGE,
   GET_ALL_CATEGORIES_SUCCESS,
   GET_ALL_CATEGORIES_ERROR,
 } from '../actions/commonActions';
 
 export const initialState = {
   categories: [],
+  searchValue: '',
 };
 
 const reducer = (state = initialState, action = {}) => {
   switch (action.type) {
+    case SEARCH_BAR_ON_CHANGE:
+      return {
+        ...state,
+        searchValue: action.value,
+      };
     case GET_ALL_CATEGORIES_SUCCESS:
       return {
         ...state,

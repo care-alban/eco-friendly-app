@@ -34,3 +34,16 @@ export const getAllCategoriesError = (error) => ({
   type: GET_ALL_CATEGORIES_ERROR,
   error,
 });
+
+/**
+ * @name searchBarOnChange
+ * @description Search bar on change
+ * @param {Object} event Event
+ * @returns {Object} Action
+ */
+export const SEARCH_BAR_ON_CHANGE = 'SEARCH_BAR_ON_CHANGE';
+
+export const searchBarOnChange = (value) => ({
+  type: SEARCH_BAR_ON_CHANGE,
+  value,
+});
