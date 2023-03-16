@@ -19,6 +19,10 @@ const GlobalTheme = createTheme({
       main: config.colors.neutral.main,
       contrastText: config.colors.neutral.contrastText,
     },
+    common: {
+      white: config.colors.common.white,
+      black: config.colors.common.black,
+    },
   },
 });
 
