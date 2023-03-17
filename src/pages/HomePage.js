@@ -23,21 +23,25 @@ import Quizz from '../components/Quizz';
 import LargeCard from '../components/Cards/LargeCard';
 import MediumCard from '../components/Cards/MediumCard';
 import SmallCard from '../components/Cards/SmallCard';
+import Loader from '../components/Loader';
 
 import config from '../config';
 
 export default function HomePage() {
-  const featuredArticle = useSelector((state) => state.articles.list[0]);
-  const featuredArticles = useSelector((state) =>
-    state.articles.list.slice(1, 3),
-  );
-  const inShortArticles = useSelector((state) =>
-    state.articles.list.slice(3, 6),
-  );
-  const recentArticles = useSelector((state) =>
-    state.articles.list.slice(6, 18),
-  );
-  const recentAdvices = useSelector((state) => state.advices.list);
+  const articles = useSelector((state) => state.articles.list);
+  const featuredArticle = articles[0];
+  const featuredArticles = articles.slice(1, 3);
+  const inShortArticles = articles.slice(3, 6);
+  const recentArticles = articles.slice(6, 18);
+  const advices = useSelector((state) => state.advices.list);
+
+  if (!articles.length > 0 || !advices.length > 0) {
+    return (
+      <Layout>
+        <Loader />
+      </Layout>
+    );
+  }
 
   return (
     <Layout>
@@ -145,7 +149,7 @@ export default function HomePage() {
           </Link>
         </Box>
         <Grid container sx={{ paddingTop: 4 }}>
-          {recentAdvices.map((advice) => (
+          {advices.map((advice) => (
             <RecentAdvices key={advice.id} advice={advice} />
           ))}
         </Grid>

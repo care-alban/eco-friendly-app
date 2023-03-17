@@ -9,6 +9,7 @@ import Breadcrumbs from '@mui/material/Breadcrumbs';
 import Link from '@mui/material/Link';
 
 import Layout from '../components/Layout';
+import Loader from '../components/Loader';
 
 import config from '../config';
 
@@ -18,7 +19,13 @@ export default function ArticlePage() {
     state.articles.list.find((item) => item.slug === slug),
   );
 
-  console.log(article);
+  if (!article) {
+    return (
+      <Layout>
+        <Loader />
+      </Layout>
+    );
+  }
 
   return (
     <Layout>

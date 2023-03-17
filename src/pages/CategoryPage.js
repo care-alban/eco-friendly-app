@@ -13,9 +13,9 @@ import Layout from '../components/Layout';
 import Hero from '../components/Hero';
 import SearchBar from '../components/SearchBar';
 import MediumCard from '../components/Cards/MediumCard';
+import Loader from '../components/Loader';
 import { getArticles } from '../actions/articlesActions';
 import { getAdvices } from '../actions/advicesActions';
-// import useDebounce from '../hooks/useDebounce';
 import { searchBarOnChange } from '../actions/commonActions';
 import { randomlyMixSeveralArrays } from '../utils/index';
 
@@ -27,16 +27,6 @@ export default function CategoryPage() {
   const categories = useSelector((state) => state.common.categories);
   const category = categories.find((item) => item.slug === name);
 
-  /* If the category is not found, return an funny error message */
-  if (!category) {
-    return (
-      <Layout>
-        Oups, quelque chose ne s'est pas passé comme prévu. Impossible de
-        retrouver où j'ai rangé le contenu de cette page !
-      </Layout>
-    );
-  }
-
   /* Clear the search value when the page is loaded */
   useEffect(() => {
     dispatch(searchBarOnChange(''));
@@ -44,17 +34,19 @@ export default function CategoryPage() {
 
   /* Get all the articles and advices of the category */
   useEffect(() => {
-    const params = [
-      { name: 'category', value: category.id },
-      { name: 'sorttype', value: 'created_at' },
-      { name: 'order', value: 'desc' },
-    ];
-    /**
-     * Get all the articles and all the advices of the category
-     * TODO: add a limit number and get the articles and advices on scroll
-     * */
-    dispatch(getArticles(params));
-    dispatch(getAdvices(params));
+    if (category) {
+      const params = [
+        { name: 'category', value: category.id },
+        { name: 'sorttype', value: 'created_at' },
+        { name: 'order', value: 'desc' },
+      ];
+      /**
+       * Get all the articles and all the advices of the category
+       * TODO: add a limit number and get the articles and advices on scroll
+       * */
+      dispatch(getArticles(params));
+      dispatch(getAdvices(params));
+    }
   }, [category]);
 
   const [allArticlesAndAdvices, setAllArticlesAndAdvices] = useState([]);
@@ -83,6 +75,14 @@ export default function CategoryPage() {
     -webkit-hyphens: auto;
     hyphens: auto;
   `;
+
+  if (!category || !allArticlesAndAdvices.length > 0) {
+    return (
+      <Layout>
+        <Loader />
+      </Layout>
+    );
+  }
 
   return (
     <Layout>
