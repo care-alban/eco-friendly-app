@@ -5,7 +5,7 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import styled from 'styled-components';
 
-const Section = styled.section`
+const HeroWrapper = styled.div`
   position: relative;
   background-repeat: no-repeat;
   background-size: cover;
@@ -37,7 +37,7 @@ export default function Hero({
   rightBtnText,
 }) {
   return (
-    <Section style={{ backgroundImage: `url("${image}")` }}>
+    <HeroWrapper style={{ backgroundImage: `url("${image}")` }}>
       <Container maxWidth="md">
         <Box textAlign="center" color="common.white">
           <Typography
@@ -73,7 +73,7 @@ export default function Hero({
           </Box>
         </Box>
       </Container>
-    </Section>
+    </HeroWrapper>
   );
 }
 
