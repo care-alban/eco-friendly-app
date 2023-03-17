@@ -1,5 +1,6 @@
 /* eslint-disable camelcase */
 import { useSelector } from 'react-redux';
+import { Link as RouterLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 import Grid from '@mui/material/Grid';
@@ -14,12 +15,16 @@ import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Chip from '@mui/material/Chip';
+import SendIcon from '@mui/icons-material/Send';
+
 import Layout from '../components/Layout';
 import Section from '../components/Section';
 import Quizz from '../components/Quizz';
 import LargeCard from '../components/Cards/LargeCard';
 import MediumCard from '../components/Cards/MediumCard';
 import SmallCard from '../components/Cards/SmallCard';
+
+import config from '../config';
 
 export default function HomePage() {
   const featuredArticle = useSelector((state) => state.articles.list[0]);
@@ -150,7 +155,7 @@ export default function HomePage() {
 }
 
 function FeaturedArticle({ article }) {
-  const { title, picture, content, category, created_at } = article;
+  const { title, picture, content, category, created_at, slug } = article;
   const TruncateContent = styled.div`
     overflow: hidden;
     overflow-wrap: break-word;
@@ -174,6 +179,26 @@ function FeaturedArticle({ article }) {
       <CardContent sx={{ overflow: 'hidden', padding: 0 }}>
         <TruncateContent dangerouslySetInnerHTML={{ __html: content }} />
       </CardContent>
+      <CardActions marginTop="3">
+        <Button
+          color="secondary"
+          size="small"
+          variant="contained"
+          endIcon={<SendIcon />}
+          sx={{ marginRight: 2 }}
+        >
+          Partager
+        </Button>
+        <Button
+          component={RouterLink}
+          to={`${config.basePath}/articles/${slug}`}
+          color="secondary"
+          size="small"
+          variant="outlined"
+        >
+          En savoir plus
+        </Button>
+      </CardActions>
     </LargeCard>
   );
 }
@@ -187,6 +212,7 @@ FeaturedArticle.propTypes = {
       name: PropTypes.string,
     }),
     created_at: PropTypes.string,
+    slug: PropTypes.string,
   }),
 };
 
@@ -199,6 +225,7 @@ FeaturedArticle.defaultProps = {
       name: '',
     },
     created_at: '',
+    slug: '',
   },
 };
 
@@ -285,8 +312,8 @@ function InShortArticles({ article }) {
         <TruncateContent dangerouslySetInnerHTML={{ __html: content }} />
       </CardContent>
       <CardActions>
-        <Button size="small">Share</Button>
-        <Button size="small">Learn More</Button>
+        <Button size="small">Partager</Button>
+        <Button size="small">En savoir plus</Button>
       </CardActions>
     </SmallCard>
   );
@@ -396,8 +423,8 @@ function RecentAdvices({ advice }) {
           <TruncateContent dangerouslySetInnerHTML={{ __html: content }} />
         </CardContent>
         <CardActions>
-          <Button size="small">Share</Button>
-          <Button size="small">Learn More</Button>
+          <Button size="small">Partager</Button>
+          <Button size="small">En savoir plus</Button>
         </CardActions>
       </SmallCard>
     </Grid>
