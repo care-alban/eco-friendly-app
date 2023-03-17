@@ -4,6 +4,7 @@ import { Routes, Route } from 'react-router-dom';
 
 import HomePage from '../pages/HomePage';
 import CategoryPage from '../pages/CategoryPage';
+import ArticlePage from '../pages/ArticlePage';
 
 import { getArticles } from '../actions/articlesActions';
 import { getAdvices } from '../actions/advicesActions';
@@ -32,6 +33,10 @@ function App() {
         <Route
           path={`${config.basePath}/categories/:name`}
           element={<CategoryPage />}
+        />
+        <Route
+          path={`${config.basePath}/articles/:slug`}
+          element={<ArticlePage />}
         />
       </Route>
     </Routes>
