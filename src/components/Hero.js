@@ -1,6 +1,6 @@
+import PropTypes from 'prop-types';
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
-import PropTypes from 'prop-types';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import styled from 'styled-components';
