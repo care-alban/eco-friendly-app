@@ -179,7 +179,7 @@ function FeaturedArticle({ article }) {
       <CardContent sx={{ overflow: 'hidden', padding: 0 }}>
         <TruncateContent dangerouslySetInnerHTML={{ __html: content }} />
       </CardContent>
-      <CardActions marginTop="3">
+      <CardActions>
         <Button
           color="secondary"
           size="small"
