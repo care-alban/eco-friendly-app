@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import { styled, alpha } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
@@ -42,11 +43,22 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-export default function SearchBar() {
+export default function SearchBar({ array, keys }) {
   const dispatch = useDispatch();
   const handleChange = (event) => {
-    dispatch(searchBarOnChange(event.target.value.toLowerCase()));
+    /* Search a value in an array */
+    if (array.lenght > 0 && keys.lenght > 0) {
+      /* Filter the articles and advices by search value */
+      const filteredArray = array.filter((item) =>
+        keys.map((key) =>
+          item[key].toLowerCase().includes(event.target.value.toLowerCase()),
+        ),
+      );
+      dispatch(searchBarOnChange(filteredArray));
+    }
   };
+  /* TODO: Use debouncer to avoid too many requests */
+  /* TODO: Filter the articles and advices by search value */
 
   return (
     <Search>
@@ -63,3 +75,13 @@ export default function SearchBar() {
     </Search>
   );
 }
+
+SearchBar.propTypes = {
+  array: PropTypes.arrayOf(PropTypes.object),
+  keys: PropTypes.arrayOf(PropTypes.string),
+};
+
+SearchBar.defaultProps = {
+  array: [],
+  keys: [],
+};

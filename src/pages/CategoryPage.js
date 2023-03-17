@@ -72,26 +72,6 @@ export default function CategoryPage() {
     }
   }, [articles, advices, category]);
 
-  /* Search a value in an array */
-  const searchValue = useSelector((state) => state.common.searchValue);
-
-  /* Filter the articles and advices by search value */
-  useEffect(() => {
-    if (searchValue !== '') {
-      setAllArticlesAndAdvices(
-        allArticlesAndAdvices.filter((item) => {
-          const title = item.title.toLowerCase();
-          const content = item.content.toLowerCase();
-          return title.includes(searchValue) || content.includes(searchValue);
-        }),
-      );
-    }
-  }, [searchValue]);
-
-  /* TODO: Use debouncer to avoid too many requests */
-
-  /* TODO: Filter the articles and advices by search value */
-
   /* Truncate the content of the card */
   const TruncateContent = styled.div`
     overflow: hidden;
@@ -112,7 +92,7 @@ export default function CategoryPage() {
         image="https://picsum.photos/seed/picsum/1024/900"
       />
       <Box sx={{ flexGrow: 1, marginY: 2, marginX: 0 }}>
-        <SearchBar />
+        <SearchBar list={allArticlesAndAdvices} keys={['title', 'content']} />
       </Box>
       <section>
         <Grid container spacing={2}>
