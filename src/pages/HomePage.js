@@ -85,9 +85,10 @@ export default function HomePage() {
           <Typography
             variant="h4"
             component="h2"
-            color="t-primary"
+            color="neutral.main"
             sx={{
               marginBottom: 2,
+              paddingBottom: 2,
               borderBottom: 1,
               borderColor: 'divider',
             }}
@@ -104,7 +105,14 @@ export default function HomePage() {
             }}
           >
             {inShortArticles.map((article) => (
-              <Grid item xs={4} key={article.id} flex={1}>
+              <Grid
+                item
+                xs={4}
+                key={article.id}
+                sx={{
+                  position: 'relative',
+                }}
+              >
                 <InShortArticles article={article} />
               </Grid>
             ))}
@@ -116,7 +124,11 @@ export default function HomePage() {
           <Typography variant="h4" component="h2">
             Articles récents
           </Typography>
-          <Link color="inherit" href="/">
+          <Link
+            color="inherit"
+            component={RouterLink}
+            to={`${config.basePath}/articles`}
+          >
             <Typography variant="body2" component="span">
               Voir tous les articles &nbsp;
             </Typography>
@@ -125,7 +137,7 @@ export default function HomePage() {
             </Typography>
           </Link>
         </Box>
-        <Grid container sx={{ paddingTop: 4 }}>
+        <Grid spacing={4} container sx={{ paddingTop: 4 }}>
           {recentArticles.map((article) => (
             <RecentArticles key={article.id} article={article} />
           ))}
@@ -135,11 +147,21 @@ export default function HomePage() {
         <Quizz />
       </Section>
       <section id="advices">
-        <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            marginTop: '2rem',
+          }}
+        >
           <Typography variant="h4" component="h2">
             Conseils récents
           </Typography>
-          <Link color="inherit" href="/">
+          <Link
+            color="inherit"
+            component={RouterLink}
+            to={`${config.basePath}/conseils`}
+          >
             <Typography variant="body2" component="span">
               Voir tous les conseils &nbsp;
             </Typography>
@@ -173,7 +195,11 @@ function FeaturedArticle({ article }) {
 
   return (
     <LargeCard>
-      <Chip label={category.name} variant="outlined" color="secondary" />
+      <Chip
+        label={category.name}
+        variant="outlined"
+        sx={{ backgroundColor: 'secondary', zIndex: 1 }}
+      />
       <CardHeader
         title={title}
         subheader={created_at}
@@ -183,7 +209,7 @@ function FeaturedArticle({ article }) {
       <CardContent sx={{ overflow: 'hidden', padding: 0 }}>
         <TruncateContent dangerouslySetInnerHTML={{ __html: content }} />
       </CardContent>
-      <CardActions>
+      <CardActions sx={{ display: 'flex', justifyContent: 'flex-end' }}>
         <Button
           color="secondary"
           size="small"
@@ -234,7 +260,7 @@ FeaturedArticle.defaultProps = {
 };
 
 function FeaturedArticles({ article }) {
-  const { title, picture, content, category } = article;
+  const { title, picture, content, category, slug } = article;
   const TruncateContent = styled.div`
     overflow: hidden;
     overflow-wrap: break-word;
@@ -244,15 +270,34 @@ function FeaturedArticles({ article }) {
     -webkit-box-orient: vertical;
     -webkit-hyphens: auto;
     hyphens: auto;
+    & p {
+      margin: 0;
+    }
   `;
 
   return (
     <MediumCard sx={{ border: 'none', boxShadow: 'none', marginBottom: 2 }}>
-      <CardActionArea>
+      <CardActionArea
+        LinkComponent={RouterLink}
+        to={`${config.basePath}/articles/${slug}`}
+      >
         <CardMedia component="img" height="200" image={picture} alt={title} />
-        <CardContent>
-          <Chip label={category.name} variant="outlined" color="secondary" />
-          <Typography gutterBottom variant="h6" component="div">
+        <Typography
+          sx={{
+            fontSize: '0.8rem',
+            color: 'secondary.light',
+            marginTop: '0.375rem',
+          }}
+        >
+          {category.name}
+        </Typography>
+        <CardContent sx={{ padding: '0' }}>
+          <Typography
+            gutterBottom
+            variant="h6"
+            component="div"
+            marginBottom={0}
+          >
             {title}
           </Typography>
           <TruncateContent dangerouslySetInnerHTML={{ __html: content }} />
@@ -270,6 +315,7 @@ FeaturedArticles.propTypes = {
     category: PropTypes.shape({
       name: PropTypes.string,
     }),
+    slug: PropTypes.string,
   }),
 };
 
@@ -281,11 +327,12 @@ FeaturedArticles.defaultProps = {
     category: {
       name: '',
     },
+    slug: '',
   },
 };
 
 function InShortArticles({ article }) {
-  const { title, content, category } = article;
+  const { title, content, category, slug } = article;
   const TruncateContent = styled.div`
     overflow: hidden;
     overflow-wrap: break-word;
@@ -297,29 +344,61 @@ function InShortArticles({ article }) {
     hyphens: auto;
   `;
   return (
-    <SmallCard
-      sx={{
-        border: 'none',
-        boxShadow: 'none',
-        marginBottom: 2,
-        flex: 1,
-        borderRadius: 2,
-        backgroundColor: 'secondary.light',
-        color: 'secondary.contrastText',
-      }}
-    >
-      <CardContent>
-        <Typography gutterBottom variant="h6" component="div">
-          {title}
-        </Typography>
-        <Chip label={category.name} variant="outlined" color="neutral" />
-        <TruncateContent dangerouslySetInnerHTML={{ __html: content }} />
-      </CardContent>
-      <CardActions>
-        <Button size="small">Partager</Button>
-        <Button size="small">En savoir plus</Button>
-      </CardActions>
-    </SmallCard>
+    <>
+      <Chip
+        label={category.name}
+        variant="outlined"
+        color="neutral"
+        sx={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          transform: 'translateX(50%)',
+          backgroundColor: 'secondary.light',
+          zIndex: 1,
+        }}
+      />
+      <SmallCard
+        sx={{
+          position: 'relative',
+          marginBottom: 2,
+          padding: '0.725rem',
+          borderRadius: 2,
+          border: '1px solid #fff',
+          backgroundColor: 'secondary.light',
+          color: 'secondary.contrastText',
+          boxShadow:
+            '0px 3px 1px -2px rgba(0,0,0,0.2), 0px 2px 2px 0px rgba(0,0,0,0.14), 0px 1px 5px 0px rgba(0,0,0,0.12)',
+        }}
+      >
+        <CardContent sx={{ minHeight: 200 }}>
+          <Typography gutterBottom variant="h6" component="div">
+            {title}
+          </Typography>
+          <TruncateContent dangerouslySetInnerHTML={{ __html: content }} />
+        </CardContent>
+        <CardActions sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+          <Button
+            color="secondary"
+            size="small"
+            variant="contained"
+            endIcon={<SendIcon />}
+            sx={{ marginRight: 2 }}
+          >
+            Partager
+          </Button>
+          <Button
+            component={RouterLink}
+            to={`${config.basePath}/articles/${slug}`}
+            color="primary"
+            size="small"
+            variant="contained"
+          >
+            En savoir plus
+          </Button>
+        </CardActions>
+      </SmallCard>
+    </>
   );
 }
 
@@ -330,6 +409,7 @@ InShortArticles.propTypes = {
     category: PropTypes.shape({
       name: PropTypes.string,
     }),
+    slug: PropTypes.string,
   }),
 };
 
@@ -340,39 +420,53 @@ InShortArticles.defaultProps = {
     category: {
       name: '',
     },
+    slug: '',
   },
 };
 
 function RecentArticles({ article }) {
-  const { title, picture, content, category } = article;
+  const { title, picture, content, category, slug } = article;
   const TruncateContent = styled.div`
     overflow: hidden;
     overflow-wrap: break-word;
     text-overflow: ellipsis;
     display: -webkit-box;
-    -webkit-line-clamp: 5;
+    -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     -webkit-hyphens: auto;
     hyphens: auto;
+    & p {
+      margin: 0;
+    }
   `;
 
   return (
-    <Grid
-      item
-      xs={3}
-      sx={{
-        paddingRight: 2,
-        paddingBottom: 3,
-      }}
-    >
-      <MediumCard>
+    <Grid item xs={3}>
+      <MediumCard sx={{ border: 'none', boxShadow: 'none', marginBottom: 2 }}>
         <CardMedia component="img" height="200" image={picture} alt={title} />
-        <CardActionArea>
-          <CardContent>
-            <Chip label={category.name} variant="outlined" color="secondary" />
-            <Typography gutterBottom variant="h6" component="div">
+        <CardActionArea
+          LinkComponent={RouterLink}
+          to={`${config.basePath}/articles/${slug}`}
+        >
+          <Typography
+            sx={{
+              fontSize: '0.8rem',
+              color: 'secondary.light',
+              marginTop: '0.375rem',
+            }}
+          >
+            {category.name}
+          </Typography>
+          <CardContent sx={{ padding: '0' }}>
+            <Typography
+              gutterBottom
+              variant="h6"
+              component="div"
+              marginBottom={0}
+            >
               {title}
             </Typography>
+
             <TruncateContent dangerouslySetInnerHTML={{ __html: content }} />
           </CardContent>
         </CardActionArea>
@@ -389,6 +483,7 @@ RecentArticles.propTypes = {
     category: PropTypes.shape({
       name: PropTypes.string,
     }),
+    slug: PropTypes.string,
   }),
 };
 
@@ -400,11 +495,12 @@ RecentArticles.defaultProps = {
     category: {
       name: '',
     },
+    slug: '',
   },
 };
 
 function RecentAdvices({ advice }) {
-  const { title, content, category } = advice;
+  const { title, content, category, slug } = advice;
   const TruncateContent = styled.div`
     overflow: hidden;
     overflow-wrap: break-word;
@@ -418,17 +514,48 @@ function RecentAdvices({ advice }) {
 
   return (
     <Grid item xs={3} sx={{ paddingRight: 2, paddingBottom: 3 }}>
-      <SmallCard sx={{ border: 'none', boxShadow: 'none', marginBottom: 2 }}>
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="div">
-            {title}
-          </Typography>
-          <Chip label={category.name} variant="outlined" color="secondary" />
+      <SmallCard
+        sx={{
+          border: 'none',
+          boxShadow:
+            '0px 3px 1px -2px rgba(0,0,0,0.2), 0px 2px 2px 0px rgba(0,0,0,0.14), 0px 1px 5px 0px rgba(0,0,0,0.12)',
+          marginBottom: 2,
+        }}
+      >
+        <CardContent
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-between',
+            minHeight: 300,
+          }}
+        >
+          <Box>
+            <Typography gutterBottom variant="h5" component="div">
+              {title}
+            </Typography>
+            <Typography
+              sx={{
+                fontSize: '0.8rem',
+                color: 'secondary.light',
+                marginTop: '0.375rem',
+              }}
+            >
+              {category.name}
+            </Typography>
+          </Box>
           <TruncateContent dangerouslySetInnerHTML={{ __html: content }} />
         </CardContent>
-        <CardActions>
-          <Button size="small">Partager</Button>
-          <Button size="small">En savoir plus</Button>
+        <CardActions sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+          <Button
+            component={RouterLink}
+            to={`${config.basePath}/conseils/${slug}`}
+            color="primary"
+            size="small"
+            variant="contained"
+          >
+            En savoir plus
+          </Button>
         </CardActions>
       </SmallCard>
     </Grid>
@@ -442,6 +569,7 @@ RecentAdvices.propTypes = {
     category: PropTypes.shape({
       name: PropTypes.string,
     }),
+    slug: PropTypes.string,
   }),
 };
 
@@ -452,5 +580,6 @@ RecentAdvices.defaultProps = {
     category: {
       name: '',
     },
+    slug: '',
   },
 };
