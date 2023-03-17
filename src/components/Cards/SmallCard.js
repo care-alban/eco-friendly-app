@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Card from '@mui/material/Card';
 
 export default function SmallCard({ sx, children }) {
-  return <Card sx={sx}>{children}</Card>;
+  return <Card sx={{ ...sx, backgroundColor: 'transparent' }}>{children}</Card>;
 }
 
 SmallCard.propTypes = {

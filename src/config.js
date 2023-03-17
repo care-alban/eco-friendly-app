@@ -16,7 +16,7 @@ export default {
       contrastText: '#fff',
     },
     neutral: {
-      main: '#f5f5f5',
+      main: '#faf6f6;',
       contrastText: '#000',
     },
     common: {
