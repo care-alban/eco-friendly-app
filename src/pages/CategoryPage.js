@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
+import { Link as RouterLink, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
 import styled from '@emotion/styled';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
@@ -18,6 +18,8 @@ import { getArticles } from '../actions/articlesActions';
 import { getAdvices } from '../actions/advicesActions';
 import { searchBarOnChange } from '../actions/commonActions';
 import { randomlyMixSeveralArrays } from '../utils/index';
+
+import config from '../config';
 
 export default function CategoryPage() {
   const dispatch = useDispatch();
@@ -104,35 +106,38 @@ export default function CategoryPage() {
                   boxShadow: 'rgba(149, 157, 165, 0.2) 0px 8px 24px',
                 }}
               >
-                {item.picture ? (
-                  <CardMedia
-                    component="img"
-                    height="200"
-                    image={item.picture}
-                    alt={item.title}
-                  />
-                ) : (
-                  <CardMedia
-                    height="200"
-                    sx={{
-                      display: 'flex',
-                      flexDirection: 'column',
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      minHeight: 200,
-                    }}
-                  >
-                    <GroupsIcon
-                      sx={{
-                        fontSize: 72,
-                      }}
+                <CardActionArea
+                  LinkComponent={RouterLink}
+                  to={`${config.basePath}/articles/${item.slug}`}
+                >
+                  {item.picture ? (
+                    <CardMedia
+                      component="img"
+                      height="200"
+                      image={item.picture}
+                      alt={item.title}
                     />
-                    <Typography variant="h6" component="h6" marginTop="-1rem">
-                      {item.contributor.nickname}
-                    </Typography>
-                  </CardMedia>
-                )}
-                <CardActionArea>
+                  ) : (
+                    <CardMedia
+                      height="200"
+                      sx={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        minHeight: 200,
+                      }}
+                    >
+                      <GroupsIcon
+                        sx={{
+                          fontSize: 72,
+                        }}
+                      />
+                      <Typography variant="h6" component="h6" marginTop="-1rem">
+                        {item.contributor.nickname}
+                      </Typography>
+                    </CardMedia>
+                  )}
                   <CardContent
                     sx={{
                       display: 'flex',
