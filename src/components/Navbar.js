@@ -82,7 +82,16 @@ export default function Navbar() {
               Eco-Friendly
             </Typography>
           </Box>
-          {user ? <UserMenu /> : <Button color="inherit">Login</Button>}
+          {user ? (
+            <UserMenu />
+          ) : (
+            <Button color="inherit" size="small" sx={{ marginRight: '1rem' }}>
+              S'identifier
+            </Button>
+          )}
+          <Button color="inherit" size="small" variant="outlined">
+            S'inscrire
+          </Button>
         </Toolbar>
       </Container>
       <AppMenu categories={categories} />
