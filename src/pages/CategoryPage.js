@@ -19,8 +19,6 @@ import { getAdvices } from '../actions/advicesActions';
 import { searchBarOnChange } from '../actions/commonActions';
 import { randomlyMixSeveralArrays } from '../utils/index';
 
-import config from '../config';
-
 export default function CategoryPage() {
   const dispatch = useDispatch();
   const { name } = useParams();
@@ -108,7 +106,7 @@ export default function CategoryPage() {
               >
                 <CardActionArea
                   LinkComponent={RouterLink}
-                  to={`${config.basePath}/articles/${item.slug}`}
+                  to={`/articles/${item.slug}`}
                 >
                   {item.picture ? (
                     <CardMedia

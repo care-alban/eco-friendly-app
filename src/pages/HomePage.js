@@ -25,8 +25,6 @@ import MediumCard from '../components/Cards/MediumCard';
 import SmallCard from '../components/Cards/SmallCard';
 import Loader from '../components/Loader';
 
-import config from '../config';
-
 export default function HomePage() {
   const articles = useSelector((state) => state.articles.list);
   const featuredArticle = articles[0];
@@ -124,11 +122,7 @@ export default function HomePage() {
           <Typography variant="h4" component="h2">
             Articles récents
           </Typography>
-          <Link
-            color="inherit"
-            component={RouterLink}
-            to={`${config.basePath}/articles`}
-          >
+          <Link color="inherit" component={RouterLink} to="/articles">
             <Typography variant="body2" component="span">
               Voir tous les articles &nbsp;
             </Typography>
@@ -157,11 +151,7 @@ export default function HomePage() {
           <Typography variant="h4" component="h2">
             Conseils récents
           </Typography>
-          <Link
-            color="inherit"
-            component={RouterLink}
-            to={`${config.basePath}/conseils`}
-          >
+          <Link color="inherit" component={RouterLink} to="/conseils">
             <Typography variant="body2" component="span">
               Voir tous les conseils &nbsp;
             </Typography>
@@ -221,7 +211,7 @@ function FeaturedArticle({ article }) {
         </Button>
         <Button
           component={RouterLink}
-          to={`${config.basePath}/articles/${slug}`}
+          to={`/articles/${slug}`}
           color="secondary"
           size="small"
           variant="outlined"
@@ -277,10 +267,7 @@ function FeaturedArticles({ article }) {
 
   return (
     <MediumCard sx={{ border: 'none', boxShadow: 'none', marginBottom: 2 }}>
-      <CardActionArea
-        LinkComponent={RouterLink}
-        to={`${config.basePath}/articles/${slug}`}
-      >
+      <CardActionArea LinkComponent={RouterLink} to={`/articles/${slug}`}>
         <CardMedia component="img" height="200" image={picture} alt={title} />
         <Typography
           sx={{
@@ -389,7 +376,7 @@ function InShortArticles({ article }) {
           </Button>
           <Button
             component={RouterLink}
-            to={`${config.basePath}/articles/${slug}`}
+            to={`/articles/${slug}`}
             color="primary"
             size="small"
             variant="contained"
@@ -444,10 +431,7 @@ function RecentArticles({ article }) {
     <Grid item xs={3}>
       <MediumCard sx={{ border: 'none', boxShadow: 'none', marginBottom: 2 }}>
         <CardMedia component="img" height="200" image={picture} alt={title} />
-        <CardActionArea
-          LinkComponent={RouterLink}
-          to={`${config.basePath}/articles/${slug}`}
-        >
+        <CardActionArea LinkComponent={RouterLink} to={`/articles/${slug}`}>
           <Typography
             sx={{
               fontSize: '0.8rem',
@@ -549,7 +533,7 @@ function RecentAdvices({ advice }) {
         <CardActions sx={{ display: 'flex', justifyContent: 'flex-end' }}>
           <Button
             component={RouterLink}
-            to={`${config.basePath}/conseils/${slug}`}
+            to={`/conseils/${slug}`}
             color="primary"
             size="small"
             variant="contained"

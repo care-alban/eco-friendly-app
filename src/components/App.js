@@ -9,8 +9,6 @@ import ArticlePage from '../pages/ArticlePage';
 import { getArticles } from '../actions/articlesActions';
 import { getAdvices } from '../actions/advicesActions';
 
-import config from '../config';
-
 function App() {
   const dispatch = useDispatch();
   const articles = useSelector((state) => state.articles.list);
@@ -29,15 +27,9 @@ function App() {
   return (
     <Routes>
       <Route>
-        <Route path={`${config.basePath}`} element={<HomePage />} />
-        <Route
-          path={`${config.basePath}/categories/:name`}
-          element={<CategoryPage />}
-        />
-        <Route
-          path={`${config.basePath}/articles/:slug`}
-          element={<ArticlePage />}
-        />
+        <Route path="/" element={<HomePage />} />
+        <Route path="/categories/:name" element={<CategoryPage />} />
+        <Route path="/articles/:slug" element={<ArticlePage />} />
       </Route>
     </Routes>
   );

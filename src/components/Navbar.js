@@ -18,8 +18,6 @@ import Avatar from '@mui/material/Avatar';
 
 import { getAllCategories } from '../actions/commonActions';
 
-import config from '../config';
-
 // const pages = ['Maison', 'Santé', 'Bien-être', 'Alimentation'];
 
 export default function Navbar() {
@@ -42,7 +40,7 @@ export default function Navbar() {
             variant="h6"
             noWrap
             component="a"
-            href={`${config.basePath}`}
+            href="/"
             sx={{
               mr: 2,
               display: { xs: 'none', md: 'flex' },
@@ -129,19 +127,14 @@ function AppMenu({ categories }) {
         backgroundColor: 'white',
       }}
     >
-      <Link
-        component={RouterLink}
-        to={`${config.basePath}`}
-        color="inherit"
-        sx={link}
-      >
+      <Link component={RouterLink} to="/" color="inherit" sx={link}>
         Actualité
       </Link>
       {categories.map((category) => (
         <Link
           key={category.id}
           component={RouterLink}
-          to={`${config.basePath}/categories/${category.slug}`}
+          to={`/categories/${category.slug}`}
           color="inherit"
           sx={link}
         >

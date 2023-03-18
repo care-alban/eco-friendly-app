@@ -19,8 +19,6 @@ import MediumCard from '../components/Cards/MediumCard';
 import Layout from '../components/Layout';
 import Loader from '../components/Loader';
 
-import config from '../config';
-
 export default function ArticlePage() {
   const { slug } = useParams();
   const articles = useSelector((state) => state.articles.list);
@@ -57,7 +55,7 @@ export default function ArticlePage() {
           >
             <Link
               component={RouterLink}
-              to={`${config.basePath}`}
+              to="/"
               underline="hover"
               color="inherit"
               href="/"
@@ -66,7 +64,7 @@ export default function ArticlePage() {
             </Link>
             <Link
               component={RouterLink}
-              to={`${config.basePath}/articles`}
+              to="/articles"
               underline="hover"
               color="inherit"
               href="/material-ui/getting-started/installation/"
