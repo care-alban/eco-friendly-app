@@ -84,11 +84,23 @@ export default function Navbar() {
             {user ? (
               <UserMenu />
             ) : (
-              <Button color="inherit" size="small" sx={{ marginRight: '1rem' }}>
+              <Button
+                component={RouterLink}
+                to="/connexion"
+                color="inherit"
+                size="small"
+                sx={{ marginRight: '1rem' }}
+              >
                 S'identifier
               </Button>
             )}
-            <Button color="inherit" size="small" variant="outlined">
+            <Button
+              component={RouterLink}
+              to="/inscription"
+              color="inherit"
+              size="small"
+              variant="outlined"
+            >
               S'inscrire
             </Button>
           </Box>
@@ -194,11 +206,27 @@ function MobileNav({ categories, user }) {
         }}
       >
         <MenuItem onClick={handleCloseNavMenu}>
-          <Typography textAlign="center">Actualité</Typography>
+          <Link
+            component={RouterLink}
+            to="/"
+            textAlign="center"
+            sx={{ textDecoration: 'none' }}
+            color="inherit"
+          >
+            Actualité
+          </Link>
         </MenuItem>
         {categories.map((category) => (
           <MenuItem key={category.id} onClick={handleCloseNavMenu}>
-            <Typography textAlign="center">{category.name}</Typography>
+            <Link
+              component={RouterLink}
+              to={`/categories/${category.slug}`}
+              textAlign="center"
+              sx={{ textDecoration: 'none' }}
+              color="inherit"
+            >
+              {category.name}
+            </Link>
           </MenuItem>
         ))}
         <Box
@@ -212,10 +240,26 @@ function MobileNav({ categories, user }) {
           ) : (
             <>
               <MenuItem onClick={handleCloseNavMenu}>
-                <Typography textAlign="center">S'identifier</Typography>
+                <Link
+                  component={RouterLink}
+                  to="/connexion"
+                  textAlign="center"
+                  sx={{ textDecoration: 'none' }}
+                  color="inherit"
+                >
+                  S'identifier
+                </Link>
               </MenuItem>
               <MenuItem onClick={handleCloseNavMenu}>
-                <Typography textAlign="center">S'inscrire</Typography>
+                <Link
+                  component={RouterLink}
+                  to="/inscription"
+                  textAlign="center"
+                  sx={{ textDecoration: 'none' }}
+                  color="inherit"
+                >
+                  S'inscrire
+                </Link>
               </MenuItem>
             </>
           )}
