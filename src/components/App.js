@@ -5,6 +5,8 @@ import { Routes, Route } from 'react-router-dom';
 import HomePage from '../pages/HomePage';
 import CategoryPage from '../pages/CategoryPage';
 import ArticlePage from '../pages/ArticlePage';
+import SignInPage from '../pages/SignInPage';
+import SignUpPage from '../pages/SignUpPage';
 
 import { getArticles } from '../actions/articlesActions';
 import { getAdvices } from '../actions/advicesActions';
@@ -30,6 +32,8 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/categories/:name" element={<CategoryPage />} />
         <Route path="/articles/:slug" element={<ArticlePage />} />
+        <Route path="/connexion" element={<SignInPage />} />
+        <Route path="/inscription" element={<SignUpPage />} />
       </Route>
     </Routes>
   );
