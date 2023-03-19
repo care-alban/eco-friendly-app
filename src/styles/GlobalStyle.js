@@ -22,6 +22,9 @@ const GlobalStyle = createGlobalStyle`
         padding: 0;
         overflow-x: hidden;
         min-width: 380px;
+    }
+
+    #root {
         background-color: var(--color-neutral-main);
     }
 
