@@ -1,4 +1,6 @@
-import { Link as RouterLink } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate, Link as RouterLink } from 'react-router-dom';
 import {
   Box,
   Grid,
@@ -14,16 +16,41 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import Layout from '../components/Layout';
 
+import { onInputChange, onSignIn } from '../actions/userActions';
+
+const paperStyle = {
+  padding: '2rem',
+  height: '100%',
+  width: '340px',
+  margin: '1.4rem auto',
+};
+const TextFieldStyle = { margin: '0.5rem 0' };
+const btnstyle = { margin: '1rem 0' };
+const linkStyle = { textDecoration: 'none' };
+
 export default function SignInPage() {
-  const paperStyle = {
-    padding: '2rem',
-    height: '100%',
-    width: '340px',
-    margin: '1.4rem auto',
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const email = useSelector((state) => state.user.email);
+  const password = useSelector((state) => state.user.password);
+  const isLogged = useSelector((state) => state.user.isLogged);
+
+  /* link field to state */
+  const changeField = (e) => {
+    dispatch(onInputChange(e.target.value, e.target.name));
   };
-  const TextFieldStyle = { margin: '0.5rem 0' };
-  const btnstyle = { margin: '1rem 0' };
-  const linkStyle = { textDecoration: 'none' };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    dispatch(onSignIn(email, password));
+  };
+
+  useEffect(() => {
+    if (isLogged) {
+      navigate('/');
+    }
+  }, [isLogged]);
+
   return (
     <Layout>
       <Box sx={{ flexGrow: 1 }}>
@@ -34,35 +61,44 @@ export default function SignInPage() {
           <h2>Connexion</h2>
         </Grid>
         <Paper elevation={10} sx={paperStyle}>
-          <TextField
-            label="email"
-            placeholder="Email"
-            variant="outlined"
-            fullWidth
-            required
-            sx={TextFieldStyle}
-          />
-          <TextField
-            label="Password"
-            placeholder="Mot de passe"
-            type="password"
-            variant="outlined"
-            fullWidth
-            required
-          />
-          <FormControlLabel
-            control={<Checkbox name="checkedB" color="primary" />}
-            label="Se souvenir de moi"
-          />
-          <Button
-            type="submit"
-            color="primary"
-            variant="contained"
-            sx={btnstyle}
-            fullWidth
-          >
-            S'identifier
-          </Button>
+          <form noValidate autoComplete="off" onSubmit={handleSubmit}>
+            <TextField
+              name="email"
+              onChange={changeField}
+              value={email}
+              type="email"
+              label="email"
+              placeholder="Email"
+              variant="outlined"
+              fullWidth
+              required
+              sx={TextFieldStyle}
+            />
+            <TextField
+              name="password"
+              onChange={changeField}
+              value={password}
+              type="password"
+              label="Mot de passe"
+              placeholder="Mot de passe"
+              variant="outlined"
+              fullWidth
+              required
+            />
+            <FormControlLabel
+              control={<Checkbox name="checkedB" color="primary" />}
+              label="Se souvenir de moi"
+            />
+            <Button
+              type="submit"
+              color="primary"
+              variant="contained"
+              sx={btnstyle}
+              fullWidth
+            >
+              S'identifier
+            </Button>
+          </form>
           <Typography
             variant="subtitle2"
             component="p"
