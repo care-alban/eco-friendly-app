@@ -37,12 +37,10 @@ Layout.propTypes = {
 
 const Main = styled.main`
   --navbar-height: 4rem;
-  --footer-height: 1.25rem;
+  --footer-height: 1rem;
 
-  --margin: calc(2rem + var(--navbar-height)) auto var(--footer-height);
-
-  margin: var(--margin);
-  min-height: calc(100vh - var(--navbar-height) - var(--footer-height));
+  padding-top: calc(2rem + var(--navbar-height));
+  min-height: calc(100vh - var(--navbar-height) - var(--footer-height) + 2rem);
 
   @media screen and (min-width: 900px) {
     --navbar-height: 8.625rem;
