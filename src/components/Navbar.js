@@ -53,7 +53,7 @@ export default function Navbar() {
           >
             Eco-Friendly
           </Typography>
-          <MobileNav categories={categories} />
+          <MobileNav categories={categories} user={user} />
           <Box
             sx={{
               flexGrow: 1,
@@ -80,16 +80,18 @@ export default function Navbar() {
               Eco-Friendly
             </Typography>
           </Box>
-          {user ? (
-            <UserMenu />
-          ) : (
-            <Button color="inherit" size="small" sx={{ marginRight: '1rem' }}>
-              S'identifier
+          <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+            {user ? (
+              <UserMenu />
+            ) : (
+              <Button color="inherit" size="small" sx={{ marginRight: '1rem' }}>
+                S'identifier
+              </Button>
+            )}
+            <Button color="inherit" size="small" variant="outlined">
+              S'inscrire
             </Button>
-          )}
-          <Button color="inherit" size="small" variant="outlined">
-            S'inscrire
-          </Button>
+          </Box>
         </Toolbar>
       </Container>
       <AppMenu categories={categories} />
@@ -97,6 +99,7 @@ export default function Navbar() {
   );
 }
 
+/* desktop menu */
 function AppMenu({ categories }) {
   const link = {
     mr: 3,
@@ -149,7 +152,7 @@ AppMenu.propTypes = {
   categories: PropTypes.array.isRequired,
 };
 
-function MobileNav({ categories }) {
+function MobileNav({ categories, user }) {
   const [anchorElNav, setAnchorElNav] = useState(null);
 
   const handleOpenNavMenu = (event) => {
@@ -198,6 +201,25 @@ function MobileNav({ categories }) {
             <Typography textAlign="center">{category.name}</Typography>
           </MenuItem>
         ))}
+        <Box
+          sx={{
+            display: { xs: 'flex', md: 'none' },
+            flexDirection: 'column',
+          }}
+        >
+          {user ? (
+            <UserMenu />
+          ) : (
+            <>
+              <MenuItem onClick={handleCloseNavMenu}>
+                <Typography textAlign="center">S'identifier</Typography>
+              </MenuItem>
+              <MenuItem onClick={handleCloseNavMenu}>
+                <Typography textAlign="center">S'inscrire</Typography>
+              </MenuItem>
+            </>
+          )}
+        </Box>
       </Menu>
     </Box>
   );
@@ -205,6 +227,11 @@ function MobileNav({ categories }) {
 
 MobileNav.propTypes = {
   categories: PropTypes.array.isRequired,
+  user: PropTypes.object,
+};
+
+MobileNav.defaultProps = {
+  user: null,
 };
 
 function UserMenu() {

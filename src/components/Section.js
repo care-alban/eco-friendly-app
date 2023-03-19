@@ -23,6 +23,7 @@ Section.defaultProps = {
 
 const SectionSlyte = styled.section`
   margin-bottom: 2rem;
+  padding: 2rem 0;
 
   &:has(:last-child) {
     margin-bottom: 0;
@@ -30,7 +31,6 @@ const SectionSlyte = styled.section`
 
   &:not(:first-child) {
     border-top: 1px solid var(--color-divider);
-    padding-top: 2rem;
   }
 
   &[id='short-articles'] {
@@ -43,8 +43,16 @@ const SectionSlyte = styled.section`
 
   &[id='short-articles'],
   &[id='quizz'] {
-    padding: 2rem;
     min-width: 100vw;
     margin-left: calc((100vw - 100%) / -2);
+  }
+
+  @media screen and (min-width: 768px) {
+    &[id='short-articles'],
+    &[id='quizz'] {
+      padding: 2rem;
+      min-width: 100vw;
+      margin-left: calc((100vw - 100%) / -2);
+    }
   }
 `;

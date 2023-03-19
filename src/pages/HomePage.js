@@ -44,26 +44,35 @@ export default function HomePage() {
   return (
     <Layout>
       <Section id="featured-articles">
-        <Typography variant="h4" component="h2" color="t-primary">
+        <Typography variant="h4" component="h2" color="inherit">
           A la une
         </Typography>
         <Grid container sx={{ paddingY: 4 }}>
-          <Grid item xs={8} sx={{ paddingRight: 12 }}>
+          <Grid
+            item
+            xs={12}
+            md={8}
+            sx={{
+              paddingRight: { xs: 0, md: 6, lg: 8 },
+              marginBottom: { xs: 4, md: 0 },
+            }}
+          >
             <FeaturedArticle article={featuredArticle} />
           </Grid>
           <Grid
             item
-            xs={4}
+            xs={12}
+            md={4}
             sx={{
-              borderLeft: 1,
-              borderColor: 'divider',
-              paddingX: 12,
+              paddingLeft: { xs: 0, md: 6, lg: 8 },
+              borderLeft: { xs: 'none', md: 1 },
+              borderColor: { xs: 'none', md: 'divider' },
             }}
           >
             <Typography
               variant="h4"
               component="h2"
-              color="t-primary"
+              color="inherit"
               sx={{
                 marginBottom: 4,
                 borderBottom: 1,
@@ -72,9 +81,17 @@ export default function HomePage() {
             >
               en vedette
             </Typography>
-            {featuredArticles.map((article) => (
-              <FeaturedArticles key={article.id} article={article} />
-            ))}
+            <Box
+              sx={{
+                display: 'flex',
+                flexDirection: { xs: 'column', sm: 'row', md: 'column' },
+                justifyContent: 'space-between',
+              }}
+            >
+              {featuredArticles.map((article) => (
+                <FeaturedArticles key={article.id} article={article} />
+              ))}
+            </Box>
           </Grid>
         </Grid>
       </Section>
@@ -97,7 +114,7 @@ export default function HomePage() {
             container
             spacing={2}
             sx={{
-              dispalay: 'flex',
+              display: 'flex',
               justifyContent: 'space-between',
               paddingTop: 4,
             }}
@@ -105,7 +122,8 @@ export default function HomePage() {
             {inShortArticles.map((article) => (
               <Grid
                 item
-                xs={4}
+                xs={12}
+                md={4}
                 key={article.id}
                 sx={{
                   position: 'relative',
@@ -131,7 +149,7 @@ export default function HomePage() {
             </Typography>
           </Link>
         </Box>
-        <Grid spacing={4} container sx={{ paddingTop: 4 }}>
+        <Grid container spacing={2} sx={{ paddingTop: 4 }}>
           {recentArticles.map((article) => (
             <RecentArticles key={article.id} article={article} />
           ))}
@@ -160,7 +178,7 @@ export default function HomePage() {
             </Typography>
           </Link>
         </Box>
-        <Grid container sx={{ paddingTop: 4 }}>
+        <Grid container spacing={2} sx={{ paddingTop: 4 }}>
           {advices.map((advice) => (
             <RecentAdvices key={advice.id} advice={advice} />
           ))}
@@ -184,22 +202,43 @@ function FeaturedArticle({ article }) {
   `;
 
   return (
-    <LargeCard>
+    <LargeCard
+      sx={{
+        border: 'none',
+        boxShadow: 'none',
+      }}
+    >
       <Chip
         label={category.name}
         variant="outlined"
-        sx={{ backgroundColor: 'secondary', zIndex: 1 }}
+        sx={{
+          backgroundColor: 'secondary.light',
+          color: 'white',
+          borderColor: 'secondary.light',
+        }}
       />
       <CardHeader
         title={title}
         subheader={created_at}
         sx={{ paddingY: 4, paddingX: 0 }}
       />
-      <CardMedia component="img" height="400" image={picture} alt={title} />
+      <CardMedia
+        component="img"
+        height="400"
+        image={picture}
+        alt={title}
+        sx={{ borderRadius: '0.375rem' }}
+      />
       <CardContent sx={{ overflow: 'hidden', padding: 0 }}>
         <TruncateContent dangerouslySetInnerHTML={{ __html: content }} />
       </CardContent>
-      <CardActions sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+      <CardActions
+        sx={{
+          display: 'flex',
+          marginTop: 2,
+          justifyContent: { xs: 'center', md: 'flex-end' },
+        }}
+      >
         <Button
           color="secondary"
           size="small"
@@ -266,7 +305,20 @@ function FeaturedArticles({ article }) {
   `;
 
   return (
-    <MediumCard sx={{ border: 'none', boxShadow: 'none', marginBottom: 2 }}>
+    <MediumCard
+      sx={{
+        border: 'none',
+        boxShadow: 'none',
+        marginBottom: 2,
+        maxWidth: { xs: '100%', sm: '50%', md: '100%' },
+        '&:fisrt-child': {
+          marginRight: { xs: 0, sm: 2, md: 0 },
+        },
+        '&:last-child': {
+          marginLeft: { xs: 0, sm: 2, md: 0 },
+        },
+      }}
+    >
       <CardActionArea LinkComponent={RouterLink} to={`/articles/${slug}`}>
         <CardMedia component="img" height="200" image={picture} alt={title} />
         <Typography
@@ -358,7 +410,14 @@ function InShortArticles({ article }) {
             '0px 3px 1px -2px rgba(0,0,0,0.2), 0px 2px 2px 0px rgba(0,0,0,0.14), 0px 1px 5px 0px rgba(0,0,0,0.12)',
         }}
       >
-        <CardContent sx={{ minHeight: 200 }}>
+        <CardContent
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-between',
+            minHeight: { xs: 200, md: 230 },
+          }}
+        >
           <Typography gutterBottom variant="h6" component="div">
             {title}
           </Typography>
@@ -370,7 +429,10 @@ function InShortArticles({ article }) {
             size="small"
             variant="contained"
             endIcon={<SendIcon />}
-            sx={{ marginRight: 2 }}
+            sx={{
+              marginRight: 2,
+              '@media (max-width: 1024px)': { display: 'none' },
+            }}
           >
             Partager
           </Button>
@@ -428,10 +490,10 @@ function RecentArticles({ article }) {
   `;
 
   return (
-    <Grid item xs={3}>
+    <Grid item xs={12} sm={6} md={3}>
       <MediumCard sx={{ border: 'none', boxShadow: 'none', marginBottom: 2 }}>
-        <CardMedia component="img" height="200" image={picture} alt={title} />
         <CardActionArea LinkComponent={RouterLink} to={`/articles/${slug}`}>
+          <CardMedia component="img" height="200" image={picture} alt={title} />
           <Typography
             sx={{
               fontSize: '0.8rem',
@@ -490,14 +552,14 @@ function RecentAdvices({ advice }) {
     overflow-wrap: break-word;
     text-overflow: ellipsis;
     display: -webkit-box;
-    -webkit-line-clamp: 5;
+    -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     -webkit-hyphens: auto;
     hyphens: auto;
   `;
 
   return (
-    <Grid item xs={3} sx={{ paddingRight: 2, paddingBottom: 3 }}>
+    <Grid item xs={12} sm={6} md={4} lg={3}>
       <SmallCard
         sx={{
           border: 'none',
@@ -511,7 +573,8 @@ function RecentAdvices({ advice }) {
             display: 'flex',
             flexDirection: 'column',
             justifyContent: 'space-between',
-            minHeight: 300,
+            minHeight: 260,
+            padding: '2rem 2rem 0',
           }}
         >
           <Box>
@@ -530,7 +593,13 @@ function RecentAdvices({ advice }) {
           </Box>
           <TruncateContent dangerouslySetInnerHTML={{ __html: content }} />
         </CardContent>
-        <CardActions sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+        <CardActions
+          sx={{
+            display: 'flex',
+            justifyContent: 'flex-end',
+            padding: '2rem',
+          }}
+        >
           <Button
             component={RouterLink}
             to={`/conseils/${slug}`}
