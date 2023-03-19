@@ -3,14 +3,14 @@ import { composeWithDevTools } from '@redux-devtools/extension';
 
 import reducer from '../reducers';
 
-// import userMiddleware from '../middlewares/userMiddleware';
+import userMiddleware from '../middlewares/userMiddleware';
 import advicesMiddleware from '../middlewares/advicesMiddleware';
 import articlesMiddleware from '../middlewares/articlesMiddleware';
 import commonMiddleware from '../middlewares/commonMiddleware';
 
 const enhancers = composeWithDevTools(
   applyMiddleware(
-    // userMiddleware,
+    userMiddleware,
     advicesMiddleware,
     articlesMiddleware,
     commonMiddleware,
