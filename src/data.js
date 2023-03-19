@@ -1,4 +1,28 @@
 export default {
+  user: {
+    id: 3,
+    email: 'user@user.com',
+    roles: ['ROLE_USER'],
+    firstname: 'Jeff',
+    lastname: 'Lebowski',
+    nickname: 'El_Dude',
+    avatar:
+      'https://back-apotheose.eco-friendly.fr/assets/img/avatars/ours.png',
+    is_active: true,
+    is_verified: true,
+    created_at: {
+      date: '2023-03-11 17:52:55.000000',
+      timezone_type: 3,
+      timezone: 'UTC',
+    },
+    updated_at: {
+      date: '2023-03-19 18:59:16.000000',
+      timezone_type: 3,
+      timezone: 'UTC',
+    },
+  },
+  token:
+    'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE2NzkyNjA3NzIsImV4cCI6MTY3OTI2NDM3Miwicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJuYW1lIjoidXNlckB1c2VyLmNvbSJ9.ZEmbnRw8WYJvpfNPoESZEe7q5O5tfvYz6ZLT2HCavNFjSqGaaZNRYoK4mySKyrpIdvp_phb4OkTHzvGzmOmlavl0u4H8DChTzj4c1E_Sa3KX4qyTzEKrVBmui_TRypmJXbUuQUI_ZtxBiBHGPSVuPszovFzB0xZ8k3wJluyFAbLxwC-sc5FB1UipbKWoh3RA5GBRtAldu8-qNurhC0JDe3cj_c8qqNebVsoK5HyO7YmjHYhDrF5Dsx4VA-3SQaZnMhoZMac0Tp001Uhewgha2t8fd9oZvvkRU8NgN06JSkhCIYisxK1sd3Ds4tTQK2Me88Hm8JL9afJJEmMr0N88pw',
   categories: [
     {
       id: 1,
