@@ -7,6 +7,9 @@ import CategoryPage from '../pages/CategoryPage';
 import ArticlePage from '../pages/ArticlePage';
 import SignInPage from '../pages/SignInPage';
 import SignUpPage from '../pages/SignUpPage';
+import RegistrationPage from '../pages/RegistrationPage';
+import ValidationPage from '../pages/ValidationPage';
+import NotFoundPage from '../pages/NotFoundPage';
 
 import { getArticles } from '../actions/articlesActions';
 import { getAdvices } from '../actions/advicesActions';
@@ -34,6 +37,9 @@ function App() {
         <Route path="/articles/:slug" element={<ArticlePage />} />
         <Route path="/connexion" element={<SignInPage />} />
         <Route path="/inscription" element={<SignUpPage />} />
+        <Route path="/enregistrement" element={<RegistrationPage />} />
+        <Route path="/validation" element={<ValidationPage />} />
+        <Route path="*" element={<NotFoundPage />} />
       </Route>
     </Routes>
   );
