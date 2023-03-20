@@ -1,6 +1,5 @@
-import Typography from '@mui/material/Typography';
-import Link from '@mui/material/Link';
-import Box from '@mui/material/Box';
+import { Link as RouterLink } from 'react-router-dom';
+import { Box, Link, Typography } from '@mui/material';
 import Banner from './Banner';
 
 function Footer() {
@@ -9,7 +8,7 @@ function Footer() {
       <Box sx={{ flexGrow: 1, paddingTop: 2, paddingBottom: 1 }}>
         <Typography variant="body2" color="primary" align="center">
           <span>{'Copyright © '}</span>
-          <Link color="inherit" href="/">
+          <Link conmponent={RouterLink} to="/" color="inherit">
             Eco-Friendly
           </Link>
           <span> {new Date().getFullYear()}.</span>
