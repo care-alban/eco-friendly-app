@@ -3,6 +3,9 @@ import {
   ON_SIGN_IN,
   onSignInSuccess,
   onSignInError,
+  ON_SIGN_UP,
+  onSignUpSuccess,
+  onSignUpError,
 } from '../actions/userActions';
 
 import config from '../config';
@@ -26,6 +29,26 @@ const userMiddleware = (store) => (next) => (action) => {
           })
           .catch((error) => {
             store.dispatch(onSignInError(error));
+          });
+      }
+      break;
+    case ON_SIGN_UP:
+      if (config.env === 'dev') {
+        store.dispatch(onSignUpSuccess(data.user.email, data.user.nickname));
+      } else {
+        axios
+          .post(`${config.apiURL}/signup`, {
+            email: action.email,
+            password: action.password,
+            nickname: action.nickname,
+          })
+          .then((response) => {
+            store.dispatch(
+              onSignUpSuccess(response.data.email, response.data.nickname),
+            );
+          })
+          .catch((error) => {
+            store.dispatch(onSignUpError(error));
           });
       }
       break;

@@ -46,12 +46,57 @@ export const onSignInSuccess = (user, token) => ({
 /**
  * @name onSignInError
  * @description Action creator for sign in error
- * @param {string} error
+ * @param {array} error
  * @returns {object} action
  */
 export const ON_SIGN_IN_ERROR = 'ON_SIGN_IN_ERROR';
 
 export const onSignInError = (error) => ({
   type: ON_SIGN_IN_ERROR,
+  error,
+});
+
+/**
+ * @name onSignUp
+ * @description Action creator for sign up
+ * @param {string} email
+ * @param {string} password
+ * @param {string} nickname
+ * @returns {object} action
+ */
+export const ON_SIGN_UP = 'ON_SIGN_UP';
+
+export const onSignUp = (email, password, nickname) => ({
+  type: ON_SIGN_UP,
+  email,
+  password,
+  nickname,
+});
+
+/**
+ * @name onSignUpSuccess
+ * @description Action creator for sign up success
+ * @param {string} email
+ * @param {string} nickname
+ * @returns {object} action
+ */
+export const ON_SIGN_UP_SUCCESS = 'ON_SIGN_UP_SUCCESS';
+
+export const onSignUpSuccess = (email, nickname) => ({
+  type: ON_SIGN_UP_SUCCESS,
+  email,
+  nickname,
+});
+
+/**
+ * @name onSignUpError
+ * @description Action creator for sign up error
+ * @param {error} error
+ * @returns {object} action
+ */
+export const ON_SIGN_UP_ERROR = 'ON_SIGN_UP_ERROR';
+
+export const onSignUpError = (error) => ({
+  type: ON_SIGN_UP_ERROR,
   error,
 });
