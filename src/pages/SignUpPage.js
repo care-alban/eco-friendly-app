@@ -1,4 +1,7 @@
-import { Link as RouterLink } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate, Link as RouterLink } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import {
   Avatar,
   Box,
@@ -6,6 +9,7 @@ import {
   Container,
   FormHelperText,
   Grid,
+  IconButton,
   InputAdornment,
   Link,
   Paper,
@@ -15,8 +19,12 @@ import {
 import AppRegistrationIcon from '@mui/icons-material/AppRegistration';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import KeyIcon from '@mui/icons-material/Key';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import CheckIcon from '@mui/icons-material/Check';
 import Layout from '../components/Layout';
+
+import { onInputChange, onSignUp } from '../actions/userActions';
 
 const paperStyle = {
   padding: '2rem',
@@ -29,6 +37,36 @@ const btnstyle = { margin: '1rem 0' };
 const linkStyle = { textDecoration: 'none' };
 
 export default function SignUpPage() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [error, setError] = useState(false); // password confirm
+  const email = useSelector((state) => state.user.email);
+  const password = useSelector((state) => state.user.password);
+  const passwordConfirm = useSelector((state) => state.user.passwordConfirm);
+  const nickname = useSelector((state) => state.user.nickname);
+  const isRegistered = useSelector((state) => state.user.isRegistered);
+
+  /* link field to state */
+  const changeField = (e) => {
+    dispatch(onInputChange(e.target.value, e.target.name));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setError(false);
+    if (password !== passwordConfirm) {
+      setError(true);
+      return null;
+    }
+    return dispatch(onSignUp(email, password, nickname));
+  };
+
+  useEffect(() => {
+    if (isRegistered) {
+      navigate('/connexion');
+    }
+  }, [isRegistered]);
+
   return (
     <Layout>
       <Container sx={{ flexGrow: 1 }}>
@@ -39,18 +77,25 @@ export default function SignUpPage() {
           <h2>S'inscrire</h2>
         </Grid>
         <Paper elevation={10} sx={paperStyle}>
-          <AddEmail />
-          <AddPassword />
-          <AddNickname />
-          <Button
-            type="submit"
-            color="primary"
-            variant="contained"
-            sx={btnstyle}
-            fullWidth
-          >
-            Suivant
-          </Button>
+          <form noValidate autoComplete="off" onSubmit={handleSubmit}>
+            <AddEmail onChange={changeField} value={email} />
+            <AddPassword onChange={changeField} value={password} />
+            <PasswordConfirm
+              onChange={changeField}
+              value={passwordConfirm}
+              error={error}
+            />
+            <AddNickname onChange={changeField} value={nickname} />
+            <Button
+              type="submit"
+              color="primary"
+              variant="contained"
+              sx={btnstyle}
+              fullWidth
+            >
+              Suivant
+            </Button>
+          </form>
         </Paper>
         <Typography
           variant="subtitle1"
@@ -74,13 +119,16 @@ export default function SignUpPage() {
   );
 }
 
-function AddEmail() {
+function AddEmail({ onChange, value }) {
   return (
     <Box sx={TextFieldStyle}>
       <TextField
+        name="email"
+        onChange={onChange}
+        value={value}
+        type="email"
         label="email"
         placeholder="Email"
-        type="email"
         variant="outlined"
         fullWidth
         required
@@ -96,13 +144,21 @@ function AddEmail() {
   );
 }
 
-function AddPassword() {
+AddEmail.propTypes = {
+  onChange: PropTypes.func.isRequired,
+  value: PropTypes.string.isRequired,
+};
+
+function AddPassword({ onChange, value }) {
   return (
     <Box sx={TextFieldStyle}>
       <TextField
-        label="Password"
-        placeholder="Mot de passe"
+        name="password"
+        onChange={onChange}
+        value={value}
         type="password"
+        label="Mot de passe"
+        placeholder="Mot de passe"
         variant="outlined"
         fullWidth
         required
@@ -118,25 +174,85 @@ function AddPassword() {
         8 caractères minimum dont une majuscule, une minuscule, un chiffre et un
         caractère spécial.
       </FormHelperText>
-      <TextField
-        label="Confirmation du mot de passe"
-        placeholder="Confirmer votre mot de passe"
-        type="password"
-        variant="outlined"
-        fullWidth
-        required
-      />
     </Box>
   );
 }
 
-function AddNickname() {
+AddPassword.propTypes = {
+  onChange: PropTypes.func.isRequired,
+  value: PropTypes.string.isRequired,
+};
+
+function PasswordConfirm({ onChange, value, error }) {
+  const [showPassword, setShowPassword] = useState(false);
+
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
+
   return (
     <Box sx={TextFieldStyle}>
       <TextField
+        error={error}
+        name="passwordConfirm"
+        onChange={onChange}
+        value={value}
+        type={showPassword ? 'text' : 'password'}
+        label="Confirmation du mot de passe"
+        placeholder="Confirmer votre mot de passe"
+        variant="outlined"
+        fullWidth
+        required
+        InputProps={{
+          endAdornment: (
+            <InputAdornment position="end">
+              <IconButton
+                aria-label="toggle password visibility"
+                onClick={handleClickShowPassword}
+                onMouseDown={handleMouseDownPassword}
+                edge="end"
+              >
+                {showPassword ? <VisibilityOff /> : <Visibility />}
+              </IconButton>
+            </InputAdornment>
+          ),
+        }}
+      />
+      {error && (
+        <FormHelperText
+          error={error}
+          id="component-helper-text"
+          sx={{ margin: '0.5rem 0' }}
+        >
+          Les mots de passe ne correspondent pas.
+        </FormHelperText>
+      )}
+    </Box>
+  );
+}
+
+PasswordConfirm.propTypes = {
+  onChange: PropTypes.func.isRequired,
+  value: PropTypes.string.isRequired,
+  error: PropTypes.bool,
+};
+
+PasswordConfirm.defaultProps = {
+  error: false,
+};
+
+function AddNickname({ onChange, value }) {
+  return (
+    <Box sx={TextFieldStyle}>
+      <TextField
+        name="nickname"
+        onChange={onChange}
+        value={value}
+        type="text"
         label="Pseudo"
         placeholder="Choisir votre pseudo"
-        type="text"
         variant="outlined"
         fullWidth
         required
@@ -151,3 +267,8 @@ function AddNickname() {
     </Box>
   );
 }
+
+AddNickname.propTypes = {
+  onChange: PropTypes.func.isRequired,
+  value: PropTypes.string.isRequired,
+};
