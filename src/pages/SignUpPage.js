@@ -63,7 +63,7 @@ export default function SignUpPage() {
 
   useEffect(() => {
     if (isRegistered) {
-      navigate('/connexion');
+      navigate('/enregistrement');
     }
   }, [isRegistered]);
 
