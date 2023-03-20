@@ -15,7 +15,7 @@ export const initialState = {
   password: '',
   passwordConfirm: '',
   nickname: '',
-  register: {
+  registerInfo: {
     email: '',
     nickname: '',
   },
@@ -56,7 +56,7 @@ const reducer = (state = initialState, action = {}) => {
     case ON_SIGN_UP_SUCCESS:
       return {
         ...state,
-        register: {
+        registerInfo: {
           email: action.email,
           nickname: action.nickname,
         },
