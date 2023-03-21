@@ -6,6 +6,9 @@ import {
   ON_SIGN_UP,
   onSignUpSuccess,
   onSignUpError,
+  ON_GET_ADVICES,
+  onGetAdvicesSuccess,
+  onGetAdvicesError,
 } from '../actions/userActions';
 
 import config from '../config';
@@ -49,6 +52,24 @@ const userMiddleware = (store) => (next) => (action) => {
           })
           .catch((error) => {
             store.dispatch(onSignUpError(error));
+          });
+      }
+      break;
+    case ON_GET_ADVICES:
+      if (config.env === 'dev') {
+        store.dispatch(onGetAdvicesSuccess(data.user.advices));
+      } else {
+        axios
+          .get(`${config.apiURL}/users/${store.getState().user.data.id}`, {
+            headers: {
+              Authorization: `Bearer ${store.getState().user.token}`,
+            },
+          })
+          .then((response) => {
+            store.dispatch(onGetAdvicesSuccess(response.data.advices));
+          })
+          .catch((error) => {
+            store.dispatch(onGetAdvicesError(error));
           });
       }
       break;

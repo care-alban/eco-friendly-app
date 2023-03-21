@@ -4,6 +4,8 @@ import {
   ON_SIGN_IN_ERROR,
   ON_SIGN_UP_SUCCESS,
   ON_SIGN_UP_ERROR,
+  ON_GET_ADVICES_SUCCESS,
+  ON_GET_ADVICES_ERROR,
 } from '../actions/userActions';
 
 import { loadState } from '../utils/sessionStorage';
@@ -74,6 +76,19 @@ const reducer = (state = initialState, action = {}) => {
         nickname: '',
       };
     case ON_SIGN_UP_ERROR:
+      return {
+        ...state,
+        messages: {
+          ...state.messages,
+          error: action.error.response.data.errors,
+        },
+      };
+    case ON_GET_ADVICES_SUCCESS:
+      return {
+        ...state,
+        advices: action.advices,
+      };
+    case ON_GET_ADVICES_ERROR:
       return {
         ...state,
         messages: {

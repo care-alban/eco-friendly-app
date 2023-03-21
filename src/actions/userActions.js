@@ -100,3 +100,42 @@ export const onSignUpError = (error) => ({
   type: ON_SIGN_UP_ERROR,
   error,
 });
+
+/**
+ * @name onGetAdvices
+ * @description Action creator for get user advices
+ * @param {string} token
+ * @returns {object} action
+ */
+export const ON_GET_ADVICES = 'ON_GET_ADVICES';
+
+export const onGetAdvices = (token) => ({
+  type: ON_GET_ADVICES,
+  token,
+});
+
+/**
+ * @name onGetAdvicesSuccess
+ * @description Action creator for get user advices success
+ * @param {array} advices
+ * @returns {object} action
+ */
+export const ON_GET_ADVICES_SUCCESS = 'ON_GET_ADVICES_SUCCESS';
+
+export const onGetAdvicesSuccess = (advices) => ({
+  type: ON_GET_ADVICES_SUCCESS,
+  advices,
+});
+
+/**
+ * @name onGetAdvicesError
+ * @description Action creator for get user advices error
+ * @param {error} error
+ * @returns {object} action
+ */
+export const ON_GET_ADVICES_ERROR = 'ON_GET_ADVICES_ERROR';
+
+export const onGetAdvicesError = (error) => ({
+  type: ON_GET_ADVICES_ERROR,
+  error,
+});
