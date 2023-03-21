@@ -8,6 +8,8 @@ import advicesMiddleware from '../middlewares/advicesMiddleware';
 import articlesMiddleware from '../middlewares/articlesMiddleware';
 import commonMiddleware from '../middlewares/commonMiddleware';
 
+import { loadState, saveState, throttle } from '../utils/sessionStorage';
+
 const enhancers = composeWithDevTools(
   applyMiddleware(
     userMiddleware,
@@ -18,7 +20,17 @@ const enhancers = composeWithDevTools(
 );
 
 const configureStore = () => {
-  const store = createStore(reducer, enhancers);
+  const persistedState = loadState();
+  const store = createStore(reducer, enhancers, persistedState);
+
+  store.subscribe(
+    throttle(() => {
+      saveState('user', store.getState().user.data);
+      saveState('token', store.getState().user.token);
+      saveState('advices', store.getState().user.advices);
+    }, 1000),
+  );
+
   return store;
 };
 

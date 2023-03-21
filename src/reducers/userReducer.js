@@ -6,11 +6,14 @@ import {
   ON_SIGN_UP_ERROR,
 } from '../actions/userActions';
 
+import { loadState } from '../utils/sessionStorage';
+
 export const initialState = {
   isLogged: false,
   isRegistered: false,
-  token: '',
-  user: null,
+  token: loadState('token') || '',
+  data: loadState('user') || null,
+  advices: loadState('advices') || [],
   email: '',
   password: '',
   passwordConfirm: '',
@@ -35,7 +38,7 @@ const reducer = (state = initialState, action = {}) => {
     case ON_SIGN_IN_SUCCESS:
       return {
         ...state,
-        user: action.user,
+        data: action.user,
         token: action.token,
         messages: {
           ...state.messages,
