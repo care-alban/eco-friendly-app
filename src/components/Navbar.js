@@ -84,25 +84,27 @@ export default function Navbar() {
             {user ? (
               <UserMenu />
             ) : (
-              <Button
-                component={RouterLink}
-                to="/connexion"
-                color="inherit"
-                size="small"
-                sx={{ marginRight: '1rem' }}
-              >
-                S'identifier
-              </Button>
+              <>
+                <Button
+                  component={RouterLink}
+                  to="/connexion"
+                  color="inherit"
+                  size="small"
+                  sx={{ marginRight: '1rem' }}
+                >
+                  S'identifier
+                </Button>
+                <Button
+                  component={RouterLink}
+                  to="/inscription"
+                  color="inherit"
+                  size="small"
+                  variant="outlined"
+                >
+                  S'inscrire
+                </Button>
+              </>
             )}
-            <Button
-              component={RouterLink}
-              to="/inscription"
-              color="inherit"
-              size="small"
-              variant="outlined"
-            >
-              S'inscrire
-            </Button>
           </Box>
         </Toolbar>
       </Container>
@@ -292,7 +294,10 @@ function UserMenu() {
 
   return (
     <Box sx={{ flexGrow: 0 }}>
-      <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+      <IconButton
+        onClick={handleOpenUserMenu}
+        sx={{ p: 0, display: { xs: 'none', md: 'block' } }}
+      >
         <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
       </IconButton>
       <Menu
