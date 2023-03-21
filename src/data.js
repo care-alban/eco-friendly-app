@@ -20,6 +20,41 @@ export default {
       timezone_type: 3,
       timezone: 'UTC',
     },
+    advices: [
+      {
+        id: 72,
+        title: 'Sunt velit et ex dolor similique earum ipsam quaerat.',
+        content:
+          '<p>Tenetur veniam cupiditate quia soluta est. Neque accusamus quaerat necessitatibus corporis vel doloremque. Eaque iure quasi in fugiat nulla et quaerat. Officiis quidem dolorem sed saepe. Incidunt ea saepe vero voluptatum pariatur aut corporis. Ut sit odio enim omnis nisi nobis aspernatur.</p><p>Ea iure nulla molestiae aliquid officia. Et ducimus suscipit consequuntur aliquam. Rerum placeat vel delectus corrupti harum asperiores. Alias unde sed repudiandae aliquam suscipit.</p><p>Rem nihil ut harum quod quisquam ratione aut quaerat. Ipsa aut at ratione alias laboriosam. Exercitationem culpa blanditiis consectetur ut ut voluptates sequi. Aut amet temporibus nemo nemo facere. Eligendi error sit error ut voluptate. Ut nihil sed id officia assumenda.</p>',
+        slug: 'sunt-velit-et-ex-dolor-similique-earum-ipsam-quaerat',
+        status: 1,
+        created_at: '2022-06-21T09:47:25+00:00',
+        updated_at: '2022-10-31T13:11:26+00:00',
+        category: {
+          id: 1,
+          name: 'Mobilité',
+          tagline: 'Eaque enim enim quaerat est velit qui quia.',
+          slug: 'mobilite',
+        },
+      },
+      {
+        id: 134,
+        title: 'Tenetur est suscipit quam aut qui similique.',
+        content:
+          '<p>Tempora molestias et consectetur qui voluptatem incidunt. Fuga enim vel distinctio sit architecto voluptatem. Et quas eligendi ut non. Vitae ut reiciendis dolore quidem distinctio. Placeat occaecati corrupti rerum officiis error magnam animi aut. Dolore qui impedit esse similique voluptas excepturi. Nisi reiciendis sit corrupti temporibus. Reprehenderit nulla accusamus necessitatibus in qui nisi laboriosam quaerat.</p><p>Aut aut asperiores blanditiis non. Qui aut eos velit quaerat qui quo. Nihil sit ipsum nemo. Veniam voluptate consequatur velit in nulla quia. Et occaecati repellat aliquam error voluptas voluptas qui. Dolorem vero tempora sit laboriosam at voluptatum autem. Doloribus amet deleniti eaque accusamus quaerat perferendis exercitationem. Quia est quod rerum inventore nam beatae.</p><p>Pariatur aspernatur beatae natus nam. A nihil labore atque porro aut. Doloremque reiciendis omnis ad ut. Odit quo temporibus sed quis odio sint excepturi sunt. Voluptatem sequi possimus qui et.</p>',
+        slug: 'tenetur-est-suscipit-quam-aut-qui-similique',
+        status: 1,
+        created_at: '2023-03-12T21:03:44+00:00',
+        updated_at: '2022-08-29T02:06:35+00:00',
+        category: {
+          id: 3,
+          name: 'Santé',
+          tagline:
+            'Dolores corporis ullam libero exercitationem corporis adipisci quo et.',
+          slug: 'sante',
+        },
+      },
+    ],
   },
   token:
     'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE2NzkyNjA3NzIsImV4cCI6MTY3OTI2NDM3Miwicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJuYW1lIjoidXNlckB1c2VyLmNvbSJ9.ZEmbnRw8WYJvpfNPoESZEe7q5O5tfvYz6ZLT2HCavNFjSqGaaZNRYoK4mySKyrpIdvp_phb4OkTHzvGzmOmlavl0u4H8DChTzj4c1E_Sa3KX4qyTzEKrVBmui_TRypmJXbUuQUI_ZtxBiBHGPSVuPszovFzB0xZ8k3wJluyFAbLxwC-sc5FB1UipbKWoh3RA5GBRtAldu8-qNurhC0JDe3cj_c8qqNebVsoK5HyO7YmjHYhDrF5Dsx4VA-3SQaZnMhoZMac0Tp001Uhewgha2t8fd9oZvvkRU8NgN06JSkhCIYisxK1sd3Ds4tTQK2Me88Hm8JL9afJJEmMr0N88pw',
