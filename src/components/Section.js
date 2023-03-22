@@ -23,13 +23,13 @@ Section.defaultProps = {
 
 const SectionSlyte = styled.section`
   margin-bottom: 2rem;
-  padding: 2rem 0;
 
   &:has(:last-child) {
     margin-bottom: 0;
   }
 
   &:not(:first-child) {
+    padding: 2rem 0;
     border-top: 1px solid var(--color-divider);
   }
 
