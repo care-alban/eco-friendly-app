@@ -21,15 +21,13 @@ import { getAllCategories } from '../actions/commonActions';
 // const pages = ['Maison', 'Santé', 'Bien-être', 'Alimentation'];
 const link = {
   mr: 3,
-  fontFamily: 'monospace',
   fontWeight: 500,
-  letterSpacing: '.3rem',
   color: '#000',
   textDecoration: 'none',
   borderBottom: 1,
   borderColor: 'transparent',
   '&:hover': {
-    borderColor: 'inherit',
+    borderColor: 'divider',
   },
   '&:last-child': {
     mr: 0,
@@ -39,7 +37,7 @@ const link = {
 export default function Navbar() {
   const dispatch = useDispatch();
   const categories = useSelector((state) => state.common.categories);
-  const user = useSelector((state) => state.user.user);
+  const user = useSelector((state) => state.user.data);
 
   useEffect(() => {
     if (categories.length === 0) dispatch(getAllCategories());
@@ -99,7 +97,7 @@ export default function Navbar() {
             </Box>
             <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
               {user ? (
-                <UserMenu />
+                <UserMenu user={user} />
               ) : (
                 <>
                   <Button
@@ -126,7 +124,7 @@ export default function Navbar() {
           </Toolbar>
         </Container>
       </AppBar>
-      <AppBar position="sticky">
+      <AppBar position="sticky" sx={{ display: { xs: 'none', md: 'flex' } }}>
         <Toolbar disableGutters>
           <Box
             sx={{
@@ -139,7 +137,12 @@ export default function Navbar() {
               backgroundColor: 'white',
             }}
           >
-            <Link component={RouterLink} to="/" color="inherit" sx={link}>
+            <Link
+              component={RouterLink}
+              to="/"
+              color="inherit"
+              sx={{ ...link, letterSpacing: '.3rem' }}
+            >
               Actualité
             </Link>
             {categories.map((category) => (
@@ -148,7 +151,7 @@ export default function Navbar() {
                 component={RouterLink}
                 to={`/categories/${category.slug}`}
                 color="inherit"
-                sx={link}
+                sx={{ ...link, letterSpacing: '.3rem' }}
               >
                 {category.name}
               </Link>
@@ -199,71 +202,111 @@ function MobileNav({ categories, user }) {
         onClose={handleCloseNavMenu}
         sx={{
           display: { xs: 'block', md: 'none' },
-          '& .MuiPaper-root': {
-            width: '100%',
-            maxWidth: '100%',
-          },
+          // '& .MuiMenu-paper': {
+          //   padding: '0 1rem',
+          // },
         }}
       >
-        <MenuItem onClick={handleCloseNavMenu}>
+        <MenuItem
+          onClick={handleCloseNavMenu}
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            '&:hover': {
+              backgroundColor: 'transparent',
+            },
+          }}
+        >
           <Link
             component={RouterLink}
             to="/"
-            textAlign="center"
-            sx={{ textDecoration: 'none' }}
+            sx={{ ...link, margin: '0.625rem 0' }}
             color="inherit"
           >
             Actualité
           </Link>
-        </MenuItem>
-        {categories.map((category) => (
-          <MenuItem key={category.id} onClick={handleCloseNavMenu}>
+          {categories.map((category) => (
             <Link
+              key={category.id}
               component={RouterLink}
               to={`/categories/${category.slug}`}
-              textAlign="center"
-              sx={{ textDecoration: 'none' }}
+              sx={{ ...link, margin: '0.625rem 0' }}
               color="inherit"
             >
               {category.name}
             </Link>
-          </MenuItem>
-        ))}
-        <Box
-          sx={{
-            display: { xs: 'flex', md: 'none' },
-            flexDirection: 'column',
-          }}
-        >
-          {user ? (
-            <UserMenu />
-          ) : (
+          ))}
+          {!user ? (
             <>
-              <MenuItem onClick={handleCloseNavMenu}>
-                <Link
-                  component={RouterLink}
-                  to="/connexion"
-                  textAlign="center"
-                  sx={{ textDecoration: 'none' }}
-                  color="inherit"
-                >
-                  S'identifier
-                </Link>
-              </MenuItem>
-              <MenuItem onClick={handleCloseNavMenu}>
-                <Link
-                  component={RouterLink}
-                  to="/inscription"
-                  textAlign="center"
-                  sx={{ textDecoration: 'none' }}
-                  color="inherit"
-                >
-                  S'inscrire
-                </Link>
-              </MenuItem>
+              <Link
+                component={RouterLink}
+                to="/connexion"
+                sx={{ ...link, margin: '0.625rem 0' }}
+                color="inherit"
+              >
+                S'identifier
+              </Link>
+              <Link
+                component={RouterLink}
+                to="/inscription"
+                sx={{ ...link, margin: '0.625rem 0' }}
+                color="inherit"
+              >
+                S'inscrire
+              </Link>
             </>
+          ) : (
+            <Box
+              sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                borderTop: 1,
+                borderColor: 'divider',
+              }}
+            >
+              <Link
+                component={RouterLink}
+                to={`/utilisateurs/${user.nickname}`}
+                sx={{ ...link, margin: '0.625rem 0' }}
+                color="inherit"
+              >
+                Profil
+              </Link>
+              <Link
+                component={RouterLink}
+                to="/tableau-de-bord"
+                sx={{ ...link, margin: '0.625rem 0' }}
+                color="inherit"
+              >
+                Tableau de bord
+              </Link>
+              <Link
+                component={RouterLink}
+                to="/deconnexion"
+                sx={{
+                  ...link,
+                  margin: '0.625rem 0',
+                  color: 'secondary.main',
+                  border: 1,
+                  padding: '0.375rem 1rem',
+                  borderRadius: '0.25rem',
+                  transition: 'all 0.3s ease',
+                  '&:hover': {
+                    color: 'white',
+                    backgroundColor: 'divider',
+                    borderColor: 'none',
+                  },
+                }}
+              >
+                Déconnexion
+              </Link>
+            </Box>
           )}
-        </Box>
+        </MenuItem>
       </Menu>
     </Box>
   );
@@ -278,9 +321,9 @@ MobileNav.defaultProps = {
   user: null,
 };
 
-function UserMenu() {
-  const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+function UserMenu({ user }) {
   const [anchorElUser, setAnchorElUser] = useState(null);
+  const { nickname, avatar } = user;
 
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
@@ -296,7 +339,7 @@ function UserMenu() {
         onClick={handleOpenUserMenu}
         sx={{ p: 0, display: { xs: 'none', md: 'block' } }}
       >
-        <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+        <Avatar alt={`avatar de ${nickname}`} src={avatar} />
       </IconButton>
       <Menu
         sx={{ mt: '45px' }}
@@ -304,22 +347,69 @@ function UserMenu() {
         anchorEl={anchorElUser}
         anchorOrigin={{
           vertical: 'top',
-          horizontal: 'right',
+          horizontal: 'center',
         }}
         keepMounted
         transformOrigin={{
           vertical: 'top',
-          horizontal: 'right',
+          horizontal: 'center',
         }}
         open={Boolean(anchorElUser)}
         onClose={handleCloseUserMenu}
       >
-        {settings.map((setting) => (
-          <MenuItem key={setting} onClick={handleCloseUserMenu}>
-            <Typography textAlign="center">{setting}</Typography>
-          </MenuItem>
-        ))}
+        <MenuItem
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            '&:hover': {
+              backgroundColor: 'transparent',
+            },
+          }}
+        >
+          <Link
+            component={RouterLink}
+            to={`/utilisateurs/${user.nickname}`}
+            sx={{ ...link, margin: '0.625rem 0' }}
+            color="inherit"
+          >
+            Profil
+          </Link>
+          <Link
+            component={RouterLink}
+            to="/tableau-de-bord"
+            sx={{ ...link, margin: '0.625rem 0' }}
+            color="inherit"
+          >
+            Tableau de bord
+          </Link>
+          <Link
+            component={RouterLink}
+            to="/deconnexion"
+            sx={{
+              ...link,
+              margin: '0.625rem 0',
+              color: 'secondary.main',
+              border: 1,
+              padding: '0.375rem 1rem',
+              borderRadius: '0.25rem',
+              transition: 'all 0.3s ease',
+              '&:hover': {
+                color: 'white',
+                backgroundColor: 'divider',
+                borderColor: 'none',
+              },
+            }}
+          >
+            Déconnexion
+          </Link>
+        </MenuItem>
       </Menu>
     </Box>
   );
 }
+
+UserMenu.propTypes = {
+  user: PropTypes.object.isRequired,
+};
