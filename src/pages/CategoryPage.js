@@ -97,10 +97,11 @@ export default function CategoryPage() {
       <section>
         <Grid container spacing={2}>
           {allArticlesAndAdvices.map((item) => (
-            <Grid item xs={3} key={`${item.title}`}>
+            <Grid item xs={12} sm={6} md={3} key={`${item.title}`}>
               <MediumCard
                 sx={{
                   boder: 1,
+                  maxWidth: { xs: '100%', md: '100%' },
                   boxShadow: 'rgba(149, 157, 165, 0.2) 0px 8px 24px',
                 }}
               >
