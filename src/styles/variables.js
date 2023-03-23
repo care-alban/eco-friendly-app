@@ -16,6 +16,9 @@ const variables = css`
     --color-neutral-main: ${config.colors.neutral.main};
     --color-neutral-contrastText: ${config.colors.neutral.contrastText};
 
+    --color-common-white: ${config.colors.common.white};
+    --color-common-black: ${config.colors.common.black};
+
     --color-divider: ${config.colors.divider};
   }
 `;
