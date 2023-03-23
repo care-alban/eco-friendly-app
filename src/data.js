@@ -63,12 +63,15 @@ export default {
       id: 1,
       name: 'Mobilité',
       slug: 'mobilite',
+      picture:
+        'https://cdn.eco-friendly.fr/assets/img/categories/mobilite.webp',
       tagline: 'Eaque enim enim quaerat est velit qui quia.',
     },
     {
       id: 2,
       name: 'Maison',
       tagline: 'Eveniet quis reiciendis cum.',
+      picture: 'https://cdn.eco-friendly.fr/assets/img/categories/maison.webp',
       slug: 'maison',
     },
     {
@@ -76,13 +79,16 @@ export default {
       name: 'Santé',
       tagline:
         'Dolores corporis ullam libero exercitationem corporis adipisci quo et.',
+      picture: 'https://cdn.eco-friendly.fr/assets/img/categories/sante.webp',
       slug: 'sante',
     },
     {
       id: 4,
-      name: 'Energie',
+      name: 'Alimentation',
       tagline: 'Nisi modi ducimus laborum autem.',
-      slug: 'energie',
+      picture:
+        'https://cdn.eco-friendly.fr/assets/img/categories/alimentation.webp',
+      slug: 'alimentation',
     },
   ],
   articles: {
