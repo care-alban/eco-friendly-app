@@ -1,11 +1,13 @@
 import { useSelector } from 'react-redux';
 import {
   Box,
+  Button,
   FormControl,
   InputLabel,
   MenuItem,
   Paper,
   Select,
+  Stack,
   TextField,
   Typography,
 } from '@mui/material';
@@ -76,6 +78,20 @@ export default function FormAdvice() {
             defaultValue="Default Value"
           />
         </FormControl>
+        <Stack
+          spacing={2}
+          direction="row"
+          marginTop={2}
+          sx={{ display: 'flex', justifyContent: 'flex-end' }}
+        >
+          <Button variant="contained" color="secondary">
+            Publier
+          </Button>
+          <Button variant="contained" color="primary">
+            Sauvegarder
+          </Button>
+          <Button variant="outlined">Annuler</Button>
+        </Stack>
       </form>
     </Paper>
   );
