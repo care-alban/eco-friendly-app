@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
-import { Box, Button, Container, Typography } from '@mui/material';
+import { Link as RouterLink } from 'react-router-dom';
+import { Container, Typography } from '@mui/material';
 import styled from 'styled-components';
 
 const HeroWrapper = styled.div`
@@ -28,70 +29,96 @@ const HeroWrapper = styled.div`
   }
 `;
 
-export default function Hero({
-  title,
-  tagline,
-  image,
-  leftBtnText,
-  rightBtnText,
-}) {
+export default function Hero({ image, category, title, subtitle, author }) {
   return (
-    <HeroWrapper style={{ backgroundImage: `url("${image}")` }}>
-      <Container maxWidth="md">
-        <Box textAlign="center" color="common.white">
+    <HeroWrapper
+      style={{
+        backgroundImage: `url("${image}")`,
+        color: 'var(--color-common-white)',
+      }}
+    >
+      <Container
+        maxWidth="md"
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+      >
+        {category && (
           <Typography
-            variant="h2"
-            component="h1"
+            variant="h5"
+            component={RouterLink}
+            to={`/categories/${category.slug}`}
+            color="secondary.light"
+            paragraph
+            sx={{
+              position: 'relative',
+              textDecoration: 'none',
+            }}
+          >
+            {category.name}
+          </Typography>
+        )}
+        <Typography
+          variant="h2"
+          component="h1"
+          color="inherit"
+          gutterBottom
+          textAlign="center"
+          sx={{
+            position: 'relative',
+          }}
+        >
+          {title}
+        </Typography>
+        {subtitle && (
+          <Typography
+            variant="h6"
             color="inherit"
-            gutterBottom
+            textAlign="center"
+            paragraph
             sx={{
               position: 'relative',
             }}
           >
-            {title}
+            {subtitle}
           </Typography>
-          <Container maxWidth="sm">
-            <Typography
-              variant="subtitle1"
-              paragraph
-              color="inherit"
-              sx={{
-                position: 'relative',
-              }}
-            >
-              {tagline}
+        )}
+        {author && (
+          <Typography
+            variant="h4"
+            paragraph
+            color="inherit"
+            textAlign="center"
+            sx={{
+              position: 'relative',
+            }}
+          >
+            rédigé par{' '}
+            <Typography component="span" variant="h4" color="secondary.main">
+              {author}
             </Typography>
-          </Container>
-          <Box mt={3}>
-            {leftBtnText && (
-              <Button variant="contained" color="secondary" sx={{ mr: 2 }}>
-                {leftBtnText}
-              </Button>
-            )}
-            {rightBtnText && (
-              <Button variant="outlined" color="secondary">
-                {rightBtnText}
-              </Button>
-            )}
-          </Box>
-        </Box>
+          </Typography>
+        )}
       </Container>
     </HeroWrapper>
   );
 }
 
 Hero.propTypes = {
-  title: PropTypes.string,
-  tagline: PropTypes.string,
-  image: PropTypes.string,
-  leftBtnText: PropTypes.string,
-  rightBtnText: PropTypes.string,
+  image: PropTypes.string.isRequired,
+  category: PropTypes.shape({
+    name: PropTypes.string,
+    slug: PropTypes.string,
+  }),
+  title: PropTypes.string.isRequired,
+  subtitle: PropTypes.string.isRequired,
+  author: PropTypes.string,
 };
 
 Hero.defaultProps = {
-  title: 'Lorem ipsum dolor',
-  tagline: 'sit amet, consectetur adipiscing elit.',
-  image: 'https://picsum.photos/seed/picsum/1024/900',
-  leftBtnText: '',
-  rightBtnText: '',
+  category: null,
+  author: '',
 };
