@@ -1,0 +1,13 @@
+export { default as Banner } from './Banner';
+export { default as Footer } from './Footer';
+export { default as Hero } from './Hero';
+export { default as Layout } from './Layout';
+export { default as Loader } from './Loader';
+export { default as Navbar } from './Navbar';
+export { default as NotFound } from './NotFound';
+export { default as Quizz } from './Quizz';
+export { default as SearchBar } from './SearchBar';
+export { default as Section } from './Section';
+export { default as MediumCard } from './Cards/MediumCard';
+export { default as SmallCard } from './Cards/SmallCard';
+export { default as LargeCard } from './Cards/LargeCard';
