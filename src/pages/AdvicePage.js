@@ -10,12 +10,14 @@ import {
   CardMedia,
   Container,
   Grid,
+  IconButton,
   Link,
   Typography,
 } from '@mui/material';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 import Hero from '../components/Hero';
-
 import Layout from '../components/Layout';
 import Loader from '../components/Loader';
 
@@ -24,6 +26,7 @@ export default function AdvicePage() {
   const advices = useSelector((state) => state.advices.list);
   const articles = useSelector((state) => state.articles.list);
   const advice = advices.find((item) => item.slug === slug);
+  const userId = useSelector((state) => state.user.data.id);
 
   if (!advice) {
     return (
@@ -82,7 +85,23 @@ export default function AdvicePage() {
       </Breadcrumbs>
       <Grid container spacing={4} marginBottom={4}>
         <Grid item xs={12} md={8}>
-          <Box paddingBottom={2}>
+          <Box paddingY={2}>
+            {userId === advice.contributor.id && (
+              <Box
+                sx={{
+                  position: 'relative',
+                  display: 'flex',
+                  justifyContent: 'flex-end',
+                }}
+              >
+                <IconButton aria-label="delete">
+                  <DeleteIcon />
+                </IconButton>
+                <IconButton aria-label="edit" color="primary">
+                  <EditIcon />
+                </IconButton>
+              </Box>
+            )}
             <div
               dangerouslySetInnerHTML={{ __html: advice.content }}
               className="innerHTML"
