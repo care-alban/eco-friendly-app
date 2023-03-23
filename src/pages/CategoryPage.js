@@ -87,9 +87,9 @@ export default function CategoryPage() {
   return (
     <Layout>
       <Hero
-        title={category.name}
-        tagline={category.tagline}
         image={category.picture}
+        title={category.name}
+        subtitle={category.tagline}
       />
       <Box sx={{ flexGrow: 1, marginY: 2, marginX: 0 }}>
         <SearchBar list={allArticlesAndAdvices} keys={['title', 'content']} />
@@ -97,7 +97,7 @@ export default function CategoryPage() {
       <section>
         <Grid container spacing={2}>
           {allArticlesAndAdvices.map((item) => (
-            <Grid item xs={12} sm={6} md={3} key={`${item.title}`}>
+            <Grid item xs={12} sm={6} md={4} lg={3} key={`${item.title}`}>
               <MediumCard
                 sx={{
                   boder: 1,
