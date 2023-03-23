@@ -7,6 +7,7 @@ import Container from '@mui/material/Container';
 import { GlobalStyle, GlobalTheme } from '../styles';
 import Navbar from './Navbar';
 import Footer from './Footer';
+import FormAdvice from './Forms/FormAdvice';
 
 export default function Layout({ children }) {
   /* Automatically positions the scroll bar at the top of the window at each page change */
@@ -24,7 +25,10 @@ export default function Layout({ children }) {
       <CssBaseline />
       <Navbar />
       <Main>
-        <Container maxWidth="xl">{children}</Container>
+        <Container maxWidth="xl">
+          <FormAdvice />
+          {children}
+        </Container>
       </Main>
       <Footer />
     </ThemeProvider>
