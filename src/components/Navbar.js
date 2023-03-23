@@ -2,21 +2,28 @@ import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link as RouterLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import Menu from '@mui/material/Menu';
-import MenuIcon from '@mui/icons-material/Menu';
-import Container from '@mui/material/Container';
-import Button from '@mui/material/Button';
-import MenuItem from '@mui/material/MenuItem';
+import {
+  AppBar,
+  Avatar,
+  Box,
+  Button,
+  Container,
+  IconButton,
+  Link,
+  Menu,
+  MenuItem,
+  Toolbar,
+  Typography,
+} from '@mui/material';
 import LocalFloristIcon from '@mui/icons-material/LocalFlorist';
-import Link from '@mui/material/Link';
-import Avatar from '@mui/material/Avatar';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
+import MenuIcon from '@mui/icons-material/Menu';
 
-import { getAllCategories } from '../actions/commonActions';
+import {
+  getAllCategories,
+  toggleShowAdviceForm,
+} from '../actions/commonActions';
 
 // const pages = ['Maison', 'Santé', 'Bien-être', 'Alimentation'];
 const link = {
@@ -25,9 +32,14 @@ const link = {
   color: '#000',
   textDecoration: 'none',
   borderBottom: 1,
+  textTransform: 'none',
   borderColor: 'transparent',
+  fontSize: '1.2rem',
+  backgroundColor: 'transparent',
+  padding: 0,
   '&:hover': {
     borderColor: 'divider',
+    backgroundColor: 'transparent',
   },
   '&:last-child': {
     mr: 0,
@@ -164,7 +176,12 @@ export default function Navbar() {
 }
 
 function MobileNav({ categories, user }) {
+  const dispatch = useDispatch();
   const [anchorElNav, setAnchorElNav] = useState(null);
+
+  const handleShowAdviceForm = () => {
+    dispatch(toggleShowAdviceForm());
+  };
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -284,6 +301,17 @@ function MobileNav({ categories, user }) {
               >
                 Tableau de bord
               </Link>
+              <Button
+                variant="text"
+                color="inherit"
+                sx={{
+                  ...link,
+                  margin: '0.625rem 0',
+                }}
+                onClick={handleShowAdviceForm}
+              >
+                Ajouter un conseil
+              </Button>
               <Link
                 component={RouterLink}
                 to="/deconnexion"
@@ -322,8 +350,15 @@ MobileNav.defaultProps = {
 };
 
 function UserMenu({ user }) {
+  const dispatch = useDispatch();
   const [anchorElUser, setAnchorElUser] = useState(null);
   const { nickname, avatar } = user;
+
+  const handleShowAdviceForm = () => {
+    dispatch(toggleShowAdviceForm());
+  };
+
+  const adviceFormIsOpen = useSelector((state) => state.common.showAdviceForm);
 
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
@@ -334,7 +369,7 @@ function UserMenu({ user }) {
   };
 
   return (
-    <Box sx={{ flexGrow: 0 }}>
+    <Box sx={{ flexGrow: 0, display: 'flex' }}>
       <IconButton
         onClick={handleOpenUserMenu}
         sx={{ p: 0, display: { xs: 'none', md: 'block' } }}
@@ -384,6 +419,7 @@ function UserMenu({ user }) {
           >
             Tableau de bord
           </Link>
+
           <Link
             component={RouterLink}
             to="/deconnexion"
@@ -406,6 +442,21 @@ function UserMenu({ user }) {
           </Link>
         </MenuItem>
       </Menu>
+      <IconButton
+        onClick={handleShowAdviceForm}
+        sx={{
+          p: 0,
+          display: { xs: 'none', md: 'block' },
+          color: 'common.white',
+          ml: 1,
+        }}
+      >
+        {!adviceFormIsOpen ? (
+          <AddCircleOutlineIcon fontSize="large" />
+        ) : (
+          <RemoveCircleOutlineIcon fontSize="large" />
+        )}
+      </IconButton>
     </Box>
   );
 }

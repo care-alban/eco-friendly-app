@@ -3,27 +3,32 @@ import { useSelector } from 'react-redux';
 import { Link as RouterLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
-import Link from '@mui/material/Link';
-import CardHeader from '@mui/material/CardHeader';
-import CardMedia from '@mui/material/CardMedia';
-import CardContent from '@mui/material/CardContent';
-import CardActionArea from '@mui/material/CardActionArea';
-import CardActions from '@mui/material/CardActions';
-import Container from '@mui/material/Container';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
-import Chip from '@mui/material/Chip';
+import {
+  Box,
+  Button,
+  CardActions,
+  CardActionArea,
+  CardContent,
+  CardHeader,
+  CardMedia,
+  Chip,
+  Container,
+  Grid,
+  Link,
+  Typography,
+} from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
 
-import Layout from '../components/Layout';
-import Section from '../components/Section';
-import Quizz from '../components/Quizz';
-import LargeCard from '../components/Cards/LargeCard';
-import MediumCard from '../components/Cards/MediumCard';
-import SmallCard from '../components/Cards/SmallCard';
-import Loader from '../components/Loader';
+import {
+  FormAdvice,
+  MediumCard,
+  LargeCard,
+  Layout,
+  Loader,
+  Quizz,
+  Section,
+  SmallCard,
+} from '../components';
 
 export default function HomePage() {
   const articles = useSelector((state) => state.articles.list);
@@ -43,6 +48,7 @@ export default function HomePage() {
 
   return (
     <Layout>
+      <FormAdvice />
       <Section id="featured-articles">
         <Typography variant="h4" component="h2" color="inherit">
           A la une
