@@ -12,9 +12,24 @@ import {
   Typography,
 } from '@mui/material';
 
+import RichTextEditor from '../RichTextEditor';
+
 export default function FormAdvice() {
   const isShow = useSelector((state) => state.common.showAdviceForm);
   const categories = useSelector((state) => state.common.categories);
+  const RichTextEditorValue = '';
+
+  const handleTextFieldChange = (event) => {
+    console.log(event.target.value);
+  };
+
+  const handleSelectChange = (event) => {
+    console.log(event.target.value);
+  };
+
+  const handleRichTextEditorChange = (value) => {
+    console.log(value);
+  };
 
   return (
     <Paper
@@ -39,27 +54,28 @@ export default function FormAdvice() {
             }}
           >
             <TextField
-              name="title"
-              // onChange={changeField}
-              // value={email}
               type="text"
+              name="title"
               label="Titre du conseil"
               placeholder="Ajouter un titre"
               variant="outlined"
               fullWidth
               required
+              // value={email}
+              onChange={handleTextFieldChange}
             />
           </FormControl>
           <FormControl sx={{ width: { sx: '100%', md: '20%' }, marginTop: 2 }}>
             <InputLabel id="category-label">Catégorie</InputLabel>
             <Select
+              name="category"
               labelId="category-label"
               id="category"
-              // value={age}
               label="Catégorie"
-              // onChange={handleChange}
-              required
               defaultValue=""
+              required
+              // value={category}
+              onChange={handleSelectChange}
             >
               {categories.map((category) => (
                 <MenuItem key={category.id} value={category.id}>
@@ -70,12 +86,11 @@ export default function FormAdvice() {
           </FormControl>
         </Box>
         <FormControl sx={{ width: '100%', marginTop: 2 }}>
-          <TextField
-            id="outlined-multiline-static"
-            label="Multiline"
-            multiline
-            rows={4}
-            defaultValue="Default Value"
+          <RichTextEditor
+            name="description"
+            placeholder="Ajouter un conseil"
+            value={RichTextEditorValue}
+            onChange={handleRichTextEditorChange}
           />
         </FormControl>
         <Stack
