@@ -2,18 +2,19 @@ import { useEffect, useState } from 'react';
 import { Link as RouterLink, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from '@emotion/styled';
-import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
-import CardMedia from '@mui/material/CardMedia';
-import CardContent from '@mui/material/CardContent';
-import CardActionArea from '@mui/material/CardActionArea';
-import Typography from '@mui/material/Typography';
+import {
+  Box,
+  CardActionArea,
+  CardContent,
+  CardMedia,
+  Grid,
+  Typography,
+} from '@mui/material';
+
 import GroupsIcon from '@mui/icons-material/Groups';
-import Layout from '../components/Layout';
-import Hero from '../components/Hero';
-import SearchBar from '../components/SearchBar';
+import { Hero, Layout, Loader, SearchBar } from '../components';
 import MediumCard from '../components/Cards/MediumCard';
-import Loader from '../components/Loader';
+
 import { getArticles } from '../actions/articlesActions';
 import { getAdvices } from '../actions/advicesActions';
 import { searchBarOnChange } from '../actions/commonActions';
