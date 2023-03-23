@@ -20,7 +20,6 @@ import {
 import SendIcon from '@mui/icons-material/Send';
 
 import {
-  FormAdvice,
   MediumCard,
   LargeCard,
   Layout,
@@ -48,7 +47,6 @@ export default function HomePage() {
 
   return (
     <Layout>
-      <FormAdvice />
       <Section id="featured-articles">
         <Typography variant="h4" component="h2" color="inherit">
           A la une
