@@ -2,17 +2,18 @@ import { useSelector } from 'react-redux';
 import { useParams, Link as RouterLink } from 'react-router-dom';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import Container from '@mui/material/Container';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import Breadcrumbs from '@mui/material/Breadcrumbs';
-import Link from '@mui/material/Link';
-
-import Grid from '@mui/material/Grid';
-import CardMedia from '@mui/material/CardMedia';
-import CardActionArea from '@mui/material/CardActionArea';
-import CardContent from '@mui/material/CardContent';
-import Chip from '@mui/material/Chip';
+import {
+  Box,
+  Breadcrumbs,
+  CardActionArea,
+  CardContent,
+  CardMedia,
+  Chip,
+  Container,
+  Grid,
+  Link,
+  Typography,
+} from '@mui/material';
 
 import MediumCard from '../components/Cards/MediumCard';
 
@@ -52,6 +53,7 @@ export default function ArticlePage() {
             paddingBottom={2}
             borderBottom={1}
             borderColor="divider"
+            sx={{ display: { xs: 'none', sm: 'flex' } }}
           >
             <Link
               component={RouterLink}
@@ -95,20 +97,20 @@ export default function ArticlePage() {
           </Box>
         </Box>
       </Container>
-      <section
-        id="short-articles"
-        style={{
+      <Box
+        component="section"
+        sx={{
           backgroundColor: 'var(--color-secondary-light)',
           minWidth: '100vw',
-          marginLeft: 'calc((100vw - 100%) / -2)',
           padding: '2rem 2rem 0',
           color: 'var(--color-neutral-main)',
-          marginBottom: '8rem',
+          marginLeft: 'calc((100vw - 100%) / -2)',
         }}
       >
         <Box
           sx={{
             display: 'flex',
+            flexDirection: { xs: 'column', sm: 'row' },
             justifyContent: 'space-between',
           }}
         >
@@ -129,7 +131,7 @@ export default function ArticlePage() {
             <RecentArticles key={recentArticle.id} article={recentArticle} />
           ))}
         </Grid>
-      </section>
+      </Box>
     </Layout>
   );
 }
@@ -223,14 +225,7 @@ function RecentArticles({ article }) {
   const { title, picture, content, category } = article;
 
   return (
-    <Grid
-      item
-      xs={3}
-      sx={{
-        paddingRight: 2,
-        paddingBottom: 3,
-      }}
-    >
+    <Grid item xs={12} sm={6} md={3} spacing={4}>
       <MediumCard>
         <CardMedia component="img" height="200" image={picture} alt={title} />
         <CardActionArea>
