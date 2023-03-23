@@ -8,6 +8,7 @@ export { default as NotFound } from './NotFound';
 export { default as Quizz } from './Quizz';
 export { default as SearchBar } from './SearchBar';
 export { default as Section } from './Section';
+export { default as FormAdvice } from './Forms/FormAdvice';
 export { default as MediumCard } from './Cards/MediumCard';
 export { default as SmallCard } from './Cards/SmallCard';
 export { default as LargeCard } from './Cards/LargeCard';
