@@ -30,7 +30,6 @@ const SectionSlyte = styled.section`
 
   &:not(:first-child) {
     padding: 2rem 0;
-    border-top: 1px solid var(--color-divider);
   }
 
   &[id='short-articles'] {
@@ -48,7 +47,6 @@ const SectionSlyte = styled.section`
   }
 
   @media screen and (min-width: 768px) {
-    &[id='short-articles'],
     &[id='quizz'] {
       padding: 2rem;
       min-width: 100vw;
