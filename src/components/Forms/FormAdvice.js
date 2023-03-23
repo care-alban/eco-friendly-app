@@ -36,6 +36,7 @@ export default function FormAdvice() {
       elevation={4}
       sx={{
         padding: 2,
+        marginBottom: 2,
         '&.MuiPaper-root': { display: isShow ? 'block' : 'none' },
       }}
     >
