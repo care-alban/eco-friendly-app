@@ -29,10 +29,11 @@ import { onInputChange, onSignUp } from '../actions/userActions';
 const paperStyle = {
   padding: '2rem',
   height: '100%',
-  width: '340px',
+  width: '100%',
+  maxWidth: '380px',
   margin: '1.4rem auto',
 };
-const TextFieldStyle = { margin: '1rem 0' };
+const TextFieldStyle = { margin: '0.5rem 0' };
 const btnstyle = { margin: '1rem 0' };
 const linkStyle = { textDecoration: 'none' };
 
@@ -200,8 +201,8 @@ function PasswordConfirm({ onChange, value, error }) {
         onChange={onChange}
         value={value}
         type={showPassword ? 'text' : 'password'}
-        label="Confirmation du mot de passe"
-        placeholder="Confirmer votre mot de passe"
+        label="Confirmation"
+        placeholder="Mot de passe"
         variant="outlined"
         fullWidth
         required

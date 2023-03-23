@@ -21,7 +21,8 @@ import { onInputChange, onSignIn } from '../actions/userActions';
 const paperStyle = {
   padding: '2rem',
   height: '100%',
-  width: '340px',
+  width: '100%',
+  maxWidth: '380px',
   margin: '1.4rem auto',
 };
 const TextFieldStyle = { margin: '0.5rem 0' };
