@@ -16,6 +16,7 @@ import {
 } from '@mui/material';
 
 import MediumCard from '../components/Cards/MediumCard';
+import Hero from '../components/Hero';
 
 import Layout from '../components/Layout';
 import Loader from '../components/Loader';
@@ -37,10 +38,11 @@ export default function ArticlePage() {
   return (
     <Layout>
       <Hero
-        category={article.category.name}
-        title={article.title}
-        author={article.author.nickname}
         image={article.picture}
+        category={article.category}
+        title={article.title}
+        subtitle={article.category.tagline}
+        author={article.author.nickname}
       />
       <Container maxWidth="md">
         <Box
@@ -50,6 +52,8 @@ export default function ArticlePage() {
         >
           <Breadcrumbs
             aria-label="breadcrumb"
+            maxItems={3}
+            marginTop={2}
             paddingBottom={2}
             borderBottom={1}
             borderColor="divider"
@@ -135,81 +139,6 @@ export default function ArticlePage() {
     </Layout>
   );
 }
-
-const HeroWrapper = styled.div`
-  position: relative;
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
-  background-color: var(--color-primary-dark);
-  padding-top: 2rem;
-  padding-bottom: 2rem;
-  margin-bottom: 2rem;
-  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
-  &::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    opacity: 0.5;
-  }
-  @media screen and (min-width: 900px) {
-    padding-top: 4rem;
-    padding-bottom: 4rem;
-  }
-`;
-
-function Hero({ category, title, author, image }) {
-  return (
-    <HeroWrapper style={{ backgroundImage: `url("${image}")` }}>
-      <Container maxWidth="sm">
-        <Typography
-          variant="subtitle1"
-          paragraph
-          color="common.white"
-          textAlign="center"
-          sx={{ mixBlendMode: 'difference' }}
-        >
-          {category}
-        </Typography>
-      </Container>
-      <Container maxWidth="md">
-        <Box textAlign="center" color="common.white">
-          <Typography
-            variant="h2"
-            component="h1"
-            gutterBottom
-            sx={{
-              position: 'relative',
-            }}
-          >
-            {title}
-          </Typography>
-        </Box>
-        <Container maxWidth="sm">
-          <Typography
-            variant="h4"
-            paragraph
-            color="common.white"
-            textAlign="center"
-            sx={{ mixBlendMode: 'difference' }}
-          >
-            rédigé par {author}
-          </Typography>
-        </Container>
-      </Container>
-    </HeroWrapper>
-  );
-}
-
-Hero.propTypes = {
-  category: PropTypes.string.isRequired,
-  title: PropTypes.string.isRequired,
-  author: PropTypes.string.isRequired,
-  image: PropTypes.string.isRequired,
-};
 
 const TruncateContent = styled.div`
   overflow: hidden;
