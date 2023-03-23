@@ -114,11 +114,12 @@ Hero.propTypes = {
     slug: PropTypes.string,
   }),
   title: PropTypes.string.isRequired,
-  subtitle: PropTypes.string.isRequired,
+  subtitle: PropTypes.string,
   author: PropTypes.string,
 };
 
 Hero.defaultProps = {
   category: null,
+  subtitle: '',
   author: '',
 };
