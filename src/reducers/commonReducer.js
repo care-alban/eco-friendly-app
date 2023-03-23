@@ -1,4 +1,5 @@
 import {
+  TOGGLE_SHOW_ADVICE_FORM,
   SEARCH_BAR_ON_CHANGE,
   GET_ALL_CATEGORIES_SUCCESS,
   GET_ALL_CATEGORIES_ERROR,
@@ -7,10 +8,16 @@ import {
 export const initialState = {
   categories: [],
   searchValue: '',
+  showAdviceForm: false,
 };
 
 const reducer = (state = initialState, action = {}) => {
   switch (action.type) {
+    case TOGGLE_SHOW_ADVICE_FORM:
+      return {
+        ...state,
+        showAdviceForm: !state.showAdviceForm,
+      };
     case SEARCH_BAR_ON_CHANGE:
       return {
         ...state,
