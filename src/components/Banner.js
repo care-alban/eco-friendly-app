@@ -2,7 +2,7 @@ import { Container, Typography } from '@mui/material';
 
 export default function Banner() {
   return (
-    <Container>
+    <Container maxWidth="xl">
       <Typography
         variant="caption"
         display="block"
