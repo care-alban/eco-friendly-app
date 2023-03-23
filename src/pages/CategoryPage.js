@@ -89,7 +89,7 @@ export default function CategoryPage() {
       <Hero
         title={category.name}
         tagline={category.tagline}
-        image="https://picsum.photos/seed/picsum/1024/900"
+        image={category.picture}
       />
       <Box sx={{ flexGrow: 1, marginY: 2, marginX: 0 }}>
         <SearchBar list={allArticlesAndAdvices} keys={['title', 'content']} />

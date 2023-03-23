@@ -1,8 +1,5 @@
 import PropTypes from 'prop-types';
-import Container from '@mui/material/Container';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
+import { Box, Button, Container, Typography } from '@mui/material';
 import styled from 'styled-components';
 
 const HeroWrapper = styled.div`
@@ -14,6 +11,7 @@ const HeroWrapper = styled.div`
   padding-top: 2rem;
   padding-bottom: 2rem;
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  border-radius: 0.375rem;
   &::before {
     content: '';
     position: absolute;
@@ -21,7 +19,8 @@ const HeroWrapper = styled.div`
     left: 0;
     right: 0;
     bottom: 0;
-    opacity: 0.5;
+    opacity: 0.4;
+    background-color: var(--color-common-black);
   }
   @media screen and (min-width: 900px) {
     padding-top: 4rem;
@@ -43,6 +42,7 @@ export default function Hero({
           <Typography
             variant="h2"
             component="h1"
+            color="inherit"
             gutterBottom
             sx={{
               position: 'relative',
@@ -54,7 +54,10 @@ export default function Hero({
             <Typography
               variant="subtitle1"
               paragraph
-              sx={{ mixBlendMode: 'difference' }}
+              color="inherit"
+              sx={{
+                position: 'relative',
+              }}
             >
               {tagline}
             </Typography>
