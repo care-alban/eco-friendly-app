@@ -22,16 +22,8 @@ import Loader from '../components/Loader';
 export default function AdvicePage() {
   const { slug } = useParams();
   const advices = useSelector((state) => state.advices.list);
+  const articles = useSelector((state) => state.articles.list);
   const advice = advices.find((item) => item.slug === slug);
-  /* Get the first 4 advices of the same category without the current advice */
-  const sameCategoryAdvices = advices
-    .filter((item) => item.category.id === advice.category.id)
-    .filter((item) => item.id !== advice.id)
-    .slice(0, 4);
-  /* Get the first 4 articles of the same category */
-  const sameCategoryArticles = useSelector((state) => state.articles.list)
-    .filter((item) => item.category.id === advice.category.id)
-    .slice(0, 4);
 
   if (!advice) {
     return (
@@ -40,6 +32,16 @@ export default function AdvicePage() {
       </Layout>
     );
   }
+
+  /* Get the first 4 advices of the same category without the current advice */
+  const sameCategoryAdvices = advices
+    .filter((item) => item.category.id === advice.category.id)
+    .filter((item) => item.id !== advice.id)
+    .slice(0, 4);
+  /* Get the first 4 articles of the same category */
+  const sameCategoryArticles = articles
+    .filter((item) => item.category.id === advice.category.id)
+    .slice(0, 4);
 
   return (
     <Layout>
