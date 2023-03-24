@@ -26,18 +26,21 @@ export default function FormAdvice() {
   const dispatch = useDispatch();
   /* Get the button name clicked */
   const [buttonName, setButtonName] = useState(null);
-  const categories = useSelector((state) => state.common.categories);
+  /* Get the state of the form */
   const isShow = useSelector((state) => state.advices.showAdviceForm);
+  /* Control fields */
+  const categories = useSelector((state) => state.common.categories);
+  const id = useSelector((state) => state.advices.id);
   const title = useSelector((state) => state.advices.title);
   const category = useSelector((state) => state.advices.category);
   const content = useSelector((state) => state.advices.content);
+  /* Control if the form is successfully submitted */
   const isSubmitted = useSelector((state) => state.advices.isSubmitted);
 
   /* link field to state */
   const changeField = (e) => {
     dispatch(onInputChange(e.target.value, e.target.name));
   };
-
   const handleRichTextEditorChange = (value) => {
     dispatch(onInputChange(value, 'content'));
   };
@@ -46,10 +49,18 @@ export default function FormAdvice() {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (buttonName === 'publish') {
-      dispatch(toManageAdvice({ title, category, content }, null, 1));
+      if (id) {
+        dispatch(toManageAdvice({ title, category, content }, id, 1));
+      } else {
+        dispatch(toManageAdvice({ title, category, content }, null, 1));
+      }
     }
     if (buttonName === 'save') {
-      dispatch(toManageAdvice({ title, category, content }, null, 0));
+      if (id) {
+        dispatch(toManageAdvice({ title, category, content }, id, 0));
+      } else {
+        dispatch(toManageAdvice({ title, category, content }, null, 0));
+      }
     }
     if (buttonName === 'cancel') {
       dispatch(onInputChange('', 'title'));
@@ -59,6 +70,7 @@ export default function FormAdvice() {
     dispatch(toggleShowAdviceForm());
   };
 
+  /* Actions if the form is successfully submitted */
   useEffect(() => {
     dispatch(getAdvices());
   }, [isSubmitted]);
@@ -105,7 +117,6 @@ export default function FormAdvice() {
               labelId="category-label"
               id="category"
               label="Catégorie"
-              defaultValue=""
               required
               value={category}
               onChange={changeField}
