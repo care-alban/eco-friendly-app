@@ -409,21 +409,22 @@ function UserMenu({ user }) {
   }));
 
   return (
-    <Box sx={{ flexGrow: 0, display: 'flex' }}>
-      <IconButton
-        onClick={handleShowAdviceForm}
-        sx={{
-          display: { xs: 'none', md: 'block' },
-          color: 'common.white',
-          mr: 2,
-        }}
-      >
-        {!adviceFormIsOpen ? (
-          <AddIcon fontSize="medium" />
-        ) : (
-          <CloseIcon fontSize="medium" />
-        )}
-      </IconButton>
+    <Box sx={{ flexGrow: 0, display: 'flex', alignItems: 'center' }}>
+      <Box>
+        <IconButton
+          onClick={handleShowAdviceForm}
+          sx={{
+            display: { xs: 'none', md: 'flex' },
+            color: 'common.white',
+          }}
+        >
+          {!adviceFormIsOpen ? (
+            <AddIcon fontSize="medium" />
+          ) : (
+            <CloseIcon fontSize="medium" />
+          )}
+        </IconButton>
+      </Box>
       <Button
         variant="outlined"
         onClick={handleOpenUserMenu}
@@ -433,9 +434,9 @@ function UserMenu({ user }) {
           minWidth: '15em',
           justifyContent: 'space-between',
           padding: '0.375rem 0.5rem',
+          marginLeft: '1rem',
         }}
       >
-        {/* on left */}
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
           <StyledBadge
             overlap="circular"
@@ -451,15 +452,8 @@ function UserMenu({ user }) {
             {nickname}
           </Typography>
         </Box>
-        {/* on right */}
         {anchorElUser ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />}
       </Button>
-      {/* <IconButton
-        onClick={handleOpenUserMenu}
-        sx={{ p: 0, display: { xs: 'none', md: 'block' } }}
-      >
-        <Avatar alt={`avatar de ${nickname}`} src={avatar} />
-      </IconButton> */}
       <Menu
         sx={{ mt: '45px' }}
         id="menu-appbar"
