@@ -3,13 +3,49 @@ import PropTypes from 'prop-types';
 import { ThemeProvider } from '@mui/material/styles';
 import styled from 'styled-components';
 import CssBaseline from '@mui/material/CssBaseline';
-import Container from '@mui/material/Container';
+import { Box, Container, Fab, Fade, useScrollTrigger } from '@mui/material';
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import { GlobalStyle, GlobalTheme } from '../styles';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import FormAdvice from './Forms/FormAdvice';
 
-export default function Layout({ children }) {
+function ScrollTop(props) {
+  const { children } = props;
+  const trigger = useScrollTrigger({
+    disableHysteresis: true,
+    threshold: 100,
+  });
+
+  const handleClick = (event) => {
+    const anchor = (event.target.ownerDocument || document).querySelector(
+      '#back-to-top',
+    );
+
+    if (anchor) {
+      anchor.scrollIntoView({
+        block: 'center',
+      });
+    }
+  };
+
+  return (
+    <Fade in={trigger}>
+      <Box
+        onClick={handleClick}
+        role="presentation"
+        sx={{ position: 'fixed', bottom: 16, right: 16 }}
+      >
+        {children}
+      </Box>
+    </Fade>
+  );
+}
+
+ScrollTop.propTypes = {
+  children: PropTypes.element.isRequired,
+};
+export default function Layout({ children, ...props }) {
   /* Automatically positions the scroll bar at the top of the window at each page change */
   useEffect(() => {
     window.scrollTo({
@@ -30,6 +66,11 @@ export default function Layout({ children }) {
           {children}
         </Container>
       </Main>
+      <ScrollTop {...props}>
+        <Fab size="small" aria-label="scroll back to top">
+          <KeyboardArrowUpIcon />
+        </Fab>
+      </ScrollTop>
       <Footer />
     </ThemeProvider>
   );

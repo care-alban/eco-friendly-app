@@ -65,7 +65,7 @@ export default function Navbar() {
     <>
       <AppBar position="relative">
         <Container maxWidth="xl">
-          <Toolbar disableGutters>
+          <Toolbar disableGutters id="back-to-top">
             <LocalFloristIcon
               sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }}
             />
