@@ -44,7 +44,7 @@ const advicesMiddleware = (store) => (next) => (action) => {
               {
                 ...advice,
                 status,
-                contributor: store.getState().user.id,
+                contributor: store.getState().user.data.id,
               },
               {
                 headers: {
@@ -65,7 +65,7 @@ const advicesMiddleware = (store) => (next) => (action) => {
               {
                 ...advice,
                 status,
-                contributor: store.getState().user.id,
+                contributor: store.getState().user.data.id,
               },
               {
                 headers: {
