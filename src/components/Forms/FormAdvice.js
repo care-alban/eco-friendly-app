@@ -1,4 +1,5 @@
-import { useSelector } from 'react-redux';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   Box,
   Button,
@@ -14,22 +15,53 @@ import {
 
 import RichTextEditor from '../RichTextEditor';
 
+import {
+  onInputChange,
+  toManageAdvice,
+  getAdvices,
+} from '../../actions/advicesActions';
+import { toggleShowAdviceForm } from '../../actions/commonActions';
+
 export default function FormAdvice() {
+  const dispatch = useDispatch();
+  /* Get the button name clicked */
+  const [buttonName, setButtonName] = useState(null);
   const isShow = useSelector((state) => state.common.showAdviceForm);
   const categories = useSelector((state) => state.common.categories);
-  const RichTextEditorValue = '';
+  const title = useSelector((state) => state.advices.title);
+  const category = useSelector((state) => state.advices.category);
+  const content = useSelector((state) => state.advices.content);
+  const isSubmitted = useSelector((state) => state.advices.isSubmitted);
 
-  const handleTextFieldChange = (event) => {
-    console.log(event.target.value);
-  };
-
-  const handleSelectChange = (event) => {
-    console.log(event.target.value);
+  /* link field to state */
+  const changeField = (e) => {
+    dispatch(onInputChange(e.target.value, e.target.name));
   };
 
   const handleRichTextEditorChange = (value) => {
-    console.log(value);
+    dispatch(onInputChange(value, 'content'));
   };
+
+  /* Submit form */
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (buttonName === 'publish') {
+      dispatch(toManageAdvice({ title, category, content }, null, 1));
+    }
+    if (buttonName === 'save') {
+      dispatch(toManageAdvice({ title, category, content }, null, 0));
+    }
+    if (buttonName === 'cancel') {
+      dispatch(onInputChange('', 'title'));
+      dispatch(onInputChange('', 'category'));
+      dispatch(onInputChange('', 'content'));
+    }
+    dispatch(toggleShowAdviceForm());
+  };
+
+  useEffect(() => {
+    dispatch(getAdvices());
+  }, [isSubmitted]);
 
   return (
     <Paper
@@ -43,7 +75,7 @@ export default function FormAdvice() {
       <Typography variant="h4" component="h2" color="inherit">
         Ajouter un conseil
       </Typography>
-      <form noValidate autoComplete="off">
+      <form noValidate autoComplete="off" onSubmit={handleSubmit}>
         <Box
           sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' } }}
         >
@@ -62,8 +94,8 @@ export default function FormAdvice() {
               variant="outlined"
               fullWidth
               required
-              // value={email}
-              onChange={handleTextFieldChange}
+              value={title}
+              onChange={changeField}
             />
           </FormControl>
           <FormControl sx={{ width: { sx: '100%', md: '20%' }, marginTop: 2 }}>
@@ -75,12 +107,12 @@ export default function FormAdvice() {
               label="Catégorie"
               defaultValue=""
               required
-              // value={category}
-              onChange={handleSelectChange}
+              value={category}
+              onChange={changeField}
             >
-              {categories.map((category) => (
-                <MenuItem key={category.id} value={category.id}>
-                  {category.name}
+              {categories.map((item) => (
+                <MenuItem key={item.id} value={item.id}>
+                  {item.name}
                 </MenuItem>
               ))}
             </Select>
@@ -88,9 +120,8 @@ export default function FormAdvice() {
         </Box>
         <FormControl sx={{ width: '100%', marginTop: 2 }}>
           <RichTextEditor
-            name="description"
-            placeholder="Ajouter un conseil"
-            value={RichTextEditorValue}
+            name="content"
+            value={content}
             onChange={handleRichTextEditorChange}
           />
         </FormControl>
@@ -100,13 +131,29 @@ export default function FormAdvice() {
           marginTop={2}
           sx={{ display: 'flex', justifyContent: 'flex-end' }}
         >
-          <Button variant="contained" color="secondary">
+          <Button
+            variant="contained"
+            color="secondary"
+            type="submit"
+            onClick={() => setButtonName('publish')}
+          >
             Publier
           </Button>
-          <Button variant="contained" color="primary">
+          <Button
+            variant="contained"
+            color="primary"
+            type="submit"
+            onClick={() => setButtonName('save')}
+          >
             Sauvegarder
           </Button>
-          <Button variant="outlined">Annuler</Button>
+          <Button
+            variant="outlined"
+            type="submit"
+            onClick={() => setButtonName('cancel')}
+          >
+            Annuler
+          </Button>
         </Stack>
       </form>
     </Paper>
