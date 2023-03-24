@@ -4,6 +4,9 @@ import {
   GET_ADVICES,
   getAdvicesSuccess,
   getAdvicesError,
+  TO_MANAGE_ADVICE,
+  toManageAdviceSuccess,
+  toManageAdviceError,
 } from '../actions/advicesActions';
 
 import config from '../config';
@@ -27,6 +30,32 @@ const advicesMiddleware = (store) => (next) => (action) => {
           .catch((error) => {
             store.dispatch(getAdvicesError(error));
           });
+      }
+      break;
+    case TO_MANAGE_ADVICE:
+      if (config.env === 'dev') {
+        store.dispatch(toManageAdviceSuccess(data.addedAdvice));
+      } else {
+        const { advice, id, status } = action;
+        if (id) {
+          axios
+            .put(`${config.apiURL}/advices/${id}`, { ...advice, status })
+            .then((response) => {
+              store.dispatch(toManageAdviceSuccess(response.data));
+            })
+            .catch((error) => {
+              store.dispatch(toManageAdviceError(error));
+            });
+        } else {
+          axios
+            .post(`${config.apiURL}/advices`, { ...advice, status })
+            .then((response) => {
+              store.dispatch(toManageAdviceSuccess(response.data));
+            })
+            .catch((error) => {
+              store.dispatch(toManageAdviceError(error));
+            });
+        }
       }
       break;
     default:
