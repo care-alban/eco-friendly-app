@@ -39,7 +39,19 @@ const advicesMiddleware = (store) => (next) => (action) => {
         const { advice, id, status } = action;
         if (id) {
           axios
-            .put(`${config.apiURL}/advices/${id}`, { ...advice, status })
+            .put(
+              `${config.apiURL}/advices/${id}`,
+              {
+                ...advice,
+                status,
+                contributor: store.getState().user.id,
+              },
+              {
+                headers: {
+                  Authorization: `Bearer ${store.getState().user.token}`,
+                },
+              },
+            )
             .then((response) => {
               store.dispatch(toManageAdviceSuccess(response.data));
             })
@@ -48,7 +60,19 @@ const advicesMiddleware = (store) => (next) => (action) => {
             });
         } else {
           axios
-            .post(`${config.apiURL}/advices`, { ...advice, status })
+            .post(
+              `${config.apiURL}/advices`,
+              {
+                ...advice,
+                status,
+                contributor: store.getState().user.id,
+              },
+              {
+                headers: {
+                  Authorization: `Bearer ${store.getState().user.token}`,
+                },
+              },
+            )
             .then((response) => {
               store.dispatch(toManageAdviceSuccess(response.data));
             })
