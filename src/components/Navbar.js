@@ -25,6 +25,8 @@ import {
   toggleShowAdviceForm,
 } from '../actions/commonActions';
 
+import { onLogOut } from '../actions/userActions';
+
 // const pages = ['Maison', 'Santé', 'Bien-être', 'Alimentation'];
 const link = {
   mr: 3,
@@ -191,6 +193,10 @@ function MobileNav({ categories, user }) {
     setAnchorElNav(null);
   };
 
+  const handleOnLogout = () => {
+    dispatch(onLogOut());
+  };
+
   return (
     <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
       <IconButton
@@ -219,9 +225,6 @@ function MobileNav({ categories, user }) {
         onClose={handleCloseNavMenu}
         sx={{
           display: { xs: 'block', md: 'none' },
-          // '& .MuiMenu-paper': {
-          //   padding: '0 1rem',
-          // },
         }}
       >
         <MenuItem
@@ -314,7 +317,7 @@ function MobileNav({ categories, user }) {
               </Button>
               <Link
                 component={RouterLink}
-                to="/deconnexion"
+                to="/"
                 sx={{
                   ...link,
                   margin: '0.625rem 0',
@@ -329,6 +332,7 @@ function MobileNav({ categories, user }) {
                     borderColor: 'none',
                   },
                 }}
+                onClick={handleOnLogout}
               >
                 Déconnexion
               </Link>
@@ -366,6 +370,10 @@ function UserMenu({ user }) {
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
+  };
+
+  const handleOnLogout = () => {
+    dispatch(onLogOut());
   };
 
   return (
@@ -422,7 +430,7 @@ function UserMenu({ user }) {
 
           <Link
             component={RouterLink}
-            to="/deconnexion"
+            to="/"
             sx={{
               ...link,
               margin: '0.625rem 0',
@@ -437,6 +445,7 @@ function UserMenu({ user }) {
                 borderColor: 'none',
               },
             }}
+            onClick={handleOnLogout}
           >
             Déconnexion
           </Link>
