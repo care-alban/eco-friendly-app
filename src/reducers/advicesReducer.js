@@ -1,4 +1,5 @@
 import {
+  ON_INPUT_CHANGE,
   GET_ADVICES_SUCCESS,
   GET_ADVICES_ERROR,
   TO_MANAGE_ADVICE_SUCCESS,
@@ -12,10 +13,18 @@ export const initialState = {
     success: [],
     error: [],
   },
+  title: '',
+  category: '',
+  content: '',
 };
 
 const reducer = (state = initialState, action = {}) => {
   switch (action.type) {
+    case ON_INPUT_CHANGE:
+      return {
+        ...state,
+        [action.identifier]: action.value,
+      };
     case GET_ADVICES_SUCCESS:
       return {
         ...state,
@@ -38,6 +47,9 @@ const reducer = (state = initialState, action = {}) => {
             }.`,
           ],
         },
+        title: '',
+        category: '',
+        content: '',
       };
     case TO_MANAGE_ADVICE_ERROR:
       return {

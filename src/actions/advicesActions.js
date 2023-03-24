@@ -1,4 +1,19 @@
 /**
+ * @name onInputChange
+ * @description Action creator for input change
+ * @param {string} value
+ * @param {string} identifier
+ * @returns {object} action
+ */
+export const ON_INPUT_CHANGE = 'ON_INPUT_CHANGE';
+
+export const onInputChange = (value, identifier) => ({
+  type: ON_INPUT_CHANGE,
+  value,
+  identifier,
+});
+
+/**
  * @name getAdvices
  * @description Get advices
  * @param {Array} params Params to send
