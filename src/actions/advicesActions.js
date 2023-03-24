@@ -124,12 +124,14 @@ export const toDeleteAdvice = (id) => ({
 /**
  * @name toDeleteAdviceSuccess
  * @description To delete advice success
+ * @param {Number} id Advice id
  * @returns {Object} Action
  */
 export const TO_DELETE_ADVICE_SUCCESS = 'TO_DELETE_ADVICE_SUCCESS';
 
-export const toDeleteAdviceSuccess = () => ({
+export const toDeleteAdviceSuccess = (id) => ({
   type: TO_DELETE_ADVICE_SUCCESS,
+  id,
 });
 
 /**

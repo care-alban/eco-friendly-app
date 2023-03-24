@@ -87,7 +87,7 @@ const advicesMiddleware = (store) => (next) => (action) => {
       break;
     case TO_DELETE_ADVICE:
       if (config.env === 'dev') {
-        store.dispatch(toDeleteAdviceSuccess());
+        store.dispatch(toDeleteAdviceSuccess(action.id));
       } else {
         const { id } = action;
         axios
@@ -97,7 +97,7 @@ const advicesMiddleware = (store) => (next) => (action) => {
             },
           })
           .then(() => {
-            store.dispatch(toDeleteAdviceSuccess());
+            store.dispatch(toDeleteAdviceSuccess(id));
           })
           .catch((error) => {
             store.dispatch(toDeleteAdviceError(error));
