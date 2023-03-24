@@ -1,7 +1,4 @@
-import {
-  // useDispatch,
-  useSelector,
-} from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link as RouterLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
@@ -19,15 +16,25 @@ import styled from '@emotion/styled';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 
-// import { toggleShowAdviceForm } from '../../actions/advicesActions';
+import { toggleShowAdviceForm } from '../../actions/advicesActions';
 
 export default function AdvicesMediumCard({ advice }) {
-  //   const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const user = useSelector((state) => state.user.data);
+  /* Get the state of the form */
+  const isShow = useSelector((state) => state.advices.showAdviceForm);
 
   const handleShowAdviceForm = () => {
-    console.log('Show form : ', advice.id);
-    // dispatch(toggleShowAdviceForm());
+    /* Close and clear the form if is already open */
+    if (isShow) {
+      dispatch(toggleShowAdviceForm());
+    }
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: 'smooth',
+    });
+    dispatch(toggleShowAdviceForm(advice));
   };
 
   const handleDeleteAdvice = () => {
