@@ -16,7 +16,7 @@ const advicesMiddleware = (store) => (next) => (action) => {
   switch (action.type) {
     case GET_ADVICES:
       if (config.env === 'dev') {
-        store.dispatch(getAdvicesSuccess(data.advices.home));
+        store.dispatch(getAdvicesSuccess(data.advices));
       } else {
         const { params } = action;
         const paramsString = params

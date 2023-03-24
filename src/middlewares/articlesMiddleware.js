@@ -13,7 +13,7 @@ const articlesMiddleware = (store) => (next) => (action) => {
   switch (action.type) {
     case GET_ARTICLES:
       if (config.env === 'dev') {
-        store.dispatch(getArticlesSuccess(data.articles.home));
+        store.dispatch(getArticlesSuccess(data.articles));
       } else {
         const { params } = action;
         const paramsString = params
