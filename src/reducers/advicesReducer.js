@@ -5,6 +5,8 @@ import {
   TOGGLE_SHOW_ADVICE_FORM,
   TO_MANAGE_ADVICE_SUCCESS,
   TO_MANAGE_ADVICE_ERROR,
+  TO_DELETE_ADVICE_SUCCESS,
+  TO_DELETE_ADVICE_ERROR,
 } from '../actions/advicesActions';
 
 export const initialState = {
@@ -53,6 +55,12 @@ const reducer = (state = initialState, action = {}) => {
       return {
         ...state,
         advice: action.advice,
+        list: state.list.map((advice) => {
+          if (advice.id === action.advice.id) {
+            return action.advice;
+          }
+          return advice;
+        }),
         messages: {
           ...state.messages,
           success: [
@@ -70,6 +78,23 @@ const reducer = (state = initialState, action = {}) => {
       return {
         ...state,
         advice: {},
+        messages: {
+          ...state.messages,
+          error: action.error.response.data.errors,
+        },
+      };
+    case TO_DELETE_ADVICE_SUCCESS:
+      return {
+        ...state,
+        list: state.list.filter((advice) => advice.id !== action.id),
+        messages: {
+          ...state.messages,
+          success: ['Votre conseil a bien été supprimé.'],
+        },
+      };
+    case TO_DELETE_ADVICE_ERROR:
+      return {
+        ...state,
         messages: {
           ...state.messages,
           error: action.error.response.data.errors,

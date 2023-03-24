@@ -7,6 +7,9 @@ import {
   TO_MANAGE_ADVICE,
   toManageAdviceSuccess,
   toManageAdviceError,
+  TO_DELETE_ADVICE,
+  toDeleteAdviceSuccess,
+  toDeleteAdviceError,
 } from '../actions/advicesActions';
 
 import config from '../config';
@@ -80,6 +83,25 @@ const advicesMiddleware = (store) => (next) => (action) => {
               store.dispatch(toManageAdviceError(error));
             });
         }
+      }
+      break;
+    case TO_DELETE_ADVICE:
+      if (config.env === 'dev') {
+        store.dispatch(toDeleteAdviceSuccess());
+      } else {
+        const { id } = action;
+        axios
+          .delete(`${config.apiURL}/advices/${id}`, {
+            headers: {
+              Authorization: `Bearer ${store.getState().user.token}`,
+            },
+          })
+          .then(() => {
+            store.dispatch(toDeleteAdviceSuccess());
+          })
+          .catch((error) => {
+            store.dispatch(toDeleteAdviceError(error));
+          });
       }
       break;
     default:

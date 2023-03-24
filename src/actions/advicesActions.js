@@ -107,3 +107,40 @@ export const toManageAdviceError = (error) => ({
   type: TO_MANAGE_ADVICE_ERROR,
   error,
 });
+
+/**
+ * @name toDeleteAdvice
+ * @description To delete advice
+ * @param {Number} id Advice id
+ * @returns {Object} Action
+ */
+export const TO_DELETE_ADVICE = 'TO_DELETE_ADVICE';
+
+export const toDeleteAdvice = (id) => ({
+  type: TO_DELETE_ADVICE,
+  id,
+});
+
+/**
+ * @name toDeleteAdviceSuccess
+ * @description To delete advice success
+ * @returns {Object} Action
+ */
+export const TO_DELETE_ADVICE_SUCCESS = 'TO_DELETE_ADVICE_SUCCESS';
+
+export const toDeleteAdviceSuccess = () => ({
+  type: TO_DELETE_ADVICE_SUCCESS,
+});
+
+/**
+ * @name toDeleteAdviceError
+ * @description To delete advice error
+ * @param {Object} error Error
+ * @returns {Object} Action
+ */
+export const TO_DELETE_ADVICE_ERROR = 'TO_DELETE_ADVICE_ERROR';
+
+export const toDeleteAdviceError = (error) => ({
+  type: TO_DELETE_ADVICE_ERROR,
+  error,
+});
