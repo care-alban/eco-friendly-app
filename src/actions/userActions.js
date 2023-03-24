@@ -57,6 +57,17 @@ export const onSignInError = (error) => ({
 });
 
 /**
+ * @name onLogOut
+ * @description Action creator for log out
+ * @returns {object} action
+ */
+export const ON_LOG_OUT = 'ON_LOG_OUT';
+
+export const onLogOut = () => ({
+  type: ON_LOG_OUT,
+});
+
+/**
  * @name onSignUp
  * @description Action creator for sign up
  * @param {string} email

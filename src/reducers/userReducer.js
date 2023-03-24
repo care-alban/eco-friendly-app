@@ -2,6 +2,7 @@ import {
   ON_INPUT_CHANGE,
   ON_SIGN_IN_SUCCESS,
   ON_SIGN_IN_ERROR,
+  ON_LOG_OUT,
   ON_SIGN_UP_SUCCESS,
   ON_SIGN_UP_ERROR,
   ON_GET_ADVICES_SUCCESS,
@@ -57,6 +58,17 @@ const reducer = (state = initialState, action = {}) => {
           ...state.messages,
           error: action.error.response.data.errors,
         },
+      };
+    case ON_LOG_OUT:
+      return {
+        ...state,
+        data: null,
+        token: '',
+        messages: {
+          ...state.messages,
+          success: ['Vous avez été déconnecté'],
+        },
+        isLogged: false,
       };
     case ON_SIGN_UP_SUCCESS:
       return {
