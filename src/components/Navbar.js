@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import {
   AppBar,
   Avatar,
+  Badge,
   Box,
   Button,
   Container,
@@ -15,10 +16,13 @@ import {
   Toolbar,
   Typography,
 } from '@mui/material';
+import { styled } from '@mui/material/styles';
 import LocalFloristIcon from '@mui/icons-material/LocalFlorist';
-import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
-import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
+import AddIcon from '@mui/icons-material/Add';
+import CloseIcon from '@mui/icons-material/Close';
 import MenuIcon from '@mui/icons-material/Menu';
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 
 import {
   getAllCategories,
@@ -376,26 +380,100 @@ function UserMenu({ user }) {
     dispatch(onLogOut());
   };
 
+  /* style */
+  const StyledBadge = styled(Badge)(({ theme }) => ({
+    '& .MuiBadge-badge': {
+      backgroundColor: '#44b700',
+      color: '#44b700',
+      boxShadow: `0 0 0 2px ${theme.palette.background.paper}`,
+      '&::after': {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        width: '100%',
+        height: '100%',
+        borderRadius: '50%',
+        animation: 'ripple 1.2s infinite ease-in-out',
+        border: '1px solid currentColor',
+        content: '""',
+      },
+    },
+    '@keyframes ripple': {
+      '0%': {
+        transform: 'scale(.8)',
+        opacity: 1,
+      },
+      '100%': {
+        transform: 'scale(2.4)',
+        opacity: 0,
+      },
+    },
+  }));
+
   return (
     <Box sx={{ flexGrow: 0, display: 'flex' }}>
       <IconButton
+        onClick={handleShowAdviceForm}
+        sx={{
+          display: { xs: 'none', md: 'block' },
+          color: 'common.white',
+          mr: 2,
+        }}
+      >
+        {!adviceFormIsOpen ? (
+          <AddIcon fontSize="medium" />
+        ) : (
+          <CloseIcon fontSize="medium" />
+        )}
+      </IconButton>
+      <Button
+        variant="outlined"
+        onClick={handleOpenUserMenu}
+        color="inherit"
+        sx={{
+          display: { xs: 'none', md: 'flex' },
+          minWidth: '15em',
+          justifyContent: 'space-between',
+          padding: '0.375rem 0.5rem',
+        }}
+      >
+        {/* on left */}
+        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+          <StyledBadge
+            overlap="circular"
+            anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+            variant="dot"
+          >
+            <Avatar alt={`avatar de ${nickname}`} src={avatar} />
+          </StyledBadge>
+          <Typography
+            component="span"
+            sx={{ fontSize: '0.75rem', marginLeft: '0.5rem' }}
+          >
+            {nickname}
+          </Typography>
+        </Box>
+        {/* on right */}
+        {anchorElUser ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />}
+      </Button>
+      {/* <IconButton
         onClick={handleOpenUserMenu}
         sx={{ p: 0, display: { xs: 'none', md: 'block' } }}
       >
         <Avatar alt={`avatar de ${nickname}`} src={avatar} />
-      </IconButton>
+      </IconButton> */}
       <Menu
         sx={{ mt: '45px' }}
         id="menu-appbar"
         anchorEl={anchorElUser}
         anchorOrigin={{
           vertical: 'top',
-          horizontal: 'center',
+          horizontal: 'right',
         }}
         keepMounted
         transformOrigin={{
           vertical: 'top',
-          horizontal: 'center',
+          horizontal: 'right',
         }}
         open={Boolean(anchorElUser)}
         onClose={handleCloseUserMenu}
@@ -451,21 +529,6 @@ function UserMenu({ user }) {
           </Link>
         </MenuItem>
       </Menu>
-      <IconButton
-        onClick={handleShowAdviceForm}
-        sx={{
-          p: 0,
-          display: { xs: 'none', md: 'block' },
-          color: 'common.white',
-          ml: 1,
-        }}
-      >
-        {!adviceFormIsOpen ? (
-          <AddCircleOutlineIcon fontSize="large" />
-        ) : (
-          <RemoveCircleOutlineIcon fontSize="large" />
-        )}
-      </IconButton>
     </Box>
   );
 }
