@@ -2,6 +2,7 @@ import {
   ON_INPUT_CHANGE,
   GET_ADVICES_SUCCESS,
   GET_ADVICES_ERROR,
+  TOGGLE_SHOW_ADVICE_FORM,
   TO_MANAGE_ADVICE_SUCCESS,
   TO_MANAGE_ADVICE_ERROR,
 } from '../actions/advicesActions';
@@ -17,6 +18,7 @@ export const initialState = {
   category: '',
   content: '',
   isSubmitted: false,
+  showAdviceForm: false,
 };
 
 const reducer = (state = initialState, action = {}) => {
@@ -35,6 +37,11 @@ const reducer = (state = initialState, action = {}) => {
       return {
         ...state,
         list: [],
+      };
+    case TOGGLE_SHOW_ADVICE_FORM:
+      return {
+        ...state,
+        showAdviceForm: !state.showAdviceForm,
       };
     case TO_MANAGE_ADVICE_SUCCESS:
       return {

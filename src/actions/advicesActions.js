@@ -53,6 +53,17 @@ export const getAdvicesError = (error) => ({
 });
 
 /**
+ * @name toggleShowAdviceForm
+ * @description Toggle show advice form
+ * @returns {Object} Action
+ */
+export const TOGGLE_SHOW_ADVICE_FORM = 'TOGGLE_SHOW_ADVICE_FORM';
+
+export const toggleShowAdviceForm = () => ({
+  type: TOGGLE_SHOW_ADVICE_FORM,
+});
+
+/**
  * @name toManageAdvice
  * @description To manage advice (edit or create, publish or save as draft) depending on the advice id and advice status
  * @param {Object} advice Advice

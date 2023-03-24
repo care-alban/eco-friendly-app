@@ -47,14 +47,3 @@ export const searchBarOnChange = (value) => ({
   type: SEARCH_BAR_ON_CHANGE,
   value,
 });
-
-/**
- * @name toggleShowAdviceForm
- * @description Toggle show advice form
- * @returns {Object} Action
- */
-export const TOGGLE_SHOW_ADVICE_FORM = 'TOGGLE_SHOW_ADVICE_FORM';
-
-export const toggleShowAdviceForm = () => ({
-  type: TOGGLE_SHOW_ADVICE_FORM,
-});

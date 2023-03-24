@@ -24,10 +24,8 @@ import MenuIcon from '@mui/icons-material/Menu';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 
-import {
-  getAllCategories,
-  toggleShowAdviceForm,
-} from '../actions/commonActions';
+import { getAllCategories } from '../actions/commonActions';
+import { toggleShowAdviceForm } from '../actions/advicesActions';
 
 import { onLogOut } from '../actions/userActions';
 

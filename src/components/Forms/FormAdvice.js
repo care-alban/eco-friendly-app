@@ -16,18 +16,18 @@ import {
 import RichTextEditor from '../RichTextEditor';
 
 import {
-  onInputChange,
-  toManageAdvice,
   getAdvices,
+  onInputChange,
+  toggleShowAdviceForm,
+  toManageAdvice,
 } from '../../actions/advicesActions';
-import { toggleShowAdviceForm } from '../../actions/commonActions';
 
 export default function FormAdvice() {
   const dispatch = useDispatch();
   /* Get the button name clicked */
   const [buttonName, setButtonName] = useState(null);
-  const isShow = useSelector((state) => state.common.showAdviceForm);
   const categories = useSelector((state) => state.common.categories);
+  const isShow = useSelector((state) => state.advices.showAdviceForm);
   const title = useSelector((state) => state.advices.title);
   const category = useSelector((state) => state.advices.category);
   const content = useSelector((state) => state.advices.content);
