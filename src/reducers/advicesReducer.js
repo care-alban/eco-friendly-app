@@ -16,6 +16,7 @@ export const initialState = {
   title: '',
   category: '',
   content: '',
+  isSubmitted: false,
 };
 
 const reducer = (state = initialState, action = {}) => {
@@ -50,6 +51,7 @@ const reducer = (state = initialState, action = {}) => {
         title: '',
         category: '',
         content: '',
+        isSubmitted: true,
       };
     case TO_MANAGE_ADVICE_ERROR:
       return {
