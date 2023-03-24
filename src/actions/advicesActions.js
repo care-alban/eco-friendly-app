@@ -55,12 +55,14 @@ export const getAdvicesError = (error) => ({
 /**
  * @name toggleShowAdviceForm
  * @description Toggle show advice form
+ * @param {Object} advice Advice
  * @returns {Object} Action
  */
 export const TOGGLE_SHOW_ADVICE_FORM = 'TOGGLE_SHOW_ADVICE_FORM';
 
-export const toggleShowAdviceForm = () => ({
+export const toggleShowAdviceForm = (advice = {}) => ({
   type: TOGGLE_SHOW_ADVICE_FORM,
+  advice,
 });
 
 /**
