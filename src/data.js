@@ -24,35 +24,34 @@ export default {
     'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE2NzkyNjA3NzIsImV4cCI6MTY3OTI2NDM3Miwicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJuYW1lIjoidXNlckB1c2VyLmNvbSJ9.ZEmbnRw8WYJvpfNPoESZEe7q5O5tfvYz6ZLT2HCavNFjSqGaaZNRYoK4mySKyrpIdvp_phb4OkTHzvGzmOmlavl0u4H8DChTzj4c1E_Sa3KX4qyTzEKrVBmui_TRypmJXbUuQUI_ZtxBiBHGPSVuPszovFzB0xZ8k3wJluyFAbLxwC-sc5FB1UipbKWoh3RA5GBRtAldu8-qNurhC0JDe3cj_c8qqNebVsoK5HyO7YmjHYhDrF5Dsx4VA-3SQaZnMhoZMac0Tp001Uhewgha2t8fd9oZvvkRU8NgN06JSkhCIYisxK1sd3Ds4tTQK2Me88Hm8JL9afJJEmMr0N88pw',
   categories: [
     {
-      id: 1,
+      id: 5,
+      name: 'Maison',
+      tagline: 'Velit eum aut doloribus et.',
+      slug: 'maison',
+      picture: 'https://cdn.eco-friendly.fr/assets/img/categories/maison.webp',
+    },
+    {
+      id: 6,
+      name: 'Santé',
+      tagline: 'Vero ut sit amet quas iste rerum suscipit.',
+      slug: 'sante',
+      picture: 'https://cdn.eco-friendly.fr/assets/img/categories/sante.webp',
+    },
+    {
+      id: 7,
       name: 'Mobilité',
+      tagline: 'Minima beatae autem quisquam vero ab quibusdam odio.',
       slug: 'mobilite',
       picture:
         'https://cdn.eco-friendly.fr/assets/img/categories/mobilite.webp',
-      tagline: 'Eaque enim enim quaerat est velit qui quia.',
     },
     {
-      id: 2,
-      name: 'Maison',
-      tagline: 'Eveniet quis reiciendis cum.',
-      picture: 'https://cdn.eco-friendly.fr/assets/img/categories/maison.webp',
-      slug: 'maison',
-    },
-    {
-      id: 3,
-      name: 'Santé',
-      tagline:
-        'Dolores corporis ullam libero exercitationem corporis adipisci quo et.',
-      picture: 'https://cdn.eco-friendly.fr/assets/img/categories/sante.webp',
-      slug: 'sante',
-    },
-    {
-      id: 4,
+      id: 8,
       name: 'Alimentation',
-      tagline: 'Nisi modi ducimus laborum autem.',
+      tagline: 'Maxime placeat ut atque maxime quia commodi dolor.',
+      slug: 'alimentation',
       picture:
         'https://cdn.eco-friendly.fr/assets/img/categories/alimentation.webp',
-      slug: 'alimentation',
     },
   ],
   articles: [
