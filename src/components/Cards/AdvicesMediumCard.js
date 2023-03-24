@@ -16,7 +16,10 @@ import styled from '@emotion/styled';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 
-import { toggleShowAdviceForm } from '../../actions/advicesActions';
+import {
+  toggleShowAdviceForm,
+  toDeleteAdvice,
+} from '../../actions/advicesActions';
 
 export default function AdvicesMediumCard({ advice }) {
   const dispatch = useDispatch();
@@ -38,7 +41,8 @@ export default function AdvicesMediumCard({ advice }) {
   };
 
   const handleDeleteAdvice = () => {
-    console.log('delete advice : ', advice.id);
+    /* TODO: add a confirmation modal */
+    dispatch(toDeleteAdvice(advice.id));
   };
 
   /* Truncate the content of the card */
