@@ -108,7 +108,7 @@ export default function Hero({ image, category, title, subtitle, author }) {
 }
 
 Hero.propTypes = {
-  image: PropTypes.string.isRequired,
+  image: PropTypes.string,
   category: PropTypes.shape({
     name: PropTypes.string,
     slug: PropTypes.string,
@@ -119,6 +119,7 @@ Hero.propTypes = {
 };
 
 Hero.defaultProps = {
+  image: '',
   category: null,
   subtitle: '',
   author: '',
