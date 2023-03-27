@@ -319,14 +319,16 @@ function FeaturedArticles({ article }) {
           {category.name}
         </Typography>
         <CardContent sx={{ padding: '0' }}>
-          <Typography
-            gutterBottom
-            variant="h6"
-            component="div"
-            marginBottom={0}
-          >
-            {title}
-          </Typography>
+          <TruncateContent lines={2}>
+            <Typography
+              gutterBottom
+              variant="h6"
+              component="h3"
+              sx={{ minHeight: { md: '4rem' } }}
+            >
+              {title}
+            </Typography>
+          </TruncateContent>
           <TruncateContent lines={3}>
             <div dangerouslySetInnerHTML={{ __html: content }} />
           </TruncateContent>
@@ -399,9 +401,16 @@ function InShortArticles({ article }) {
             minHeight: 180,
           }}
         >
-          <Typography gutterBottom variant="h6" component="div">
-            {title}
-          </Typography>
+          <TruncateContent lines={2}>
+            <Typography
+              gutterBottom
+              variant="h6"
+              component="h3"
+              sx={{ minHeight: { md: '4rem' } }}
+            >
+              {title}
+            </Typography>
+          </TruncateContent>
           <TruncateContent lines={3}>
             <div dangerouslySetInnerHTML={{ __html: content }} />
           </TruncateContent>
@@ -474,14 +483,16 @@ function RecentArticles({ article }) {
             {category.name}
           </Typography>
           <CardContent sx={{ padding: '0' }}>
-            <Typography
-              gutterBottom
-              variant="h6"
-              component="div"
-              marginBottom={0}
-            >
-              {title}
-            </Typography>
+            <TruncateContent lines={2}>
+              <Typography
+                gutterBottom
+                variant="h6"
+                component="h3"
+                sx={{ minHeight: { md: '4rem' } }}
+              >
+                {title}
+              </Typography>
+            </TruncateContent>
             <TruncateContent lines={3}>
               <div dangerouslySetInnerHTML={{ __html: content }} />
             </TruncateContent>
