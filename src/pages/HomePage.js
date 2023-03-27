@@ -163,9 +163,18 @@ export default function HomePage() {
           ))}
         </Grid>
       </Section>
-      <Section id="quizz">
+      <Box
+        component="section"
+        id="quizz"
+        sx={{
+          paddingY: '2rem',
+          minWidth: '100vw',
+          marginLeft: 'calc((100vw - 100%) / -2)',
+          backgroundColor: 'primary.light',
+        }}
+      >
         <Quizz />
-      </Section>
+      </Box>
       <section id="advices">
         <Box
           sx={{

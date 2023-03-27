@@ -1,14 +1,17 @@
 import { useState } from 'react';
 
-import Radio from '@mui/material/Radio';
-import RadioGroup from '@mui/material/RadioGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import FormControl from '@mui/material/FormControl';
-import FormHelperText from '@mui/material/FormHelperText';
-import FormLabel from '@mui/material/FormLabel';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
+import {
+  Box,
+  Button,
+  Container,
+  FormControl,
+  FormControlLabel,
+  FormHelperText,
+  FormLabel,
+  Radio,
+  RadioGroup,
+  Typography,
+} from '@mui/material';
 
 export default function Quizz() {
   const [value, setValue] = useState('');
@@ -37,7 +40,7 @@ export default function Quizz() {
         Quizz
       </Typography>
       <form onSubmit={handleSubmit}>
-        <FormControl sx={{ m: 3 }} variant="standard">
+        <FormControl sx={{ width: '100%' }} variant="standard">
           <FormLabel
             id="demo-error-radios"
             sx={{ color: '#fff', fontWeight: 'bold' }}
@@ -77,9 +80,16 @@ export default function Quizz() {
             />
           </RadioGroup>
           <FormHelperText>{helperText}</FormHelperText>
-          <Button sx={{ mt: 1, mr: 1 }} type="submit" variant="outlined">
-            Check Answer
-          </Button>
+          <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+            <Button
+              sx={{ mt: 1, mr: 1 }}
+              type="submit"
+              variant="contained"
+              color="secondary"
+            >
+              Check Answer
+            </Button>
+          </Box>
         </FormControl>
       </form>
     </Container>
