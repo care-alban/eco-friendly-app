@@ -1,5 +1,5 @@
-import { useSelector } from 'react-redux';
-import { useParams, Link as RouterLink } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { useParams, Link as RouterLink, useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {
   Box,
@@ -21,12 +21,20 @@ import Hero from '../components/Hero';
 import Layout from '../components/Layout';
 import Loader from '../components/Loader';
 
+import {
+  toggleShowAdviceForm,
+  toDeleteAdvice,
+} from '../actions/advicesActions';
+
 export default function AdvicePage() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { slug } = useParams();
   const advices = useSelector((state) => state.advices.list);
   const articles = useSelector((state) => state.articles.list);
   const advice = advices.find((item) => item.slug === slug);
-  const userId = useSelector((state) => state.user.data.id);
+  const user = useSelector((state) => state.user.data);
+  const isShow = useSelector((state) => state.advices.showAdviceForm);
 
   if (!advice) {
     return (
@@ -35,6 +43,11 @@ export default function AdvicePage() {
       </Layout>
     );
   }
+
+  const { category } = advice;
+
+  /* TODO: refactor this */
+  /* TODO: add a selector to get the advices and articles of the same category */
 
   /* Get the first 4 advices of the same category without the current advice */
   const sameCategoryAdvices = advices
@@ -45,6 +58,25 @@ export default function AdvicePage() {
   const sameCategoryArticles = articles
     .filter((item) => item.category.id === advice.category.id)
     .slice(0, 4);
+
+  const handleShowAdviceForm = () => {
+    /* Close and clear the form if is already open */
+    if (isShow) {
+      dispatch(toggleShowAdviceForm());
+    }
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: 'smooth',
+    });
+    dispatch(toggleShowAdviceForm(advice));
+  };
+
+  const handleDeleteAdvice = () => {
+    /* TODO: add a confirmation modal */
+    dispatch(toDeleteAdvice(advice.id));
+    navigate(`/categories/${category.slug}`, { replace: true });
+  };
 
   return (
     <Layout>
@@ -86,7 +118,7 @@ export default function AdvicePage() {
       <Grid container spacing={4} marginBottom={4}>
         <Grid item xs={12} md={8}>
           <Box paddingY={2}>
-            {userId === advice.contributor.id && (
+            {user && user.id === advice.contributor.id && (
               <Box
                 sx={{
                   position: 'relative',
@@ -94,10 +126,14 @@ export default function AdvicePage() {
                   justifyContent: 'flex-end',
                 }}
               >
-                <IconButton aria-label="delete">
+                <IconButton aria-label="delete" onClick={handleDeleteAdvice}>
                   <DeleteIcon />
                 </IconButton>
-                <IconButton aria-label="edit" color="primary">
+                <IconButton
+                  aria-label="edit"
+                  color="primary"
+                  onClick={handleShowAdviceForm}
+                >
                   <EditIcon />
                 </IconButton>
               </Box>
