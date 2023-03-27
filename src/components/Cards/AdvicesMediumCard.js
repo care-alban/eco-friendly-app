@@ -11,10 +11,11 @@ import {
   IconButton,
   Typography,
 } from '@mui/material';
-import styled from '@emotion/styled';
 
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
+
+import TruncateContent from '../TruncateContent';
 
 import {
   toggleShowAdviceForm,
@@ -45,18 +46,6 @@ export default function AdvicesMediumCard({ advice }) {
     dispatch(toDeleteAdvice(advice.id));
   };
 
-  /* Truncate the content of the card */
-  const TruncateContent = styled.div`
-    overflow: hidden;
-    overflow-wrap: break-word;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    -webkit-hyphens: auto;
-    hyphens: auto;
-  `;
-
   return (
     <Card
       sx={{
@@ -70,6 +59,7 @@ export default function AdvicesMediumCard({ advice }) {
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'space-between',
+          minHeight: 320,
         }}
       >
         <Box>
@@ -92,14 +82,16 @@ export default function AdvicesMediumCard({ advice }) {
               </IconButton>
             </CardActions>
           )}
-          <Typography
-            gutterBottom
-            variant="h6"
-            component="div"
-            sx={{ minHeight: { md: '4rem' } }}
-          >
-            {advice.title}
-          </Typography>
+          <TruncateContent lines={2}>
+            <Typography
+              gutterBottom
+              variant="h6"
+              component="div"
+              sx={{ minHeight: { md: '4rem' } }}
+            >
+              {advice.title}
+            </Typography>
+          </TruncateContent>
           {advice.contributor && (
             <Typography variant="body2" color="text.secondary" component="h6">
               Proposé par{' '}
@@ -116,7 +108,9 @@ export default function AdvicesMediumCard({ advice }) {
               : `Publié le ${new Date(advice.created_at).toLocaleDateString()}`}
           </Typography>
         </Box>
-        <TruncateContent dangerouslySetInnerHTML={{ __html: advice.content }} />
+        <TruncateContent lines={3}>
+          <div dangerouslySetInnerHTML={{ __html: advice.content }} />
+        </TruncateContent>
         <CardActions
           sx={{
             display: 'flex',
