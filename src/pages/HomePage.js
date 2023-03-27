@@ -2,7 +2,7 @@
 import { useSelector } from 'react-redux';
 import { Link as RouterLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import styled from '@emotion/styled';
+
 import {
   Box,
   Button,
@@ -30,6 +30,7 @@ import {
 } from '../components';
 
 import AdvicesMediumCard from '../components/Cards/AdvicesMediumCard';
+import TruncateContent from '../components/TruncateContent';
 
 export default function HomePage() {
   const articles = useSelector((state) => state.articles.list);
@@ -199,17 +200,6 @@ export default function HomePage() {
 
 function FeaturedArticle({ article }) {
   const { title, picture, content, category, created_at, slug } = article;
-  const TruncateContent = styled.div`
-    overflow: hidden;
-    overflow-wrap: break-word;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-line-clamp: 9;
-    -webkit-box-orient: vertical;
-    -webkit-hyphens: auto;
-    hyphens: auto;
-  `;
-
   return (
     <LargeCard
       sx={{
@@ -239,7 +229,9 @@ function FeaturedArticle({ article }) {
         sx={{ borderRadius: '0.375rem' }}
       />
       <CardContent sx={{ overflow: 'hidden', padding: 0 }}>
-        <TruncateContent dangerouslySetInnerHTML={{ __html: content }} />
+        <TruncateContent lines={9}>
+          <div dangerouslySetInnerHTML={{ __html: content }} />
+        </TruncateContent>
       </CardContent>
       <CardActions
         sx={{
@@ -299,19 +291,6 @@ FeaturedArticle.defaultProps = {
 
 function FeaturedArticles({ article }) {
   const { title, picture, content, category, slug } = article;
-  const TruncateContent = styled.div`
-    overflow: hidden;
-    overflow-wrap: break-word;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    -webkit-hyphens: auto;
-    hyphens: auto;
-    & p {
-      margin: 0;
-    }
-  `;
 
   return (
     <MediumCard
@@ -348,7 +327,9 @@ function FeaturedArticles({ article }) {
           >
             {title}
           </Typography>
-          <TruncateContent dangerouslySetInnerHTML={{ __html: content }} />
+          <TruncateContent lines={3}>
+            <div dangerouslySetInnerHTML={{ __html: content }} />
+          </TruncateContent>
         </CardContent>
       </CardActionArea>
     </MediumCard>
@@ -381,16 +362,7 @@ FeaturedArticles.defaultProps = {
 
 function InShortArticles({ article }) {
   const { title, content, category, slug } = article;
-  const TruncateContent = styled.div`
-    overflow: hidden;
-    overflow-wrap: break-word;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    -webkit-hyphens: auto;
-    hyphens: auto;
-  `;
+
   return (
     <>
       <Chip
@@ -430,7 +402,9 @@ function InShortArticles({ article }) {
           <Typography gutterBottom variant="h6" component="div">
             {title}
           </Typography>
-          <TruncateContent dangerouslySetInnerHTML={{ __html: content }} />
+          <TruncateContent lines={3}>
+            <div dangerouslySetInnerHTML={{ __html: content }} />
+          </TruncateContent>
         </CardContent>
         <CardActions sx={{ display: 'flex', justifyContent: 'flex-end' }}>
           <Button
@@ -484,19 +458,6 @@ InShortArticles.defaultProps = {
 
 function RecentArticles({ article }) {
   const { title, picture, content, category, slug } = article;
-  const TruncateContent = styled.div`
-    overflow: hidden;
-    overflow-wrap: break-word;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    -webkit-hyphens: auto;
-    hyphens: auto;
-    & p {
-      margin: 0;
-    }
-  `;
 
   return (
     <Grid item xs={12} sm={6} md={3}>
@@ -521,8 +482,9 @@ function RecentArticles({ article }) {
             >
               {title}
             </Typography>
-
-            <TruncateContent dangerouslySetInnerHTML={{ __html: content }} />
+            <TruncateContent lines={3}>
+              <div dangerouslySetInnerHTML={{ __html: content }} />
+            </TruncateContent>
           </CardContent>
         </CardActionArea>
       </MediumCard>
