@@ -5,7 +5,9 @@ import { Routes, Route } from 'react-router-dom';
 import HomePage from '../pages/HomePage';
 import CategoryPage from '../pages/CategoryPage';
 import ArticlePage from '../pages/ArticlePage';
+import ArticlesPage from '../pages/ArticlesPage';
 import AdvicePage from '../pages/AdvicePage';
+import AdvicesPage from '../pages/AdvicesPage';
 import SignInPage from '../pages/SignInPage';
 import SignUpPage from '../pages/SignUpPage';
 import RegistrationPage from '../pages/RegistrationPage';
@@ -37,7 +39,9 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/categories/:name" element={<CategoryPage />} />
         <Route path="/articles/:slug" element={<ArticlePage />} />
+        <Route path="/articles" element={<ArticlesPage />} />
         <Route path="/conseils/:slug" element={<AdvicePage />} />
+        <Route path="/conseils" element={<AdvicesPage />} />
         <Route path="/connexion" element={<SignInPage />} />
         <Route path="/inscription" element={<SignUpPage />} />
         <Route path="/enregistrement" element={<RegistrationPage />} />
