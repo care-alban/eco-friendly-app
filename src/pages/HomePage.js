@@ -29,6 +29,8 @@ import {
   SmallCard,
 } from '../components';
 
+import AdvicesMediumCard from '../components/Cards/AdvicesMediumCard';
+
 export default function HomePage() {
   const articles = useSelector((state) => state.articles.list);
   const featuredArticle = articles[0];
@@ -36,6 +38,7 @@ export default function HomePage() {
   const inShortArticles = articles.slice(3, 6);
   const recentArticles = articles.slice(6, 18);
   const advices = useSelector((state) => state.advices.list);
+  const last4Advices = advices.slice(0, 4);
 
   if (!articles.length > 0 || !advices.length > 0) {
     return (
@@ -167,7 +170,7 @@ export default function HomePage() {
           sx={{
             display: 'flex',
             justifyContent: 'space-between',
-            marginTop: '2rem',
+            marginY: '2rem',
           }}
         >
           <Typography variant="h4" component="h2">
@@ -182,9 +185,11 @@ export default function HomePage() {
             </Typography>
           </Link>
         </Box>
-        <Grid container spacing={2} sx={{ paddingTop: 4 }}>
-          {advices.map((advice) => (
-            <RecentAdvices key={advice.id} advice={advice} />
+        <Grid container spacing={2}>
+          {last4Advices.map((advice) => (
+            <Grid item xs={12} md={6} key={`${advice.id}`}>
+              <AdvicesMediumCard advice={advice} />
+            </Grid>
           ))}
         </Grid>
       </section>
@@ -419,7 +424,7 @@ function InShortArticles({ article }) {
             display: 'flex',
             flexDirection: 'column',
             justifyContent: 'space-between',
-            minHeight: { xs: 200, md: 230 },
+            minHeight: 180,
           }}
         >
           <Typography gutterBottom variant="h6" component="div">
@@ -541,98 +546,6 @@ RecentArticles.defaultProps = {
   article: {
     title: '',
     picture: '',
-    content: '',
-    category: {
-      name: '',
-    },
-    slug: '',
-  },
-};
-
-function RecentAdvices({ advice }) {
-  const { title, content, category, slug } = advice;
-  const TruncateContent = styled.div`
-    overflow: hidden;
-    overflow-wrap: break-word;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    -webkit-hyphens: auto;
-    hyphens: auto;
-  `;
-
-  return (
-    <Grid item xs={12} sm={6} md={4} lg={3}>
-      <SmallCard
-        sx={{
-          border: 'none',
-          boxShadow:
-            '0px 3px 1px -2px rgba(0,0,0,0.2), 0px 2px 2px 0px rgba(0,0,0,0.14), 0px 1px 5px 0px rgba(0,0,0,0.12)',
-          marginBottom: 2,
-        }}
-      >
-        <CardContent
-          sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'space-between',
-            minHeight: 260,
-            padding: '2rem 2rem 0',
-          }}
-        >
-          <Box>
-            <Typography gutterBottom variant="h5" component="div">
-              {title}
-            </Typography>
-            <Typography
-              sx={{
-                fontSize: '0.8rem',
-                color: 'secondary.light',
-                marginTop: '0.375rem',
-              }}
-            >
-              {category.name}
-            </Typography>
-          </Box>
-          <TruncateContent dangerouslySetInnerHTML={{ __html: content }} />
-        </CardContent>
-        <CardActions
-          sx={{
-            display: 'flex',
-            justifyContent: 'flex-end',
-            padding: '2rem',
-          }}
-        >
-          <Button
-            component={RouterLink}
-            to={`/conseils/${slug}`}
-            color="primary"
-            size="small"
-            variant="contained"
-          >
-            En savoir plus
-          </Button>
-        </CardActions>
-      </SmallCard>
-    </Grid>
-  );
-}
-
-RecentAdvices.propTypes = {
-  advice: PropTypes.shape({
-    title: PropTypes.string,
-    content: PropTypes.string,
-    category: PropTypes.shape({
-      name: PropTypes.string,
-    }),
-    slug: PropTypes.string,
-  }),
-};
-
-RecentAdvices.defaultProps = {
-  advice: {
-    title: '',
     content: '',
     category: {
       name: '',
