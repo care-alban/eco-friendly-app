@@ -22,7 +22,7 @@ export default function ArticlesMediumCard({ article }) {
       }}
     >
       <CardActionArea
-        LinkComponent={RouterLink}
+        component={RouterLink}
         to={`/articles/${article.id}/${article.slug}`}
       >
         <CardMedia
