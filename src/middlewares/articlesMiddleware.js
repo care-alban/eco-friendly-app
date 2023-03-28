@@ -4,6 +4,9 @@ import {
   GET_ARTICLES,
   getArticlesSuccess,
   getArticlesError,
+  GET_ARTICLE,
+  getArticleSuccess,
+  getArticleError,
 } from '../actions/articlesActions';
 
 import config from '../config';
@@ -26,6 +29,22 @@ const articlesMiddleware = (store) => (next) => (action) => {
           })
           .catch((error) => {
             store.dispatch(getArticlesError(error));
+          });
+      }
+      break;
+    case GET_ARTICLE:
+      console.log('GET_ARTICLE Middleware');
+      if (config.env === 'dev') {
+        const article = data.articles.find((a) => a.id === action.id);
+        store.dispatch(getArticleSuccess(article));
+      } else {
+        axios
+          .get(`${config.apiURL}/articles/${action.id}`)
+          .then((response) => {
+            store.dispatch(getArticleSuccess(response.data));
+          })
+          .catch((error) => {
+            store.dispatch(getArticleError(error));
           });
       }
       break;
