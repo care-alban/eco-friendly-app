@@ -1,3 +1,4 @@
+import { useSelector } from 'react-redux';
 import { Routes, Route } from 'react-router-dom';
 
 import HomePage from '../pages/HomePage';
@@ -8,12 +9,15 @@ import AdvicePage from '../pages/AdvicePage';
 import AdvicesPage from '../pages/AdvicesPage';
 import SignInPage from '../pages/SignInPage';
 import SignUpPage from '../pages/SignUpPage';
+import UserProfilePage from '../pages/UserProfilePage';
 import RegistrationPage from '../pages/RegistrationPage';
 import ValidationPage from '../pages/ValidationPage';
 import LegalNoticePage from '../pages/LegalNoticePage';
 import NotFoundPage from '../pages/NotFoundPage';
 
 function App() {
+  const token = useSelector((state) => state.user.token);
+
   return (
     <Routes>
       <Route>
@@ -28,6 +32,9 @@ function App() {
         <Route path="/enregistrement" element={<RegistrationPage />} />
         <Route path="/validation" element={<ValidationPage />} />
         <Route path="/mentions-legales" element={<LegalNoticePage />} />
+        {token && (
+          <Route path="/utilisateurs/:nickname" element={<UserProfilePage />} />
+        )}
         <Route path="*" element={<NotFoundPage />} />
       </Route>
     </Routes>
