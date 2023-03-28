@@ -53,7 +53,7 @@ export default function Layout({ children, ...props }) {
       left: 0,
       behavior: 'smooth',
     });
-  });
+  }, []);
 
   return (
     <ThemeProvider theme={GlobalTheme}>
