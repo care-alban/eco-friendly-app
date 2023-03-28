@@ -34,6 +34,8 @@ import AdvicesMediumCard from '../components/Cards/AdvicesMediumCard';
 import TruncateContent from '../components/TruncateContent';
 
 import { getQuizQuestion } from '../actions/commonActions';
+import { getArticles } from '../actions/articlesActions';
+import { getAdvices } from '../actions/advicesActions';
 
 export default function HomePage() {
   const dispatch = useDispatch();
@@ -47,8 +49,25 @@ export default function HomePage() {
   const quiz = useSelector((state) => state.common.quiz);
 
   useEffect(() => {
+    if (articles.length < 10)
+      dispatch(
+        getArticles([
+          { name: 'limit', value: 10 },
+          { name: 'sorttype', value: 'created_at' },
+          { name: 'order', value: 'desc' },
+        ]),
+      );
+    if (advices.length < 4)
+      dispatch(
+        getAdvices([
+          { name: 'limit', value: 4 },
+          { name: 'sorttype', value: 'created_at' },
+          { name: 'order', value: 'desc' },
+        ]),
+      );
+    /* load random quiz question */
     dispatch(getQuizQuestion());
-  }, []);
+  }, [articles, advices]);
 
   if (!articles.length > 0 || !advices.length > 0 || !quiz.length > 0) {
     return (
