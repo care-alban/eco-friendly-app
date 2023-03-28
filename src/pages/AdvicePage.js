@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams, Link as RouterLink, useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
@@ -22,6 +23,7 @@ import Layout from '../components/Layout';
 import Loader from '../components/Loader';
 
 import {
+  getAdvice,
   toggleShowAdviceForm,
   toDeleteAdvice,
 } from '../actions/advicesActions';
@@ -29,14 +31,24 @@ import {
 export default function AdvicePage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { slug } = useParams();
+  const { id } = useParams();
+
+  const advice = useSelector((state) => state.advices.advice);
   const advices = useSelector((state) => state.advices.list);
   const articles = useSelector((state) => state.articles.list);
-  const advice = advices.find((item) => item.slug === slug);
   const user = useSelector((state) => state.user.data);
   const isShow = useSelector((state) => state.advices.showAdviceForm);
 
-  if (!advice) {
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: 'smooth',
+    });
+    dispatch(getAdvice(id));
+  }, [id]);
+
+  if (Object.keys(advice).length === 0) {
     return (
       <Layout>
         <Loader />
@@ -44,20 +56,19 @@ export default function AdvicePage() {
     );
   }
 
-  const { category } = advice;
+  /**
+   * filter the articles and advices by category without the current advice
+   * and slice the array to get only 4 items
+   */
+  const filtered = (list) =>
+    list
+      .filter((item) => item.category.id === advice.category.id)
+      .filter((item) => item.id !== advice.id)
+      .slice(0, 4);
 
-  /* TODO: refactor this */
-  /* TODO: add a selector to get the advices and articles of the same category */
+  const filteredArticles = filtered(articles);
 
-  /* Get the first 4 advices of the same category without the current advice */
-  const sameCategoryAdvices = advices
-    .filter((item) => item.category.id === advice.category.id)
-    .filter((item) => item.id !== advice.id)
-    .slice(0, 4);
-  /* Get the first 4 articles of the same category */
-  const sameCategoryArticles = articles
-    .filter((item) => item.category.id === advice.category.id)
-    .slice(0, 4);
+  const filteredAdvices = filtered(advices);
 
   const handleShowAdviceForm = () => {
     /* Close and clear the form if is already open */
@@ -73,6 +84,8 @@ export default function AdvicePage() {
   };
 
   const handleDeleteAdvice = () => {
+    const { category } = advice;
+
     /* TODO: add a confirmation modal */
     dispatch(toDeleteAdvice(advice.id));
     navigate(`/categories/${category.slug}`, { replace: true });
@@ -171,15 +184,15 @@ export default function AdvicePage() {
             <Typography variant="h4" component="h2" color="primary.dark">
               Plus de conseils
             </Typography>
-            {sameCategoryAdvices.map((sameCategoryAdvice) => (
+            {filteredAdvices.map((adv) => (
               <CardContent
-                key={sameCategoryAdvice.id}
+                key={adv.id}
                 sx={{ borderTop: 1, borderColor: 'divider' }}
               >
                 <Typography
                   variant="h5"
                   component={RouterLink}
-                  to={`/conseils/${sameCategoryAdvice.slug}`}
+                  to={`/conseils/${adv.id}/${adv.slug}`}
                   sx={{
                     textDecoration: 'none',
                     color: 'inherit',
@@ -188,18 +201,18 @@ export default function AdvicePage() {
                     },
                   }}
                 >
-                  {sameCategoryAdvice.title}
+                  {adv.title}
                 </Typography>
                 <Typography variant="body2" color="inherit">
-                  par {sameCategoryAdvice.contributor.nickname}
+                  par {adv.contributor.nickname}
                   {' - '}
                   <Typography component="span" color="inherit">
-                    {sameCategoryAdvice.updated_at
+                    {adv.updated_at
                       ? `Mis à jour le ${new Date(
-                          sameCategoryAdvice.updated_at,
+                          adv.updated_at,
                         ).toLocaleDateString()}`
                       : `Publié le ${new Date(
-                          sameCategoryAdvice.created_at,
+                          adv.created_at,
                         ).toLocaleDateString()}`}
                   </Typography>
                 </Typography>
@@ -208,48 +221,43 @@ export default function AdvicePage() {
           </Box>
         </Grid>
       </Grid>
-      {sameCategoryArticles.length > 0 && (
-        <Box
-          component="section"
-          sx={{
-            backgroundColor: 'var(--color-primary-main)',
-            minWidth: '100vw',
-            padding: '2rem 2rem 0',
-            color: 'var(--color-neutral-main)',
-            marginLeft: 'calc((100vw - 100%) / -2)',
-          }}
-        >
-          <Container maxWidth="xl">
-            <Box
-              sx={{
-                display: 'flex',
-                flexDirection: { xs: 'column', sm: 'row' },
-                justifyContent: 'space-between',
-              }}
-            >
-              <Typography variant="h4" component="h2" color="inherit">
-                Plus d'articles
+      <Box
+        component="section"
+        sx={{
+          backgroundColor: 'var(--color-primary-main)',
+          minWidth: '100vw',
+          padding: '2rem 2rem 0',
+          color: 'var(--color-neutral-main)',
+          marginLeft: 'calc((100vw - 100%) / -2)',
+        }}
+      >
+        <Container maxWidth="xl">
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: { xs: 'column', sm: 'row' },
+              justifyContent: 'space-between',
+            }}
+          >
+            <Typography variant="h4" component="h2" color="inherit">
+              Plus d'articles
+            </Typography>
+            <Link color="inherit" href="/">
+              <Typography variant="body2" component="span">
+                Voir tous les articles &nbsp;
               </Typography>
-              <Link color="inherit" href="/">
-                <Typography variant="body2" component="span">
-                  Voir tous les articles &nbsp;
-                </Typography>
-                <Typography variant="body2" component="span">
-                  &gt;
-                </Typography>
-              </Link>
-            </Box>
-            <Grid container spacing={2} sx={{ paddingTop: 4 }}>
-              {sameCategoryArticles.map((sameCategoryArticle) => (
-                <RecentArticles
-                  key={sameCategoryArticle.id}
-                  article={sameCategoryArticle}
-                />
-              ))}
-            </Grid>
-          </Container>
-        </Box>
-      )}
+              <Typography variant="body2" component="span">
+                &gt;
+              </Typography>
+            </Link>
+          </Box>
+          <Grid container spacing={2} sx={{ paddingTop: 4 }}>
+            {filteredArticles.map((article) => (
+              <RecentArticles key={article.id} article={article} />
+            ))}
+          </Grid>
+        </Container>
+      </Box>
     </Layout>
   );
 }
@@ -267,10 +275,7 @@ function RecentArticles({ article }) {
           marginBottom: 2,
         }}
       >
-        <CardActionArea
-          LinkComponent={RouterLink}
-          to={`/articles/${id}/${slug}`}
-        >
+        <CardActionArea component={RouterLink} to={`/articles/${id}/${slug}`}>
           <CardMedia component="img" height="200" image={picture} alt={title} />
           <CardContent
             sx={{

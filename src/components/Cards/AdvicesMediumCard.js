@@ -120,7 +120,7 @@ export default function AdvicesMediumCard({ advice }) {
         >
           <Button
             component={RouterLink}
-            to={`/conseils/${advice.slug}`}
+            to={`/conseils/${advice.id}/${advice.slug}`}
             color="secondary"
             size="small"
             variant="outlined"
