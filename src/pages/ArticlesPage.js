@@ -1,14 +1,22 @@
-import { useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 
 import { Box, Button, Grid } from '@mui/material';
 
 import { Hero, Layout, Loader, SearchBar } from '../components';
 import { ArticlesMediumCard } from '../components/Cards';
 
+import { getArticles } from '../actions/articlesActions';
+
 export default function ArticlesPage() {
+  const dispatch = useDispatch();
   const articles = useSelector((state) => state.articles.list);
 
-  if (!articles) {
+  useEffect(() => {
+    dispatch(getArticles());
+  }, []);
+
+  if (Object.keys(articles).length === 0) {
     return (
       <Layout>
         <Loader />

@@ -1,14 +1,22 @@
-import { useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 
 import { Box, Button, Grid } from '@mui/material';
 
 import { Hero, Layout, Loader, SearchBar } from '../components';
 import { AdvicesMediumCard } from '../components/Cards';
 
+import { getAdvices } from '../actions/advicesActions';
+
 export default function AdvicesPage() {
+  const dispatch = useDispatch();
   const advices = useSelector((state) => state.advices.list);
 
-  if (!advices) {
+  useEffect(() => {
+    dispatch(getAdvices());
+  }, []);
+
+  if (Object.keys(advices).length === 0) {
     return (
       <Layout>
         <Loader />
