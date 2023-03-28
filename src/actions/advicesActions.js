@@ -53,6 +53,45 @@ export const getAdvicesError = (error) => ({
 });
 
 /**
+ * @name getAdvice
+ * @description Get advice
+ * @param {Number} id Advice id
+ * @returns {Object} Action
+ */
+export const GET_ADVICE = 'GET_ADVICE';
+
+export const getAdvice = (id) => ({
+  type: GET_ADVICE,
+  id,
+});
+
+/**
+ * @name getAdviceSuccess
+ * @description Get advice success
+ * @param {Object} advice Advice
+ * @returns {Object} Action
+ */
+export const GET_ADVICE_SUCCESS = 'GET_ADVICE_SUCCESS';
+
+export const getAdviceSuccess = (advice) => ({
+  type: GET_ADVICE_SUCCESS,
+  advice,
+});
+
+/**
+ * @name getAdviceError
+ * @description Get advice error
+ * @param {Object} error Error
+ * @returns {Object} Action
+ */
+export const GET_ADVICE_ERROR = 'GET_ADVICE_ERROR';
+
+export const getAdviceError = (error) => ({
+  type: GET_ADVICE_ERROR,
+  error,
+});
+
+/**
  * @name toggleShowAdviceForm
  * @description Toggle show advice form
  * @param {Object} advice Advice

@@ -2,6 +2,8 @@ import {
   ON_INPUT_CHANGE,
   GET_ADVICES_SUCCESS,
   GET_ADVICES_ERROR,
+  GET_ADVICE_SUCCESS,
+  GET_ADVICE_ERROR,
   TOGGLE_SHOW_ADVICE_FORM,
   TO_MANAGE_ADVICE_SUCCESS,
   TO_MANAGE_ADVICE_ERROR,
@@ -40,6 +42,19 @@ const reducer = (state = initialState, action = {}) => {
       return {
         ...state,
         list: [],
+      };
+    case GET_ADVICE_SUCCESS:
+      return {
+        ...state,
+        advice: action.advice,
+      };
+    case GET_ADVICE_ERROR:
+      return {
+        ...state,
+        messages: {
+          ...state.messages,
+          error: action.error.response.data.errors,
+        },
       };
     case TOGGLE_SHOW_ADVICE_FORM:
       return {

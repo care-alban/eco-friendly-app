@@ -4,6 +4,9 @@ import {
   GET_ADVICES,
   getAdvicesSuccess,
   getAdvicesError,
+  GET_ADVICE,
+  getAdviceSuccess,
+  getAdviceError,
   TO_MANAGE_ADVICE,
   toManageAdviceSuccess,
   toManageAdviceError,
@@ -32,6 +35,21 @@ const advicesMiddleware = (store) => (next) => (action) => {
           })
           .catch((error) => {
             store.dispatch(getAdvicesError(error));
+          });
+      }
+      break;
+    case GET_ADVICE:
+      if (config.env === 'dev') {
+        const advice = data.advices.find((a) => a.id === action.id);
+        store.dispatch(getAdviceSuccess(advice));
+      } else {
+        axios
+          .get(`${config.apiURL}/advices/${action.id}`)
+          .then((response) => {
+            store.dispatch(getAdviceSuccess(response.data));
+          })
+          .catch((error) => {
+            store.dispatch(getAdviceError(error));
           });
       }
       break;
