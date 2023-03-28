@@ -38,7 +38,7 @@ function App() {
       <Route>
         <Route path="/" element={<HomePage />} />
         <Route path="/categories/:name" element={<CategoryPage />} />
-        <Route path="/articles/:slug" element={<ArticlePage />} />
+        <Route path="/articles/:id/:slug" element={<ArticlePage />} />
         <Route path="/articles" element={<ArticlesPage />} />
         <Route path="/conseils/:slug" element={<AdvicePage />} />
         <Route path="/conseils" element={<AdvicesPage />} />
