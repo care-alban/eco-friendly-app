@@ -345,7 +345,7 @@ function FeaturedArticles({ article }) {
         },
       }}
     >
-      <CardActionArea LinkComponent={RouterLink} to={`/articles/${id}/${slug}`}>
+      <CardActionArea component={RouterLink} to={`/articles/${id}/${slug}`}>
         <CardMedia component="img" height="200" image={picture} alt={title} />
         <Typography
           sx={{
@@ -511,10 +511,7 @@ function RecentArticles({ article }) {
   return (
     <Grid item xs={12} sm={6} md={3}>
       <MediumCard sx={{ border: 'none', boxShadow: 'none', marginBottom: 2 }}>
-        <CardActionArea
-          LinkComponent={RouterLink}
-          to={`/articles/${id}/${slug}`}
-        >
+        <CardActionArea component={RouterLink} to={`/articles/${id}/${slug}`}>
           <CardMedia component="img" height="200" image={picture} alt={title} />
           <Typography
             sx={{
