@@ -1,23 +1,16 @@
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Link as RouterLink } from 'react-router-dom';
 
-import {
-  Avatar,
-  Badge,
-  Box,
-  Button,
-  Typography,
-  Grid,
-  Link,
-} from '@mui/material';
+import { Avatar, Badge, Box, Button, Typography, Grid } from '@mui/material';
 import { amber } from '@mui/material/colors';
 import { styled } from '@mui/material/styles';
 
 import Layout from '../components/Layout';
 import Loader from '../components/Loader';
 import AdvicesMediumCard from '../components/Cards/AdvicesMediumCard';
+import FormNickname from '../components/Forms/FormNickname';
 
+import { openModal } from '../actions/commonActions';
 import { onGetAdvices } from '../actions/userActions';
 
 export default function UserProfilePage() {
@@ -40,7 +33,24 @@ export default function UserProfilePage() {
     );
   }
 
-  console.log(advices);
+  /**
+   * Retunrs the content of the modal window
+   * @param {String} contentName
+   * @returns
+   */
+  const modalContent = (contentName) => {
+    switch (contentName) {
+      case 'nickname':
+        return <FormNickname />;
+      default:
+        return null;
+    }
+  };
+
+  const toggleModal = (e) => {
+    const { name } = e.target;
+    dispatch(openModal(modalContent(name)));
+  };
 
   /* styles */
   const StyledBadge = styled(Badge)(({ theme }) => ({
@@ -93,9 +103,14 @@ export default function UserProfilePage() {
                 borderColor: 'neutral.main',
               }}
             />
-            <Link component={RouterLink} to="/">
+            <Button
+              variant="text"
+              color="primary"
+              onClick={toggleModal}
+              name="avatar"
+            >
               Changer d'avatar
-            </Link>
+            </Button>
           </StyledBadge>
           <StyleRow>
             <Box
@@ -111,9 +126,14 @@ export default function UserProfilePage() {
                 {nickname}
               </Typography>
             </Box>
-            <Link component={RouterLink} to="/">
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={toggleModal}
+              name="nickname"
+            >
               Modifier
-            </Link>
+            </Button>
           </StyleRow>
           <StyleRow>
             <Box
@@ -129,9 +149,14 @@ export default function UserProfilePage() {
                 {email}
               </Typography>
             </Box>
-            <Link component={RouterLink} to="/">
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={toggleModal}
+              name="email"
+            >
               Modifier
-            </Link>
+            </Button>
           </StyleRow>
           <StyleRow>
             <Box
@@ -147,9 +172,14 @@ export default function UserProfilePage() {
                 {firstname} {lastname}
               </Typography>
             </Box>
-            <Link component={RouterLink} to="/">
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={toggleModal}
+              name="fullname"
+            >
               Modifier
-            </Link>
+            </Button>
           </StyleRow>
         </Grid>
         <Grid
@@ -158,9 +188,14 @@ export default function UserProfilePage() {
           md={6}
           sx={{ position: 'relative', padding: '1rem', paddingTop: '3rem' }}
         >
-          <Link component={RouterLink} to="/">
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={toggleModal}
+            name="password"
+          >
             Changer de mot de passe
-          </Link>
+          </Button>
           <Box
             backgroundColor={amber[50]}
             borderRadius={4}
@@ -170,10 +205,10 @@ export default function UserProfilePage() {
             p={2}
           >
             <Button
-              component={RouterLink}
-              to="/"
               variant="contained"
               color="secondary"
+              onClick={toggleModal}
+              name="delete-account"
               sx={{ marginBottom: 2 }}
             >
               Supprimer mon compte
