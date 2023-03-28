@@ -1,4 +1,5 @@
-import { useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { useParams, Link as RouterLink } from 'react-router-dom';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
@@ -21,13 +22,21 @@ import Hero from '../components/Hero';
 import Layout from '../components/Layout';
 import Loader from '../components/Loader';
 
-export default function ArticlePage() {
-  const { slug } = useParams();
-  const articles = useSelector((state) => state.articles.list);
-  const article = articles.find((item) => item.slug === slug);
-  const recentArticles = articles.slice(1, 5);
+import { getArticle } from '../actions/articlesActions';
 
-  if (!article) {
+export default function ArticlePage() {
+  const dispatch = useDispatch();
+  const { id } = useParams();
+
+  const articles = useSelector((state) => state.articles.list);
+  const recentArticles = articles.slice(1, 5);
+  const article = useSelector((state) => state.articles.article);
+
+  useEffect(() => {
+    dispatch(getArticle(id));
+  }, []);
+
+  if (Object.keys(article).length === 0) {
     return (
       <Layout>
         <Loader />
@@ -130,7 +139,7 @@ export default function ArticlePage() {
             </Typography>
           </Link>
         </Box>
-        <Grid container sx={{ paddingTop: 4 }}>
+        <Grid container spacing={4}>
           {recentArticles.map((recentArticle) => (
             <RecentArticles key={recentArticle.id} article={recentArticle} />
           ))}
@@ -154,7 +163,7 @@ function RecentArticles({ article }) {
   const { title, picture, content, category } = article;
 
   return (
-    <Grid item xs={12} sm={6} md={3} spacing={4}>
+    <Grid item xs={12} sm={6} md={3}>
       <MediumCard>
         <CardMedia component="img" height="200" image={picture} alt={title} />
         <CardActionArea>
