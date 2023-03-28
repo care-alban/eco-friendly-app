@@ -1135,4 +1135,68 @@ export default {
       picture: 'https://cdn.eco-friendly.fr/assets/img/categories/sante.webp',
     },
   },
+  quizz: [
+    {
+      id: 44,
+      question:
+        'Est voluptatum et nihil repellendus non ut qui ducimus nemo ipsa sint voluptas dolorem sit ?',
+      article: {
+        id: 44,
+        title: 'Qui ut ducimus cum quasi.',
+        slug: 'qui-ut-ducimus-cum-quasi',
+        picture: 'https://picsum.photos/id/103/1000/1000.jpg',
+        status: 1,
+        author: {
+          id: 35,
+          email: 'author@author.com',
+          firstname: 'Milan',
+          lastname: 'Kundera',
+          nickname: 'MilKuKu',
+          code: '#1302',
+          avatar:
+            'https://cdn.eco-friendly.fr/uploads/users/3-6403a58bd869d.jpg',
+        },
+        category: {
+          id: 5,
+          name: 'Maison',
+          tagline: 'Velit eum aut doloribus.',
+          slug: 'maison',
+        },
+      },
+      answers: [
+        {
+          id: 173,
+          content:
+            'Aliquid saepe quo quia enim laudantium cumque sint rerum fugiat.',
+          correct: false,
+          created_at: '2022-05-04T08:26:32+00:00',
+          updated_at: '2023-03-21T19:11:01+00:00',
+        },
+        {
+          id: 174,
+          content: 'Adipisci vel eius vel qui nobis laboriosam.',
+          correct: false,
+          created_at: '2023-03-08T16:22:59+00:00',
+          updated_at: '2022-06-07T21:47:08+00:00',
+        },
+        {
+          id: 175,
+          content:
+            'Aut excepturi fuga eaque aliquid aperiam sed quia eveniet temporibus corrupti a provident.',
+          correct: false,
+          created_at: '2022-09-04T18:18:53+00:00',
+          updated_at: '2023-01-31T13:00:35+00:00',
+        },
+        {
+          id: 176,
+          content: 'Molestiae omnis officiis expedita vel et.',
+          correct: true,
+          created_at: '2022-05-26T16:47:22+00:00',
+          updated_at: '2022-09-30T05:18:31+00:00',
+        },
+      ],
+      created_at: '2022-08-22T06:46:56+00:00',
+      updated_at: '2022-08-12T03:37:41+00:00',
+    },
+  ],
 };
