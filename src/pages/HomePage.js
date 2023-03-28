@@ -45,29 +45,29 @@ export default function HomePage() {
   const inShortArticles = articles.slice(3, 6);
   const recentArticles = articles.slice(6, 18);
   const advices = useSelector((state) => state.advices.list);
-  const last4Advices = advices.slice(0, 4);
   const quiz = useSelector((state) => state.common.quiz);
 
   useEffect(() => {
-    if (articles.length < 10)
-      dispatch(
-        getArticles([
-          { name: 'limit', value: 10 },
-          { name: 'sorttype', value: 'created_at' },
-          { name: 'order', value: 'desc' },
-        ]),
-      );
-    if (advices.length < 4)
-      dispatch(
-        getAdvices([
-          { name: 'limit', value: 4 },
-          { name: 'sorttype', value: 'created_at' },
-          { name: 'order', value: 'desc' },
-        ]),
-      );
     /* load random quiz question */
     dispatch(getQuizQuestion());
-  }, [articles, advices]);
+  }, []);
+
+  useEffect(() => {
+    dispatch(
+      getArticles([
+        { name: 'limit', value: 10 },
+        { name: 'sorttype', value: 'created_at' },
+        { name: 'order', value: 'desc' },
+      ]),
+    );
+    dispatch(
+      getAdvices([
+        { name: 'limit', value: 4 },
+        { name: 'sorttype', value: 'created_at' },
+        { name: 'order', value: 'desc' },
+      ]),
+    );
+  }, []);
 
   if (!articles.length > 0 || !advices.length > 0 || !quiz.length > 0) {
     return (
@@ -224,7 +224,7 @@ export default function HomePage() {
           </Link>
         </Box>
         <Grid container spacing={2}>
-          {last4Advices.map((advice) => (
+          {advices.slice(0, 4).map((advice) => (
             <Grid item xs={12} md={6} key={`${advice.id}`}>
               <AdvicesMediumCard advice={advice} />
             </Grid>
