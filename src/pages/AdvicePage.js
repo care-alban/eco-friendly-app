@@ -255,7 +255,7 @@ export default function AdvicePage() {
 }
 
 function RecentArticles({ article }) {
-  const { title, category, picture, slug } = article;
+  const { id, title, category, picture, slug } = article;
 
   return (
     <Grid item xs={12} sm={6} md={4} lg={3}>
@@ -267,7 +267,10 @@ function RecentArticles({ article }) {
           marginBottom: 2,
         }}
       >
-        <CardActionArea LinkComponent={RouterLink} to={`/articles/${slug}`}>
+        <CardActionArea
+          LinkComponent={RouterLink}
+          to={`/articles/${id}/${slug}`}
+        >
           <CardMedia component="img" height="200" image={picture} alt={title} />
           <CardContent
             sx={{
@@ -292,6 +295,7 @@ function RecentArticles({ article }) {
 
 RecentArticles.propTypes = {
   article: PropTypes.shape({
+    id: PropTypes.number.isRequired,
     title: PropTypes.string,
     category: PropTypes.shape({
       name: PropTypes.string,

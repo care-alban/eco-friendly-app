@@ -50,7 +50,7 @@ export default function HomePage() {
     dispatch(getQuizQuestion());
   }, []);
 
-  if (!articles.length > 0 || !advices.length > 0 || !quiz) {
+  if (!articles.length > 0 || !advices.length > 0 || !quiz.length > 0) {
     return (
       <Layout>
         <Loader />
@@ -182,7 +182,7 @@ export default function HomePage() {
           backgroundColor: 'primary.light',
         }}
       >
-        <Quiz quiz={quiz} />
+        <Quiz quiz={quiz[0]} />
       </Box>
       <section id="advices">
         <Box
@@ -217,7 +217,7 @@ export default function HomePage() {
 }
 
 function FeaturedArticle({ article }) {
-  const { title, picture, content, category, created_at, slug } = article;
+  const { id, title, picture, content, category, created_at, slug } = article;
   return (
     <LargeCard
       sx={{
@@ -269,7 +269,7 @@ function FeaturedArticle({ article }) {
         </Button>
         <Button
           component={RouterLink}
-          to={`/articles/${slug}`}
+          to={`/articles/${id}/${slug}`}
           color="secondary"
           size="small"
           variant="outlined"
@@ -283,6 +283,7 @@ function FeaturedArticle({ article }) {
 
 FeaturedArticle.propTypes = {
   article: PropTypes.shape({
+    id: PropTypes.number.isRequired,
     title: PropTypes.string,
     picture: PropTypes.string,
     content: PropTypes.string,
@@ -308,7 +309,7 @@ FeaturedArticle.defaultProps = {
 };
 
 function FeaturedArticles({ article }) {
-  const { title, picture, content, category, slug } = article;
+  const { id, title, picture, content, category, slug } = article;
 
   return (
     <MediumCard
@@ -325,7 +326,7 @@ function FeaturedArticles({ article }) {
         },
       }}
     >
-      <CardActionArea LinkComponent={RouterLink} to={`/articles/${slug}`}>
+      <CardActionArea LinkComponent={RouterLink} to={`/articles/${id}/${slug}`}>
         <CardMedia component="img" height="200" image={picture} alt={title} />
         <Typography
           sx={{
@@ -358,6 +359,7 @@ function FeaturedArticles({ article }) {
 
 FeaturedArticles.propTypes = {
   article: PropTypes.shape({
+    id: PropTypes.number.isRequired,
     title: PropTypes.string,
     picture: PropTypes.string,
     content: PropTypes.string,
@@ -381,7 +383,7 @@ FeaturedArticles.defaultProps = {
 };
 
 function InShortArticles({ article }) {
-  const { title, content, category, slug } = article;
+  const { id, title, content, category, slug } = article;
 
   return (
     <>
@@ -448,7 +450,7 @@ function InShortArticles({ article }) {
           </Button>
           <Button
             component={RouterLink}
-            to={`/articles/${slug}`}
+            to={`/articles/${id}/${slug}`}
             color="primary"
             size="small"
             variant="contained"
@@ -463,6 +465,7 @@ function InShortArticles({ article }) {
 
 InShortArticles.propTypes = {
   article: PropTypes.shape({
+    id: PropTypes.number.isRequired,
     title: PropTypes.string,
     content: PropTypes.string,
     category: PropTypes.shape({
@@ -484,12 +487,15 @@ InShortArticles.defaultProps = {
 };
 
 function RecentArticles({ article }) {
-  const { title, picture, content, category, slug } = article;
+  const { id, title, picture, content, category, slug } = article;
 
   return (
     <Grid item xs={12} sm={6} md={3}>
       <MediumCard sx={{ border: 'none', boxShadow: 'none', marginBottom: 2 }}>
-        <CardActionArea LinkComponent={RouterLink} to={`/articles/${slug}`}>
+        <CardActionArea
+          LinkComponent={RouterLink}
+          to={`/articles/${id}/${slug}`}
+        >
           <CardMedia component="img" height="200" image={picture} alt={title} />
           <Typography
             sx={{
@@ -523,6 +529,7 @@ function RecentArticles({ article }) {
 
 RecentArticles.propTypes = {
   article: PropTypes.shape({
+    id: PropTypes.number.isRequired,
     title: PropTypes.string,
     picture: PropTypes.string,
     content: PropTypes.string,

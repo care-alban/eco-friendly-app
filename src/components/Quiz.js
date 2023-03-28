@@ -77,7 +77,7 @@ export default function Quiz({ quiz }) {
             {showLink && (
               <Link
                 component={RouterLink}
-                to={`/articles/${article.slug}`}
+                to={`/articles/${article.id}/${article.slug}`}
                 sx={{ mt: 1, mr: 1 }}
                 color="inherit"
               >
@@ -126,6 +126,7 @@ Quiz.propTypes = {
   quiz: PropTypes.shape({
     question: PropTypes.string.isRequired,
     article: PropTypes.shape({
+      id: PropTypes.number.isRequired,
       slug: PropTypes.string.isRequired,
       title: PropTypes.string.isRequired,
     }).isRequired,

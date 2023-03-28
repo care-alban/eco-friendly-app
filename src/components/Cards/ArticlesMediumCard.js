@@ -23,7 +23,7 @@ export default function ArticlesMediumCard({ article }) {
     >
       <CardActionArea
         LinkComponent={RouterLink}
-        to={`/articles/${article.slug}`}
+        to={`/articles/${article.id}/${article.slug}`}
       >
         <CardMedia
           component="img"
@@ -76,6 +76,7 @@ export default function ArticlesMediumCard({ article }) {
 
 ArticlesMediumCard.propTypes = {
   article: PropTypes.shape({
+    id: PropTypes.number.isRequired,
     slug: PropTypes.string.isRequired,
     picture: PropTypes.string,
     contributor: PropTypes.shape({
