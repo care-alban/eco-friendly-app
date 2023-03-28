@@ -63,7 +63,7 @@ export default function AdvicesMediumCard({ advice }) {
         }}
       >
         <Box>
-          {user && user.id === advice.contributor.id && (
+          {user && advice.contributor && user.id === advice.contributor.id && (
             <CardActions
               sx={{
                 float: 'right',

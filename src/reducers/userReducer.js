@@ -17,6 +17,7 @@ export const initialState = {
   token: loadState('token') || '',
   data: loadState('user') || null,
   advices: loadState('advices') || [],
+  isLoaded: false,
   email: '',
   password: '',
   passwordConfirm: '',
@@ -99,6 +100,7 @@ const reducer = (state = initialState, action = {}) => {
       return {
         ...state,
         advices: action.advices,
+        isLoaded: true,
       };
     case ON_GET_ADVICES_ERROR:
       return {

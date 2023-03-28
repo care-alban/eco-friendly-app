@@ -489,14 +489,14 @@ function UserMenu({ user }) {
           >
             Profil
           </Link>
-          <Link
+          {/* <Link
             component={RouterLink}
             to="/tableau-de-bord"
             sx={{ ...link, margin: '0.625rem 0' }}
             color="inherit"
           >
             Tableau de bord
-          </Link>
+          </Link> */}
 
           <Link
             component={RouterLink}
