@@ -1,5 +1,6 @@
 /* eslint-disable camelcase */
-import { useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { Link as RouterLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
@@ -24,7 +25,7 @@ import {
   LargeCard,
   Layout,
   Loader,
-  Quizz,
+  Quiz,
   Section,
   SmallCard,
 } from '../components';
@@ -32,7 +33,10 @@ import {
 import AdvicesMediumCard from '../components/Cards/AdvicesMediumCard';
 import TruncateContent from '../components/TruncateContent';
 
+import { getQuizQuestion } from '../actions/commonActions';
+
 export default function HomePage() {
+  const dispatch = useDispatch();
   const articles = useSelector((state) => state.articles.list);
   const featuredArticle = articles[0];
   const featuredArticles = articles.slice(1, 3);
@@ -40,8 +44,13 @@ export default function HomePage() {
   const recentArticles = articles.slice(6, 18);
   const advices = useSelector((state) => state.advices.list);
   const last4Advices = advices.slice(0, 4);
+  const quiz = useSelector((state) => state.common.quiz);
 
-  if (!articles.length > 0 || !advices.length > 0) {
+  useEffect(() => {
+    dispatch(getQuizQuestion());
+  }, []);
+
+  if (!articles.length > 0 || !advices.length > 0 || !quiz) {
     return (
       <Layout>
         <Loader />
@@ -173,7 +182,7 @@ export default function HomePage() {
           backgroundColor: 'primary.light',
         }}
       >
-        <Quizz />
+        <Quiz quiz={quiz} />
       </Box>
       <section id="advices">
         <Box
