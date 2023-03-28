@@ -33,7 +33,6 @@ const articlesMiddleware = (store) => (next) => (action) => {
       }
       break;
     case GET_ARTICLE:
-      console.log('GET_ARTICLE Middleware');
       if (config.env === 'dev') {
         const article = data.articles.find((a) => a.id === action.id);
         store.dispatch(getArticleSuccess(article));
