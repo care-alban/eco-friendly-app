@@ -135,7 +135,7 @@ export default function ArticlePage() {
           <Typography variant="h4" component="h2">
             Articles récents
           </Typography>
-          <Link color="inherit" href="/">
+          <Link color="inherit" href="/articles">
             <Typography variant="body2" component="span">
               Voir tous les articles &nbsp;
             </Typography>
