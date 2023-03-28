@@ -1,42 +1,47 @@
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams, Link as RouterLink } from 'react-router-dom';
-import styled from 'styled-components';
-import PropTypes from 'prop-types';
 import {
   Box,
   Breadcrumbs,
-  CardActionArea,
-  CardContent,
-  CardMedia,
-  Chip,
   Container,
   Grid,
   Link,
   Typography,
 } from '@mui/material';
 
-import MediumCard from '../components/Cards/MediumCard';
 import Hero from '../components/Hero';
 
 import Layout from '../components/Layout';
 import Loader from '../components/Loader';
+import ArticlesMediumCard from '../components/Cards/ArticlesMediumCard';
 
-import { getArticle } from '../actions/articlesActions';
+import { getArticles, getArticle } from '../actions/articlesActions';
 
 export default function ArticlePage() {
   const dispatch = useDispatch();
   const { id } = useParams();
 
   const articles = useSelector((state) => state.articles.list);
-  const recentArticles = articles.slice(1, 5);
   const article = useSelector((state) => state.articles.article);
 
   useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: 'smooth',
+    });
+    dispatch(
+      getArticles([
+        { name: 'limit', value: 4 },
+        { name: 'sorttype', value: 'created_at' },
+        { name: 'order', value: 'desc' },
+      ]),
+    );
     dispatch(getArticle(id));
-  }, []);
+  }, [id]);
 
-  if (Object.keys(article).length === 0) {
+  if (Object.keys(article).length === 0 || articles.length < 4) {
     return (
       <Layout>
         <Loader />
@@ -113,15 +118,15 @@ export default function ArticlePage() {
       <Box
         component="section"
         sx={{
-          backgroundColor: 'var(--color-secondary-light)',
+          padding: 4,
           minWidth: '100vw',
-          padding: '2rem 2rem 0',
-          color: 'var(--color-neutral-main)',
           marginLeft: 'calc((100vw - 100%) / -2)',
+          backgroundColor: 'var(--color-secondary-light)',
         }}
       >
         <Box
           sx={{
+            marginBottom: 4,
             display: 'flex',
             flexDirection: { xs: 'column', sm: 'row' },
             justifyContent: 'space-between',
@@ -139,65 +144,14 @@ export default function ArticlePage() {
             </Typography>
           </Link>
         </Box>
-        <Grid container spacing={4}>
-          {recentArticles.map((recentArticle) => (
-            <RecentArticles key={recentArticle.id} article={recentArticle} />
+        <Grid container spacing={2}>
+          {articles.map((recentArticle) => (
+            <Grid item xs={12} sm={6} md={4} lg={3} key={`${recentArticle.id}`}>
+              <ArticlesMediumCard article={recentArticle} />
+            </Grid>
           ))}
         </Grid>
       </Box>
     </Layout>
   );
 }
-
-const TruncateContent = styled.div`
-  overflow: hidden;
-  overflow-wrap: break-word;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 5;
-  -webkit-box-orient: vertical;
-  -webkit-hyphens: auto;
-  hyphens: auto;
-`;
-function RecentArticles({ article }) {
-  const { title, picture, content, category } = article;
-
-  return (
-    <Grid item xs={12} sm={6} md={3}>
-      <MediumCard>
-        <CardMedia component="img" height="200" image={picture} alt={title} />
-        <CardActionArea>
-          <CardContent>
-            <Chip label={category.name} variant="outlined" color="primary" />
-            <Typography gutterBottom variant="h6" component="div">
-              {title}
-            </Typography>
-            <TruncateContent dangerouslySetInnerHTML={{ __html: content }} />
-          </CardContent>
-        </CardActionArea>
-      </MediumCard>
-    </Grid>
-  );
-}
-
-RecentArticles.propTypes = {
-  article: PropTypes.shape({
-    title: PropTypes.string,
-    picture: PropTypes.string,
-    content: PropTypes.string,
-    category: PropTypes.shape({
-      name: PropTypes.string,
-    }),
-  }),
-};
-
-RecentArticles.defaultProps = {
-  article: {
-    title: '',
-    picture: '',
-    content: '',
-    category: {
-      name: '',
-    },
-  },
-};
