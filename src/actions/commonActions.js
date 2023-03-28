@@ -36,6 +36,43 @@ export const getAllCategoriesError = (error) => ({
 });
 
 /**
+ * @name getQuizQuestion
+ * @description Get quiz question
+ * @returns {Object} Action
+ */
+export const GET_QUIZ_QUESTION = 'GET_QUIZ_QUESTION';
+
+export const getQuizQuestion = () => ({
+  type: GET_QUIZ_QUESTION,
+});
+
+/**
+ * @name getQuizQuestionSuccess
+ * @description Get quiz question success
+ * @param {Array} question Question
+ * @returns {Object} Action
+ */
+export const GET_QUIZ_QUESTION_SUCCESS = 'GET_QUIZ_QUESTION_SUCCESS';
+
+export const getQuizQuestionSuccess = (data) => ({
+  type: GET_QUIZ_QUESTION_SUCCESS,
+  data,
+});
+
+/**
+ * @name getQuizQuestionError
+ * @description Get quiz question error
+ * @param {Object} error Error
+ * @returns {Object} Action
+ */
+export const GET_QUIZ_QUESTION_ERROR = 'GET_QUIZ_QUESTION_ERROR';
+
+export const getQuizQuestionError = (error) => ({
+  type: GET_QUIZ_QUESTION_ERROR,
+  error,
+});
+
+/**
  * @name searchBarOnChange
  * @description Search bar on change
  * @param {Object} event Event

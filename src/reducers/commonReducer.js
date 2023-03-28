@@ -2,11 +2,18 @@ import {
   SEARCH_BAR_ON_CHANGE,
   GET_ALL_CATEGORIES_SUCCESS,
   GET_ALL_CATEGORIES_ERROR,
+  GET_QUIZ_QUESTION_SUCCESS,
+  GET_QUIZ_QUESTION_ERROR,
 } from '../actions/commonActions';
 
 export const initialState = {
   categories: [],
+  quiz: {},
   searchValue: '',
+  messages: {
+    success: [],
+    error: [],
+  },
 };
 
 const reducer = (state = initialState, action = {}) => {
@@ -50,6 +57,19 @@ const reducer = (state = initialState, action = {}) => {
             slug: 'energie',
           },
         ],
+      };
+    case GET_QUIZ_QUESTION_SUCCESS:
+      return {
+        ...state,
+        quiz: action.data[0],
+      };
+    case GET_QUIZ_QUESTION_ERROR:
+      return {
+        ...state,
+        messages: {
+          ...state.messages,
+          error: action.error.response.data.errors,
+        },
       };
     default:
       return state;

@@ -4,6 +4,9 @@ import {
   GET_ALL_CATEGORIES,
   getAllCategoriesSuccess,
   getAllCategoriesError,
+  GET_QUIZ_QUESTION,
+  getQuizQuestionSuccess,
+  getQuizQuestionError,
 } from '../actions/commonActions';
 
 import config from '../config';
@@ -22,6 +25,20 @@ const commonMiddleware = (store) => (next) => (action) => {
           })
           .catch((error) => {
             store.dispatch(getAllCategoriesError(error));
+          });
+      }
+      break;
+    case GET_QUIZ_QUESTION:
+      if (config.env === 'dev') {
+        store.dispatch(getQuizQuestionSuccess(data.quizz));
+      } else {
+        axios
+          .get(`${config.apiURL}/quizzes/random`)
+          .then((response) => {
+            store.dispatch(getQuizQuestionSuccess(response.data));
+          })
+          .catch((error) => {
+            store.dispatch(getQuizQuestionError(error));
           });
       }
       break;
