@@ -5,7 +5,7 @@ export { default as Layout } from './Layout';
 export { default as Loader } from './Loader';
 export { default as Navbar } from './Navbar';
 export { default as NotFound } from './NotFound';
-export { default as Quizz } from './Quizz';
+export { default as Quiz } from './Quiz';
 export { default as SearchBar } from './SearchBar';
 export { default as Section } from './Section';
 export { default as FormAdvice } from './Forms/FormAdvice';
