@@ -61,7 +61,7 @@ const reducer = (state = initialState, action = {}) => {
     case GET_QUIZ_QUESTION_SUCCESS:
       return {
         ...state,
-        quiz: action.data[0],
+        quiz: action.data,
       };
     case GET_QUIZ_QUESTION_ERROR:
       return {
