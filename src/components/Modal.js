@@ -1,44 +1,29 @@
-import { useState } from 'react';
-import { Modal as ModalMUI } from '@mui/material/Modal';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
+import { useSelector, useDispatch } from 'react-redux';
+import PropTypes from 'prop-types';
 
-const style = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: 400,
-  bgcolor: 'background.paper',
-  border: '2px solid #000',
-  boxShadow: 24,
-  p: 4,
-};
+import { Modal as ModalContainer } from '@mui/material';
 
-export default function Modal() {
-  const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+import { closeModal } from '../actions/commonActions';
+
+export default function Modal({ children }) {
+  const dispatch = useDispatch();
+  const open = useSelector((state) => state.common.modalOpen);
+  const handleClose = () => dispatch(closeModal());
 
   return (
-    <div className="modal">
-      <Button onClick={handleOpen}>Open modal</Button>
-      <ModalMUI
+    <div>
+      <ModalContainer
         open={open}
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={style}>
-          <Typography id="modal-modal-title" variant="h6" component="h2">
-            Text in a modal
-          </Typography>
-          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-          </Typography>
-        </Box>
-      </ModalMUI>
+        {children}
+      </ModalContainer>
     </div>
   );
 }
+
+Modal.propTypes = {
+  children: PropTypes.node.isRequired,
+};
