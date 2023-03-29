@@ -12,6 +12,7 @@ import SignUpPage from '../pages/SignUpPage';
 import UserProfilePage from '../pages/UserProfilePage';
 import RegistrationPage from '../pages/RegistrationPage';
 import ValidationPage from '../pages/ValidationPage';
+import PasswordResetPage from '../pages/PasswordResetPage';
 import LegalNoticePage from '../pages/LegalNoticePage';
 import NotFoundPage from '../pages/NotFoundPage';
 
@@ -31,6 +32,7 @@ function App() {
         <Route path="/inscription" element={<SignUpPage />} />
         <Route path="/enregistrement" element={<RegistrationPage />} />
         <Route path="/validation" element={<ValidationPage />} />
+        <Route path="/mot-de-passe/:token" element={<PasswordResetPage />} />
         <Route path="/mentions-legales" element={<LegalNoticePage />} />
         {token && (
           <Route path="/utilisateurs/:nickname" element={<UserProfilePage />} />
