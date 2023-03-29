@@ -1,5 +1,5 @@
-import { useState, dispatch } from 'react';
-import { useSelector } from 'react-redux';
+import { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
@@ -38,6 +38,7 @@ const TextFieldStyle = { margin: '0.5rem 0' };
 const btnstyle = { margin: '1rem 0' };
 
 export default function PasswordResetPage() {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const { token } = useParams();
 
