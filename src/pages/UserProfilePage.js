@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import {
@@ -6,7 +6,11 @@ import {
   Badge,
   Box,
   Button,
+  FormControl,
+  FormControlLabel,
   Grid,
+  Radio,
+  RadioGroup,
   Stack,
   TextField,
   Typography,
@@ -20,8 +24,101 @@ import AdvicesMediumCard from '../components/Cards/AdvicesMediumCard';
 
 import { onGetAdvices } from '../actions/userActions';
 
+/* styles */
+const StyledBadge = styled(Badge)(({ theme }) => ({
+  position: 'absolute',
+  top: 0,
+  left: '5%',
+  transform: 'translateY(calc(-50% - 1rem))',
+  '& .MuiBadge-badge': {
+    border: `2px solid ${theme.palette.background.paper}`,
+    padding: '0 4px',
+  },
+  zIndex: 1,
+}));
+
+const StyleRow = styled(Box)(() => ({
+  width: '100%',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'space-between',
+  marginBottom: '1rem',
+}));
+
+const BpIcon = styled('span')(() => ({
+  position: 'absolute',
+  display: 'block',
+  top: '16px',
+  left: '-24px',
+  width: 32,
+  height: 32,
+  textAlign: 'center',
+  lineHeight: '32px',
+  zIndex: 10,
+}));
+
+const BpCheckedIcon = styled(BpIcon)({
+  '&:before': {
+    display: 'block',
+    content: '"✓"',
+    width: 32,
+    height: 32,
+    borderRadius: '50%',
+    backgroundColor: amber[100],
+  },
+  'input:hover ~ &': {
+    borderRadius: '50%',
+    backgroundColor: amber[100],
+  },
+});
+
+// Inspired by blueprintjs
+function BpRadio(props) {
+  return (
+    <Radio
+      disableRipple
+      color="default"
+      checkedIcon={<BpCheckedIcon />}
+      icon={<BpIcon />}
+      {...props}
+    />
+  );
+}
+
+const listAvatars = [
+  {
+    name: 'Ours',
+    url: 'https://cdn.eco-friendly.fr/assets/img/avatars/ours.png',
+  },
+  {
+    name: 'Mésange bleue',
+    url: 'https://cdn.eco-friendly.fr/assets/img/avatars/mesange-bleue.png',
+  },
+  {
+    name: 'Chevreuil',
+    url: 'https://cdn.eco-friendly.fr/assets/img/avatars/chevreuil.png',
+  },
+  {
+    name: 'Grenouille',
+    url: 'https://cdn.eco-friendly.fr/assets/img/avatars/grenouille.png',
+  },
+  {
+    name: 'Renard',
+    url: 'https://cdn.eco-friendly.fr/assets/img/avatars/renard.png',
+  },
+  {
+    name: 'Lièvre',
+    url: 'https://cdn.eco-friendly.fr/assets/img/avatars/lievre.png',
+  },
+  {
+    name: 'Papillon',
+    url: 'https://cdn.eco-friendly.fr/assets/img/avatars/papillon.png',
+  },
+];
+
 export default function UserProfilePage() {
   const dispatch = useDispatch();
+  const [avatarSelectShow, setAvatarSelectShow] = useState(false);
   const advices = useSelector((state) => state.user.advices);
   const isLoaded = useSelector((state) => state.user.isLoaded);
   const { nickname, email, avatar, firstname, lastname } = useSelector(
@@ -44,26 +141,6 @@ export default function UserProfilePage() {
     e.preventDefault();
     console.log('submit : ', nickname, email, firstname, lastname);
   };
-
-  /* styles */
-  const StyledBadge = styled(Badge)(({ theme }) => ({
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    transform: 'translate(calc(25%), calc(-50% - 1rem))',
-    '& .MuiBadge-badge': {
-      border: `2px solid ${theme.palette.background.paper}`,
-      padding: '0 4px',
-    },
-  }));
-
-  const StyleRow = styled(Box)(() => ({
-    width: '100%',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    marginBottom: '1rem',
-  }));
 
   return (
     <Layout>
@@ -97,8 +174,46 @@ export default function UserProfilePage() {
                   borderColor: 'neutral.main',
                 }}
               />
-              <Button variant="text" color="primary" name="avatar">
-                Changer d'avatar
+              {avatarSelectShow && (
+                <Box
+                  sx={{
+                    position: 'absolute',
+                    display: 'contents',
+                  }}
+                >
+                  <FormControl>
+                    <RadioGroup
+                      aria-labelledby="radio-buttons-group-label"
+                      defaultValue={avatar}
+                      name="radio-buttons-group"
+                      sx={{ flexDirection: 'row' }}
+                    >
+                      {listAvatars.map((itemAvatar) => (
+                        <FormControlLabel
+                          key={itemAvatar.name}
+                          value={itemAvatar.url}
+                          control={<BpRadio />}
+                          labelPlacement="bottom"
+                          label={
+                            <Avatar
+                              alt={itemAvatar.name}
+                              src={itemAvatar.url}
+                              sx={{ width: 80, height: 80 }}
+                            />
+                          }
+                        />
+                      ))}
+                    </RadioGroup>
+                  </FormControl>
+                </Box>
+              )}
+              <Button
+                variant="text"
+                color="primary"
+                name="avatar"
+                onClick={() => setAvatarSelectShow(!avatarSelectShow)}
+              >
+                {avatarSelectShow ? 'Annuler' : "Changer d'avatar"}
               </Button>
             </StyledBadge>
             <StyleRow>
