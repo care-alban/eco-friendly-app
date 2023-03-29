@@ -7,6 +7,11 @@ import {
   Badge,
   Box,
   Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
   FormControl,
   FormControlLabel,
   Grid,
@@ -29,6 +34,7 @@ import {
   onSettingsUpdate,
   onEmailUpdate,
   onEmailVerification,
+  onDeleteAccount,
   onLogOut,
 } from '../actions/userActions';
 
@@ -127,6 +133,7 @@ export default function UserProfilePage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [avatarSelectShow, setAvatarSelectShow] = useState(false);
+  const [open, setOpen] = useState(false);
   const advices = useSelector((state) => state.user.advices);
   const isLoaded = useSelector((state) => state.user.isLoaded);
   const isLogged = useSelector((state) => state.user.isLogged);
@@ -146,8 +153,6 @@ export default function UserProfilePage() {
     e.preventDefault();
     if (email !== user.email) {
       dispatch(onEmailUpdate());
-      dispatch(onLogOut());
-      navigate('/enregistrement', { replace: true });
       return;
     }
     dispatch(onSettingsUpdate());
@@ -156,6 +161,21 @@ export default function UserProfilePage() {
   const handlePasswordUpdate = (e) => {
     e.preventDefault();
     dispatch(onEmailVerification());
+  };
+
+  const handleDialogClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleDialogRemoveAccount = (e) => {
+    e.preventDefault();
+    setOpen(false);
+    dispatch(onDeleteAccount());
+    navigate('/', { replace: false });
   };
 
   useEffect(() => {
@@ -378,11 +398,34 @@ export default function UserProfilePage() {
               variant="contained"
               color="secondary"
               name="delete-account"
-              // onClick={handleRemoveAccount}
+              onClick={handleDialogClickOpen}
               sx={{ marginBottom: 2 }}
             >
               Supprimer mon compte
             </Button>
+            <Dialog
+              open={open}
+              onClose={handleClose}
+              aria-labelledby="alert-dialog-title"
+              aria-describedby="alert-dialog-description"
+            >
+              <DialogTitle id="alert-dialog-title">
+                Etes-vous sûr de vouloir supprimer votre compte ?
+              </DialogTitle>
+              <DialogContent>
+                <DialogContentText id="alert-dialog-description">
+                  Cette action est irréversible. Vous perdrez toutes vos données
+                  et ne pourrez plus ni vous connecter, ni créer, ni modifier ou
+                  supprimer de conseils.
+                </DialogContentText>
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={handleClose}>Annuler</Button>
+                <Button onClick={handleDialogRemoveAccount} autoFocus>
+                  Supprimer mon compte
+                </Button>
+              </DialogActions>
+            </Dialog>
             <Typography variant="body1" component="p" color="secondary">
               Attention, cette action est irréversible.
             </Typography>
@@ -391,11 +434,22 @@ export default function UserProfilePage() {
       </Grid>
       {advices && (
         <>
-          <Typography variant="h4" component="h4" my={4}>
-            {advices.length > 0
-              ? `Félicitations ! Vous avez déjà créé ${advices.length} conseil(s)`
-              : "Vous n'avez pas encore créé de conseils"}
-          </Typography>
+          {advices.length > 0 ? (
+            <Typography variant="h5" component="h4" my={4}>
+              `Félicitations ! Vous avez déjà créé ${advices.length} conseil(s)`
+            </Typography>
+          ) : (
+            <>
+              <Typography variant="h5" component="h4" my={4}>
+                Vous n'avez pas encore créé de conseils.
+              </Typography>
+              <Typography variant="body1" component="p" color="primary">
+                Pour créer un premier conseil, il vous suffit de cliquer sur le
+                bouton 'plus' dans la barre de navigation ou sur le lien
+                'Ajouter un conseil' dans le menu.
+              </Typography>
+            </>
+          )}
           <Grid container spacing={2}>
             {advices.map((advice) => (
               <Grid item xs={12} sm={6} md={4} lg={3} key={`${advice.id}`}>
