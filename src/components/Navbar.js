@@ -298,14 +298,6 @@ function MobileNav({ categories, user }) {
               >
                 Profil
               </Link>
-              <Link
-                component={RouterLink}
-                to="/tableau-de-bord"
-                sx={{ ...link, margin: '0.625rem 0' }}
-                color="inherit"
-              >
-                Tableau de bord
-              </Link>
               <Button
                 variant="text"
                 color="inherit"
