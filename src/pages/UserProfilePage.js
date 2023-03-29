@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 import {
   Avatar,
@@ -22,7 +23,13 @@ import Layout from '../components/Layout';
 import Loader from '../components/Loader';
 import AdvicesMediumCard from '../components/Cards/AdvicesMediumCard';
 
-import { onInputChange, onGetAdvices } from '../actions/userActions';
+import {
+  onInputChange,
+  onGetAdvices,
+  onSettingsUpdate,
+  onEmailUpdate,
+  onLogOut,
+} from '../actions/userActions';
 
 /* styles */
 const StyledBadge = styled(Badge)(({ theme }) => ({
@@ -118,6 +125,7 @@ const listAvatars = [
 
 export default function UserProfilePage() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [avatarSelectShow, setAvatarSelectShow] = useState(false);
   const advices = useSelector((state) => state.user.advices);
   const isLoaded = useSelector((state) => state.user.isLoaded);
@@ -133,9 +141,20 @@ export default function UserProfilePage() {
     dispatch(onInputChange(e.target.value, e.target.name));
   };
 
-  const handleSubmit = (e) => {
+  const handleUpdateSubmit = (e) => {
     e.preventDefault();
-    console.log('submit : ', nickname, email, firstname, lastname);
+    if (email !== user.email) {
+      dispatch(onEmailUpdate());
+      dispatch(onLogOut());
+      navigate('/enregistrement', { replace: true });
+      return;
+    }
+    dispatch(onSettingsUpdate());
+  };
+
+  const handlePasswordUpdate = (e) => {
+    e.preventDefault();
+    console.log('password update');
   };
 
   const initializeFields = () => {
@@ -175,7 +194,7 @@ export default function UserProfilePage() {
           md={6}
           sx={{ position: 'relative', padding: '1rem', paddingTop: '3rem' }}
         >
-          <form noValidate autoComplete="off" onSubmit={handleSubmit}>
+          <form noValidate autoComplete="off" onSubmit={handleUpdateSubmit}>
             <StyledBadge
               overlap="circular"
               sx={{
@@ -204,10 +223,10 @@ export default function UserProfilePage() {
                   <FormControl>
                     <RadioGroup
                       aria-labelledby="avatar-group-label"
-                      defaultValue={avatar}
                       name="avatar"
                       sx={{ flexDirection: 'row' }}
                       onChange={changeField}
+                      value={avatar}
                     >
                       {listAvatars.map((itemAvatar) => (
                         <FormControlLabel
@@ -335,7 +354,7 @@ export default function UserProfilePage() {
             variant="contained"
             color="primary"
             name="password"
-            // onClick={handlePasswordUpdate}
+            onClick={handlePasswordUpdate}
           >
             Changer de mot de passe
           </Button>
