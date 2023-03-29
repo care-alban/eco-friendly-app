@@ -28,6 +28,7 @@ import {
   onGetAdvices,
   onSettingsUpdate,
   onEmailUpdate,
+  onEmailVerification,
   onLogOut,
 } from '../actions/userActions';
 
@@ -79,7 +80,6 @@ const BpCheckedIcon = styled(BpIcon)({
   },
 });
 
-// Inspired by blueprintjs
 function BpRadio(props) {
   return (
     <Radio
@@ -129,6 +129,7 @@ export default function UserProfilePage() {
   const [avatarSelectShow, setAvatarSelectShow] = useState(false);
   const advices = useSelector((state) => state.user.advices);
   const isLoaded = useSelector((state) => state.user.isLoaded);
+  const isLogged = useSelector((state) => state.user.isLogged);
   const avatar = useSelector((state) => state.user.avatar);
   const nickname = useSelector((state) => state.user.nickname);
   const email = useSelector((state) => state.user.email);
@@ -154,8 +155,15 @@ export default function UserProfilePage() {
 
   const handlePasswordUpdate = (e) => {
     e.preventDefault();
-    console.log('password update');
+    dispatch(onEmailVerification());
   };
+
+  useEffect(() => {
+    if (!isLogged) {
+      dispatch(onLogOut());
+      navigate('/enregistrement', { replace: true });
+    }
+  }, [isLogged]);
 
   const initializeFields = () => {
     dispatch(onInputChange(user.avatar, 'avatar'));
