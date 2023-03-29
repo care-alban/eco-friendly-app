@@ -12,6 +12,11 @@ import {
   ON_SETTINGS_UPDATE,
   onSettingsUpdateSuccess,
   onSettingsUpdateError,
+  ON_EMAIL_UPDATE,
+  onEmailUpdateSuccess,
+  ON_EMAIL_VERIFICATION,
+  ON_PASSWORD_UPDATE,
+  ON_DELETE_ACCOUNT,
 } from '../actions/userActions';
 
 import config from '../config';
@@ -103,6 +108,63 @@ const userMiddleware = (store) => (next) => (action) => {
             store.dispatch(onSettingsUpdateError(error));
           });
       }
+      break;
+    case ON_EMAIL_UPDATE:
+      axios
+        .post(
+          `${config.apiURL}/users/${
+            store.getState().user.data.id
+          }/email-update`,
+          {
+            email: store.getState().user.email,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${store.getState().user.token}`,
+            },
+          },
+        )
+        .then((response) => {
+          store.dispatch(
+            onEmailUpdateSuccess(response.data.email, response.data.nickname),
+          );
+        });
+      break;
+    case ON_EMAIL_VERIFICATION:
+      axios.post(
+        `${config.apiURL}/reset-password`,
+        {
+          email: store.getState().user.data.email,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${store.getState().user.token}`,
+          },
+        },
+      );
+      break;
+    case ON_PASSWORD_UPDATE:
+      axios.post(
+        `${config.apiURL}/reset-password/reset/${action.token.replace(
+          /"/g,
+          '',
+        )}`,
+        {
+          password: store.getState().user.password,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${store.getState().user.token}`,
+          },
+        },
+      );
+      break;
+    case ON_DELETE_ACCOUNT:
+      axios.delete(`${config.apiURL}/users/${store.getState().user.data.id}`, {
+        headers: {
+          Authorization: `Bearer ${store.getState().user.token}`,
+        },
+      });
       break;
     default:
   }

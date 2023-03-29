@@ -187,3 +187,76 @@ export const onSettingsUpdateError = (error) => ({
   type: ON_SETTINGS_UPDATE_ERROR,
   error,
 });
+
+/**
+ * @name onEmailUpdate
+ * @description Action creator for update user email
+ * @returns {object} action
+ */
+export const ON_EMAIL_UPDATE = 'ON_EMAIL_UPDATE';
+
+export const onEmailUpdate = () => ({
+  type: ON_EMAIL_UPDATE,
+});
+
+/**
+ * @name onEmailUpdateSuccess
+ * @description Action creator for update user email success
+ * @param {string} email
+ * @param {string} nickname
+ * @returns {object} action
+ */
+export const ON_EMAIL_UPDATE_SUCCESS = 'ON_EMAIL_UPDATE_SUCCESS';
+
+export const onEmailUpdateSuccess = (email, nickname) => ({
+  type: ON_EMAIL_UPDATE_SUCCESS,
+  email,
+  nickname,
+});
+
+/**
+ * @name onEmailUpdateError
+ * @description Action creator for update user email error
+ * @param {error} error
+ * @returns {object} action
+ */
+export const ON_EMAIL_UPDATE_ERROR = 'ON_EMAIL_UPDATE_ERROR';
+
+export const onEmailUpdateError = (error) => ({
+  type: ON_EMAIL_UPDATE_ERROR,
+  error,
+});
+
+/**
+ * @name onEmailVerification
+ * @description Action creator for verify user email (send email with link)
+ * @returns {object} action
+ */
+export const ON_EMAIL_VERIFICATION = 'ON_EMAIL_VERIFICATION';
+
+export const onEmailVerification = () => ({
+  type: ON_EMAIL_VERIFICATION,
+});
+
+/**
+ * @name onPasswordUpdate
+ * @description Action creator for update user password
+ * @param {string} token (use token in email link)
+ * @returns {object} action
+ */
+export const ON_PASSWORD_UPDATE = 'ON_PASSWORD_UPDATE';
+
+export const onPasswordUpdate = () => ({
+  type: ON_PASSWORD_UPDATE,
+});
+
+/**
+ * @name onDeleteAccount
+ * @description Action creator for delete user account
+ * @returns {object} action
+ */
+export const ON_DELETE_ACCOUNT = 'ON_DELETE_ACCOUNT';
+
+export const onDeleteAccount = () => ({
+  type: ON_DELETE_ACCOUNT,
+});

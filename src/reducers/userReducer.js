@@ -9,6 +9,8 @@ import {
   ON_SIGN_UP_ERROR,
   ON_GET_ADVICES_SUCCESS,
   ON_GET_ADVICES_ERROR,
+  ON_EMAIL_UPDATE_SUCCESS,
+  ON_EMAIL_UPDATE_ERROR,
 } from '../actions/userActions';
 
 import { loadState } from '../utils/sessionStorage';
@@ -80,6 +82,26 @@ const reducer = (state = initialState, action = {}) => {
         lastname: '',
       };
     case ON_SETTINGS_UPDATE_ERROR:
+      return {
+        ...state,
+        messages: {
+          ...state.messages,
+          error: action.error.response.data.errors,
+        },
+      };
+    case ON_EMAIL_UPDATE_SUCCESS:
+      return {
+        ...state,
+        registerInfo: {
+          email: action.email,
+          nickname: action.nickname,
+        },
+        messages: {
+          ...state.messages,
+          success: ['Un mail de confirmation vous a été envoyé'],
+        },
+      };
+    case ON_EMAIL_UPDATE_ERROR:
       return {
         ...state,
         messages: {
