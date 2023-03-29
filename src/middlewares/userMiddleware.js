@@ -15,6 +15,8 @@ import {
   ON_EMAIL_UPDATE,
   onEmailUpdateSuccess,
   ON_EMAIL_VERIFICATION,
+  onEmailVerificationSuccess,
+  onEmailVerificationError,
   ON_PASSWORD_UPDATE,
   ON_DELETE_ACCOUNT,
 } from '../actions/userActions';
@@ -131,33 +133,47 @@ const userMiddleware = (store) => (next) => (action) => {
         });
       break;
     case ON_EMAIL_VERIFICATION:
-      axios.post(
-        `${config.apiURL}/reset-password`,
-        {
-          email: store.getState().user.data.email,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${store.getState().user.token}`,
+      axios
+        .post(
+          `${config.apiURL}/reset-password`,
+          {
+            email: store.getState().user.data.email,
           },
-        },
-      );
+          {
+            headers: {
+              Authorization: `Bearer ${store.getState().user.token}`,
+            },
+          },
+        )
+        .then(() => {
+          store.dispatch(onEmailVerificationSuccess());
+        })
+        .catch((error) => {
+          store.dispatch(onEmailVerificationError(error));
+        });
       break;
     case ON_PASSWORD_UPDATE:
-      axios.post(
-        `${config.apiURL}/reset-password/reset/${action.token.replace(
-          /"/g,
-          '',
-        )}`,
-        {
-          password: store.getState().user.password,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${store.getState().user.token}`,
+      axios
+        .post(
+          `${config.apiURL}/reset-password/reset/${action.token.replace(
+            /"/g,
+            '',
+          )}`,
+          {
+            password: store.getState().user.password,
           },
-        },
-      );
+          {
+            headers: {
+              Authorization: `Bearer ${store.getState().user.token}`,
+            },
+          },
+        )
+        .then(() => {
+          store.dispatch(onEmailVerificationSuccess());
+        })
+        .catch((error) => {
+          store.dispatch(onEmailVerificationError(error));
+        });
       break;
     case ON_DELETE_ACCOUNT:
       axios.delete(`${config.apiURL}/users/${store.getState().user.data.id}`, {

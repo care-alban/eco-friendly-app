@@ -4,13 +4,17 @@ import {
   ON_SIGN_IN_ERROR,
   ON_SETTINGS_UPDATE_SUCCESS,
   ON_SETTINGS_UPDATE_ERROR,
+  ON_EMAIL_UPDATE_SUCCESS,
+  ON_EMAIL_UPDATE_ERROR,
+  ON_EMAIL_VERIFICATION_SUCCESS,
+  ON_EMAIL_VERIFICATION_ERROR,
+  ON_PASSWORD_UPDATE_SUCCESS,
+  ON_PASSWORD_UPDATE_ERROR,
   ON_LOG_OUT,
   ON_SIGN_UP_SUCCESS,
   ON_SIGN_UP_ERROR,
   ON_GET_ADVICES_SUCCESS,
   ON_GET_ADVICES_ERROR,
-  ON_EMAIL_UPDATE_SUCCESS,
-  ON_EMAIL_UPDATE_ERROR,
 } from '../actions/userActions';
 
 import { loadState } from '../utils/sessionStorage';
@@ -102,6 +106,45 @@ const reducer = (state = initialState, action = {}) => {
         },
       };
     case ON_EMAIL_UPDATE_ERROR:
+      return {
+        ...state,
+        messages: {
+          ...state.messages,
+          error: action.error.response.data.errors,
+        },
+      };
+    case ON_EMAIL_VERIFICATION_SUCCESS:
+      return {
+        ...state,
+        registerInfo: {
+          email: state.data.email,
+          nickname: state.data.nickname,
+        },
+        messages: {
+          ...state.messages,
+          success: ['Un mail de confirmation vous a été envoyé'],
+        },
+        isLogged: false,
+      };
+    case ON_EMAIL_VERIFICATION_ERROR:
+      return {
+        ...state,
+        messages: {
+          ...state.messages,
+          error: action.error.response.data.errors,
+        },
+      };
+    case ON_PASSWORD_UPDATE_SUCCESS:
+      return {
+        ...state,
+        messages: {
+          ...state.messages,
+          success: ['Votre mot de passe a été mis à jour'],
+        },
+        password: '',
+        passwordConfirm: '',
+      };
+    case ON_PASSWORD_UPDATE_ERROR:
       return {
         ...state,
         messages: {

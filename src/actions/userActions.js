@@ -239,6 +239,30 @@ export const onEmailVerification = () => ({
 });
 
 /**
+ * @name onEmailVerificationSuccess
+ * @description Action creator for verify user email success
+ * @returns {object} action
+ */
+export const ON_EMAIL_VERIFICATION_SUCCESS = 'ON_EMAIL_VERIFICATION_SUCCESS';
+
+export const onEmailVerificationSuccess = () => ({
+  type: ON_EMAIL_VERIFICATION_SUCCESS,
+});
+
+/**
+ * @name onEmailVerificationError
+ * @description Action creator for verify user email error
+ * @param {error} error
+ * @returns {object} action
+ */
+export const ON_EMAIL_VERIFICATION_ERROR = 'ON_EMAIL_VERIFICATION_ERROR';
+
+export const onEmailVerificationError = (error) => ({
+  type: ON_EMAIL_VERIFICATION_ERROR,
+  error,
+});
+
+/**
  * @name onPasswordUpdate
  * @description Action creator for update user password
  * @param {string} token (use token in email link)
@@ -246,8 +270,33 @@ export const onEmailVerification = () => ({
  */
 export const ON_PASSWORD_UPDATE = 'ON_PASSWORD_UPDATE';
 
-export const onPasswordUpdate = () => ({
+export const onPasswordUpdate = (token) => ({
   type: ON_PASSWORD_UPDATE,
+  token,
+});
+
+/**
+ * @name onPasswordUpdateSuccess
+ * @description Action creator for update user password success
+ * @returns {object} action
+ */
+export const ON_PASSWORD_UPDATE_SUCCESS = 'ON_PASSWORD_UPDATE_SUCCESS';
+
+export const onPasswordUpdateSuccess = () => ({
+  type: ON_PASSWORD_UPDATE_SUCCESS,
+});
+
+/**
+ * @name onPasswordUpdateError
+ * @description Action creator for update user password error
+ * @param {error} error
+ * @returns {object} action
+ */
+export const ON_PASSWORD_UPDATE_ERROR = 'ON_PASSWORD_UPDATE_ERROR';
+
+export const onPasswordUpdateError = (error) => ({
+  type: ON_PASSWORD_UPDATE_ERROR,
+  error,
 });
 
 /**
