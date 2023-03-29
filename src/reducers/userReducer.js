@@ -10,6 +10,8 @@ import {
   ON_EMAIL_VERIFICATION_ERROR,
   ON_PASSWORD_UPDATE_SUCCESS,
   ON_PASSWORD_UPDATE_ERROR,
+  ON_DELETE_ACCOUNT_SUCCESS,
+  ON_DELETE_ACCOUNT_ERROR,
   ON_LOG_OUT,
   ON_SIGN_UP_SUCCESS,
   ON_SIGN_UP_ERROR,
@@ -104,6 +106,7 @@ const reducer = (state = initialState, action = {}) => {
           ...state.messages,
           success: ['Un mail de confirmation vous a été envoyé'],
         },
+        isLogged: false,
       };
     case ON_EMAIL_UPDATE_ERROR:
       return {
@@ -145,6 +148,39 @@ const reducer = (state = initialState, action = {}) => {
         passwordConfirm: '',
       };
     case ON_PASSWORD_UPDATE_ERROR:
+      return {
+        ...state,
+        messages: {
+          ...state.messages,
+          error: action.error.response.data.errors,
+        },
+      };
+    case ON_DELETE_ACCOUNT_SUCCESS:
+      return {
+        ...state,
+        isLogged: false,
+        isRegistered: false,
+        token: '',
+        data: null,
+        advices: [],
+        isLoaded: false,
+        avatar: '',
+        nickname: '',
+        email: '',
+        firstname: '',
+        lastname: '',
+        password: '',
+        passwordConfirm: '',
+        registerInfo: {
+          email: '',
+          nickname: '',
+        },
+        messages: {
+          ...state.messages,
+          success: ['Votre compte a été supprimé'],
+        },
+      };
+    case ON_DELETE_ACCOUNT_ERROR:
       return {
         ...state,
         messages: {

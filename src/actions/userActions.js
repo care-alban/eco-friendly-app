@@ -309,3 +309,28 @@ export const ON_DELETE_ACCOUNT = 'ON_DELETE_ACCOUNT';
 export const onDeleteAccount = () => ({
   type: ON_DELETE_ACCOUNT,
 });
+
+/**
+ * @name onDeleteAccountSuccess
+ * @description Action creator for delete user account success
+ * @returns {object} action
+ */
+
+export const ON_DELETE_ACCOUNT_SUCCESS = 'ON_DELETE_ACCOUNT_SUCCESS';
+
+export const onDeleteAccountSuccess = () => ({
+  type: ON_DELETE_ACCOUNT_SUCCESS,
+});
+
+/**
+ * @name onDeleteAccountError
+ * @description Action creator for delete user account error
+ * @param {error} error
+ * @returns {object} action
+ */
+export const ON_DELETE_ACCOUNT_ERROR = 'ON_DELETE_ACCOUNT_ERROR';
+
+export const onDeleteAccountError = (error) => ({
+  type: ON_DELETE_ACCOUNT_ERROR,
+  error,
+});

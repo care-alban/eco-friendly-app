@@ -19,6 +19,8 @@ import {
   onEmailVerificationError,
   ON_PASSWORD_UPDATE,
   ON_DELETE_ACCOUNT,
+  onDeleteAccountSuccess,
+  onDeleteAccountError,
 } from '../actions/userActions';
 
 import config from '../config';
@@ -176,11 +178,18 @@ const userMiddleware = (store) => (next) => (action) => {
         });
       break;
     case ON_DELETE_ACCOUNT:
-      axios.delete(`${config.apiURL}/users/${store.getState().user.data.id}`, {
-        headers: {
-          Authorization: `Bearer ${store.getState().user.token}`,
-        },
-      });
+      axios
+        .delete(`${config.apiURL}/users/${store.getState().user.data.id}`, {
+          headers: {
+            Authorization: `Bearer ${store.getState().user.token}`,
+          },
+        })
+        .then(() => {
+          store.dispatch(onDeleteAccountSuccess());
+        })
+        .catch((error) => {
+          store.dispatch(onDeleteAccountError(error));
+        });
       break;
     default:
   }
