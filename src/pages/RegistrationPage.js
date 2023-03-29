@@ -18,6 +18,8 @@ export default function RegistrationPage() {
   const nickname = useSelector((state) => state.user.registerInfo.nickname);
   const email = useSelector((state) => state.user.registerInfo.email);
 
+  /* TODO: check isRegistered key for alternate display (new user || change email) */
+
   /* display at 404 rather than redirecting the user */
   if (!nickname || !email) {
     return (
