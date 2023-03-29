@@ -22,7 +22,7 @@ import Layout from '../components/Layout';
 import Loader from '../components/Loader';
 import AdvicesMediumCard from '../components/Cards/AdvicesMediumCard';
 
-import { onGetAdvices } from '../actions/userActions';
+import { onInputChange, onGetAdvices } from '../actions/userActions';
 
 /* styles */
 const StyledBadge = styled(Badge)(({ theme }) => ({
@@ -121,13 +121,38 @@ export default function UserProfilePage() {
   const [avatarSelectShow, setAvatarSelectShow] = useState(false);
   const advices = useSelector((state) => state.user.advices);
   const isLoaded = useSelector((state) => state.user.isLoaded);
-  const { nickname, email, avatar, firstname, lastname } = useSelector(
-    (state) => state.user.data,
-  );
+  const avatar = useSelector((state) => state.user.avatar);
+  const nickname = useSelector((state) => state.user.nickname);
+  const email = useSelector((state) => state.user.email);
+  const firstname = useSelector((state) => state.user.firstname);
+  const lastname = useSelector((state) => state.user.lastname);
+  const user = useSelector((state) => state.user.data);
+
+  /* link field to state */
+  const changeField = (e) => {
+    dispatch(onInputChange(e.target.value, e.target.name));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log('submit : ', nickname, email, firstname, lastname);
+  };
+
+  const initializeFields = () => {
+    dispatch(onInputChange(user.avatar, 'avatar'));
+    dispatch(onInputChange(user.nickname, 'nickname'));
+    dispatch(onInputChange(user.email, 'email'));
+    dispatch(onInputChange(user.firstname, 'firstname'));
+    dispatch(onInputChange(user.lastname, 'lastname'));
+  };
 
   useEffect(() => {
     dispatch(onGetAdvices());
   }, []);
+
+  useEffect(() => {
+    initializeFields();
+  }, [user]);
 
   if (!isLoaded) {
     return (
@@ -136,11 +161,6 @@ export default function UserProfilePage() {
       </Layout>
     );
   }
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log('submit : ', nickname, email, firstname, lastname);
-  };
 
   return (
     <Layout>
@@ -183,10 +203,11 @@ export default function UserProfilePage() {
                 >
                   <FormControl>
                     <RadioGroup
-                      aria-labelledby="radio-buttons-group-label"
+                      aria-labelledby="avatar-group-label"
                       defaultValue={avatar}
-                      name="radio-buttons-group"
+                      name="avatar"
                       sx={{ flexDirection: 'row' }}
+                      onChange={changeField}
                     >
                       {listAvatars.map((itemAvatar) => (
                         <FormControlLabel
@@ -213,7 +234,7 @@ export default function UserProfilePage() {
                 name="avatar"
                 onClick={() => setAvatarSelectShow(!avatarSelectShow)}
               >
-                {avatarSelectShow ? 'Annuler' : "Changer d'avatar"}
+                {avatarSelectShow ? 'Valider' : "Changer d'avatar"}
               </Button>
             </StyledBadge>
             <StyleRow>
@@ -225,19 +246,7 @@ export default function UserProfilePage() {
                 variant="outlined"
                 value={nickname}
                 sx={{ flexGrow: 1 }}
-                // onChange={changeField}
-              />
-            </StyleRow>
-            <StyleRow>
-              <TextField
-                name="email"
-                type="email"
-                label="Email"
-                placeholder="Email"
-                variant="outlined"
-                value={email}
-                sx={{ flexGrow: 1 }}
-                // onChange={changeField}
+                onChange={changeField}
               />
             </StyleRow>
             <StyleRow>
@@ -254,12 +263,12 @@ export default function UserProfilePage() {
                   label="Nom de famille"
                   placeholder="Nom de famille"
                   variant="outlined"
-                  value={firstname}
+                  value={lastname}
                   sx={{
                     flexGrow: '1',
                     mr: 1,
                   }}
-                  // onChange={changeField}
+                  onChange={changeField}
                 />
                 <TextField
                   name="firstname"
@@ -267,14 +276,27 @@ export default function UserProfilePage() {
                   label="Prénom"
                   placeholder="Prénom"
                   variant="outlined"
-                  value={lastname}
+                  value={firstname}
                   sx={{
                     flexGrow: '1',
                     ml: 1,
                   }}
-                  // onChange={changeField}
+                  onChange={changeField}
                 />
               </Box>
+            </StyleRow>
+            <StyleRow>
+              <TextField
+                name="email"
+                type="email"
+                label="Email"
+                placeholder="Email"
+                variant="outlined"
+                value={email}
+                sx={{ flexGrow: 1 }}
+                onChange={changeField}
+                helperText="Un nouvel email de confirmation vous sera envoyé après soumission."
+              />
             </StyleRow>
             <Stack
               spacing={2}
@@ -296,6 +318,7 @@ export default function UserProfilePage() {
                 color="secondary"
                 name="cancel"
                 ml={2}
+                onClick={initializeFields}
               >
                 Réinitialiser
               </Button>
