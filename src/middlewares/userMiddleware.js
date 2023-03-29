@@ -9,6 +9,9 @@ import {
   ON_GET_ADVICES,
   onGetAdvicesSuccess,
   onGetAdvicesError,
+  ON_SETTINGS_UPDATE,
+  onSettingsUpdateSuccess,
+  onSettingsUpdateError,
 } from '../actions/userActions';
 
 import config from '../config';
@@ -70,6 +73,34 @@ const userMiddleware = (store) => (next) => (action) => {
           })
           .catch((error) => {
             store.dispatch(onGetAdvicesError(error));
+          });
+      }
+      break;
+    case ON_SETTINGS_UPDATE:
+      if (config.env === 'dev') {
+        store.dispatch(onSettingsUpdateSuccess());
+      } else {
+        axios
+          .put(
+            `${config.apiURL}/users/${store.getState().user.data.id}`,
+            {
+              email: store.getState().user.email,
+              nickname: store.getState().user.nickname,
+              firstname: store.getState().user.firstname,
+              lastname: store.getState().user.lastname,
+              avatar: store.getState().user.avatar,
+            },
+            {
+              headers: {
+                Authorization: `Bearer ${store.getState().user.token}`,
+              },
+            },
+          )
+          .then((response) => {
+            store.dispatch(onSettingsUpdateSuccess(response.data));
+          })
+          .catch((error) => {
+            store.dispatch(onSettingsUpdateError(error));
           });
       }
       break;

@@ -150,3 +150,40 @@ export const onGetAdvicesError = (error) => ({
   type: ON_GET_ADVICES_ERROR,
   error,
 });
+
+/**
+ * @name onSettingsUpdate
+ * @description Action creator for update user settings
+ * @returns {object} action
+ */
+export const ON_SETTINGS_UPDATE = 'ON_SETTINGS_UPDATE';
+
+export const onSettingsUpdate = () => ({
+  type: ON_SETTINGS_UPDATE,
+});
+
+/**
+ * @name onSettingsUpdateSuccess
+ * @description Action creator for update user settings success
+ * @param {object} user
+ * @returns {object} action
+ */
+export const ON_SETTINGS_UPDATE_SUCCESS = 'ON_SETTINGS_UPDATE_SUCCESS';
+
+export const onSettingsUpdateSuccess = (user) => ({
+  type: ON_SETTINGS_UPDATE_SUCCESS,
+  user,
+});
+
+/**
+ * @name onSettingsUpdateError
+ * @description Action creator for update user settings error
+ * @param {error} error
+ * @returns {object} action
+ */
+export const ON_SETTINGS_UPDATE_ERROR = 'ON_SETTINGS_UPDATE_ERROR';
+
+export const onSettingsUpdateError = (error) => ({
+  type: ON_SETTINGS_UPDATE_ERROR,
+  error,
+});

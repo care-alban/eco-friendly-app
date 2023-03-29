@@ -2,6 +2,8 @@ import {
   ON_INPUT_CHANGE,
   ON_SIGN_IN_SUCCESS,
   ON_SIGN_IN_ERROR,
+  ON_SETTINGS_UPDATE_SUCCESS,
+  ON_SETTINGS_UPDATE_ERROR,
   ON_LOG_OUT,
   ON_SIGN_UP_SUCCESS,
   ON_SIGN_UP_ERROR,
@@ -56,6 +58,28 @@ const reducer = (state = initialState, action = {}) => {
         password: '',
       };
     case ON_SIGN_IN_ERROR:
+      return {
+        ...state,
+        messages: {
+          ...state.messages,
+          error: action.error.response.data.errors,
+        },
+      };
+    case ON_SETTINGS_UPDATE_SUCCESS:
+      return {
+        ...state,
+        data: action.user,
+        messages: {
+          ...state.messages,
+          success: ['Vos informations ont été mises à jour'],
+        },
+        avatar: '',
+        nickname: '',
+        email: '',
+        firstname: '',
+        lastname: '',
+      };
+    case ON_SETTINGS_UPDATE_ERROR:
       return {
         ...state,
         messages: {
