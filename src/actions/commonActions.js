@@ -84,27 +84,3 @@ export const searchBarOnChange = (value) => ({
   type: SEARCH_BAR_ON_CHANGE,
   value,
 });
-
-/**
- * @name openModal
- * @description Open modal
- * @param {ReactNodeLike} modalContent
- * @returns {object} : the action
- */
-export const OPEN_MODAL = 'OPEN_MODAL';
-
-export const openModal = (modalContent) => ({
-  type: OPEN_MODAL,
-  modalContent,
-});
-
-/**
- * @name closeModal
- * @description Action creator for closing the modal
- * @returns {object} : the action
- */
-export const CLOSE_MODAL = 'CLOSE_MODAL';
-
-export const closeModal = () => ({
-  type: CLOSE_MODAL,
-});

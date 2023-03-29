@@ -8,9 +8,7 @@ import { styled } from '@mui/material/styles';
 import Layout from '../components/Layout';
 import Loader from '../components/Loader';
 import AdvicesMediumCard from '../components/Cards/AdvicesMediumCard';
-import FormNickname from '../components/Forms/FormNickname';
 
-import { openModal } from '../actions/commonActions';
 import { onGetAdvices } from '../actions/userActions';
 
 export default function UserProfilePage() {
@@ -32,25 +30,6 @@ export default function UserProfilePage() {
       </Layout>
     );
   }
-
-  /**
-   * Retunrs the content of the modal window
-   * @param {String} contentName
-   * @returns
-   */
-  const modalContent = (contentName) => {
-    switch (contentName) {
-      case 'nickname':
-        return <FormNickname />;
-      default:
-        return null;
-    }
-  };
-
-  const toggleModal = (e) => {
-    const { name } = e.target;
-    dispatch(openModal(modalContent(name)));
-  };
 
   /* styles */
   const StyledBadge = styled(Badge)(({ theme }) => ({
@@ -106,7 +85,7 @@ export default function UserProfilePage() {
             <Button
               variant="text"
               color="primary"
-              onClick={toggleModal}
+              // onClick={toggleModal}
               name="avatar"
             >
               Changer d'avatar
@@ -129,7 +108,7 @@ export default function UserProfilePage() {
             <Button
               variant="contained"
               color="primary"
-              onClick={toggleModal}
+              // onClick={toggleModal}
               name="nickname"
             >
               Modifier
@@ -152,7 +131,7 @@ export default function UserProfilePage() {
             <Button
               variant="contained"
               color="primary"
-              onClick={toggleModal}
+              // onClick={toggleModal}
               name="email"
             >
               Modifier
@@ -175,7 +154,7 @@ export default function UserProfilePage() {
             <Button
               variant="contained"
               color="primary"
-              onClick={toggleModal}
+              // onClick={toggleModal}
               name="fullname"
             >
               Modifier
@@ -191,7 +170,7 @@ export default function UserProfilePage() {
           <Button
             variant="contained"
             color="primary"
-            onClick={toggleModal}
+            // onClick={toggleModal}
             name="password"
           >
             Changer de mot de passe
@@ -207,7 +186,7 @@ export default function UserProfilePage() {
             <Button
               variant="contained"
               color="secondary"
-              onClick={toggleModal}
+              // onClick={toggleModal}
               name="delete-account"
               sx={{ marginBottom: 2 }}
             >

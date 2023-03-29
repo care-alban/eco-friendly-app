@@ -4,8 +4,6 @@ import {
   GET_ALL_CATEGORIES_ERROR,
   GET_QUIZ_QUESTION_SUCCESS,
   GET_QUIZ_QUESTION_ERROR,
-  OPEN_MODAL,
-  CLOSE_MODAL,
 } from '../actions/commonActions';
 
 export const initialState = {
@@ -16,8 +14,6 @@ export const initialState = {
     success: [],
     error: [],
   },
-  modalOpen: false,
-  modalContent: null,
 };
 
 const reducer = (state = initialState, action = {}) => {
@@ -74,18 +70,6 @@ const reducer = (state = initialState, action = {}) => {
           ...state.messages,
           error: action.error.response.data.errors,
         },
-      };
-    case OPEN_MODAL:
-      return {
-        ...state,
-        modalOpen: !state.modalOpen,
-        modalContent: action.modalContent,
-      };
-    case CLOSE_MODAL:
-      return {
-        ...state,
-        modalOpen: !state.modalOpen,
-        modalContent: null,
       };
     default:
       return state;

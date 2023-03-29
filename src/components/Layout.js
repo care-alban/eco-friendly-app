@@ -1,5 +1,4 @@
 import { useEffect } from 'react';
-import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import { Box, Container, Fab, Fade, useScrollTrigger } from '@mui/material';
@@ -13,7 +12,6 @@ import { GlobalStyle, GlobalTheme } from '../styles';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import FormAdvice from './Forms/FormAdvice';
-import Modal from './Modal';
 
 function ScrollTop(props) {
   const { children } = props;
@@ -51,8 +49,6 @@ ScrollTop.propTypes = {
   children: PropTypes.element.isRequired,
 };
 export default function Layout({ children, ...props }) {
-  const modalOpen = useSelector((state) => state.common.modalOpen);
-  const modalContent = useSelector((state) => state.common.modalContent);
   /* Automatically positions the scroll bar at the top of the window at each page change */
   useEffect(() => {
     window.scrollTo({
@@ -66,7 +62,6 @@ export default function Layout({ children, ...props }) {
     <ThemeProvider theme={GlobalTheme}>
       <GlobalStyle />
       <CssBaseline />
-      {modalOpen && <Modal>{modalContent}</Modal>}
       <Navbar />
       <Main>
         <Container maxWidth="xl">
