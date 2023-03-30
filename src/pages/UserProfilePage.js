@@ -14,6 +14,7 @@ import {
   DialogTitle,
   FormControl,
   FormControlLabel,
+  // FormHelperText,
   Grid,
   Radio,
   RadioGroup,
@@ -36,6 +37,7 @@ import {
   onEmailVerification,
   onDeleteAccount,
   onLogOut,
+  clearMessages,
 } from '../actions/userActions';
 
 /* styles */
@@ -136,42 +138,40 @@ export default function UserProfilePage() {
   const [open, setOpen] = useState(false);
   const advices = useSelector((state) => state.user.advices);
   const isLoaded = useSelector((state) => state.user.isLoaded);
+  const isUpdated = useSelector((state) => state.user.isUpdated);
   const avatar = useSelector((state) => state.user.avatar);
   const nickname = useSelector((state) => state.user.nickname);
   const email = useSelector((state) => state.user.email);
   const firstname = useSelector((state) => state.user.firstname);
   const lastname = useSelector((state) => state.user.lastname);
   const user = useSelector((state) => state.user.data);
+  const errors = useSelector((state) => state.user.messages.error);
 
   /* link field to state */
   const changeField = (e) => {
+    dispatch(clearMessages());
     dispatch(userOnInputChange(e.target.value, e.target.name));
   };
 
   const handleUpdateSubmit = (e) => {
     e.preventDefault();
+    dispatch(clearMessages());
     if (email !== user.email) {
       dispatch(onEmailUpdate());
-      dispatch(onLogOut());
-      navigate('/enregistrement', { replace: true });
       return;
     }
     dispatch(onSettingsUpdate());
   };
 
+  useEffect(() => {
+    if (errors && errors.email.length > 0) {
+      console.log(errors.email);
+    }
+  }, [email]);
+
   const handlePasswordUpdate = (e) => {
     e.preventDefault();
     dispatch(onEmailVerification());
-    dispatch(onLogOut());
-    navigate('/enregistrement', { replace: true });
-  };
-
-  const handleDialogClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
   };
 
   const handleDialogRemoveAccount = (e) => {
@@ -179,6 +179,21 @@ export default function UserProfilePage() {
     setOpen(false);
     dispatch(onDeleteAccount());
     navigate('/', { replace: false });
+  };
+
+  useEffect(() => {
+    if (isUpdated) {
+      dispatch(onLogOut());
+      navigate('/enregistrement', { replace: true });
+    }
+  }, [isUpdated]);
+
+  const handleDialogClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
   };
 
   const initializeFields = () => {
@@ -190,10 +205,12 @@ export default function UserProfilePage() {
   };
 
   useEffect(() => {
+    dispatch(clearMessages());
     dispatch(onGetAdvices());
   }, []);
 
   useEffect(() => {
+    dispatch(clearMessages());
     initializeFields();
   }, [user]);
 
@@ -282,6 +299,12 @@ export default function UserProfilePage() {
             </StyledBadge>
             <StyleRow>
               <TextField
+                error={errors && errors.nickname.length > 0}
+                helperText={
+                  errors &&
+                  errors.nickname.length > 0 &&
+                  errors.nickname.map((err) => err)
+                }
                 name="nickname"
                 type="nickname"
                 label="Pseudo"
@@ -291,6 +314,9 @@ export default function UserProfilePage() {
                 sx={{ flexGrow: 1 }}
                 onChange={changeField}
               />
+              {/* <FormHelperText>
+
+              </FormHelperText> */}
             </StyleRow>
             <StyleRow>
               <Box
