@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link as RouterLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
@@ -9,6 +10,9 @@ import {
   Card,
   CardActions,
   CardContent,
+  Dialog,
+  DialogActions,
+  DialogTitle,
   IconButton,
   Typography,
 } from '@mui/material';
@@ -25,6 +29,7 @@ import {
 
 export default function AdvicesMediumCard({ advice }) {
   const dispatch = useDispatch();
+  const [open, setOpen] = useState(false);
   const user = useSelector((state) => state.user.data);
   /* Get the state of the form */
   const isShow = useSelector((state) => state.advices.showAdviceForm);
@@ -42,8 +47,15 @@ export default function AdvicesMediumCard({ advice }) {
     dispatch(toggleShowAdviceForm(advice));
   };
 
+  const handleDialogClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   const handleDeleteAdvice = () => {
-    /* TODO: add a confirmation modal */
     dispatch(toDeleteAdvice(advice.id));
   };
 
@@ -71,9 +83,25 @@ export default function AdvicesMediumCard({ advice }) {
                 padding: 0,
               }}
             >
-              <IconButton aria-label="delete" onClick={handleDeleteAdvice}>
+              <IconButton aria-label="delete" onClick={handleDialogClickOpen}>
                 <DeleteIcon />
               </IconButton>
+              <Dialog
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+              >
+                <DialogTitle id="alert-dialog-title">
+                  Etes-vous sûr de vouloir supprimer ce conseil ?
+                </DialogTitle>
+                <DialogActions>
+                  <Button onClick={handleClose}>Annuler</Button>
+                  <Button onClick={handleDeleteAdvice} autoFocus>
+                    Supprimer
+                  </Button>
+                </DialogActions>
+              </Dialog>
               <IconButton
                 aria-label="edit"
                 color="primary"
