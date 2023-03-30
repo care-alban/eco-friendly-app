@@ -27,7 +27,6 @@ const configureStore = () => {
     throttle(() => {
       saveState('user', store.getState().user.data);
       saveState('token', store.getState().user.token);
-      saveState('advices', store.getState().user.advices);
     }, 1000),
   );
 
