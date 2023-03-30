@@ -1,3 +1,9 @@
+import Layout from '../components/Layout';
+
 export default function PasswordResetPage() {
-  return <h1>Password reset page</h1>;
+  return (
+    <Layout>
+      <h1>Password reset page</h1>
+    </Layout>
+  );
 }
