@@ -17,6 +17,7 @@ import {
   ON_SIGN_UP_ERROR,
   ON_GET_ADVICES_SUCCESS,
   ON_GET_ADVICES_ERROR,
+  CLEAR_MESSAGES,
 } from '../actions/userActions';
 
 import { loadState } from '../utils/sessionStorage';
@@ -24,9 +25,10 @@ import { loadState } from '../utils/sessionStorage';
 export const initialState = {
   isLogged: false,
   isRegistered: false,
+  isUpdated: false,
   token: loadState('token') || '',
   data: loadState('user') || null,
-  advices: loadState('advices') || [],
+  advices: loadState('advices') || null,
   isLoaded: false,
   avatar: '',
   nickname: '',
@@ -40,8 +42,8 @@ export const initialState = {
     nickname: '',
   },
   messages: {
-    success: [],
-    error: [],
+    success: null,
+    error: null,
   },
 };
 
@@ -106,7 +108,7 @@ const reducer = (state = initialState, action = {}) => {
           ...state.messages,
           success: ['Un mail de confirmation vous a été envoyé'],
         },
-        isLogged: false,
+        isUpdated: true,
       };
     case ON_EMAIL_UPDATE_ERROR:
       return {
@@ -127,7 +129,7 @@ const reducer = (state = initialState, action = {}) => {
           ...state.messages,
           success: ['Un mail de confirmation vous a été envoyé'],
         },
-        isLogged: false,
+        isUpdated: true,
       };
     case ON_EMAIL_VERIFICATION_ERROR:
       return {
@@ -236,6 +238,15 @@ const reducer = (state = initialState, action = {}) => {
         messages: {
           ...state.messages,
           error: action.error.response.data.errors,
+        },
+      };
+    case CLEAR_MESSAGES:
+      return {
+        ...state,
+        messages: {
+          ...state.messages,
+          success: null,
+          error: null,
         },
       };
     default:

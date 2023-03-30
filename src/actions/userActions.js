@@ -334,3 +334,14 @@ export const onDeleteAccountError = (error) => ({
   type: ON_DELETE_ACCOUNT_ERROR,
   error,
 });
+
+/**
+ * @clearMessages
+ * @description Action to clear messages
+ * @returns {Object} action
+ */
+export const CLEAR_MESSAGES = 'CLEAR_MESSAGES';
+
+export const clearMessages = () => ({
+  type: CLEAR_MESSAGES,
+});
