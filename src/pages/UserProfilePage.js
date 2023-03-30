@@ -172,12 +172,6 @@ export default function UserProfilePage() {
    */
   const hasKey = (obj, key) => Object.prototype.hasOwnProperty.call(obj, key);
 
-  useEffect(() => {
-    if (errors && hasKey(errors, 'email') && errors.email.length > 0) {
-      console.log(errors.email);
-    }
-  }, [errors]);
-
   const handlePasswordUpdate = (e) => {
     e.preventDefault();
     dispatch(onEmailVerification());
@@ -329,9 +323,6 @@ export default function UserProfilePage() {
                 sx={{ flexGrow: 1 }}
                 onChange={changeField}
               />
-              {/* <FormHelperText>
-
-              </FormHelperText> */}
             </StyleRow>
             <StyleRow>
               <Box
@@ -342,6 +333,17 @@ export default function UserProfilePage() {
                 }}
               >
                 <TextField
+                  error={
+                    errors &&
+                    hasKey(errors, 'lastname') &&
+                    errors.lastname.length > 0
+                  }
+                  helperText={
+                    errors &&
+                    hasKey(errors, 'lastname') &&
+                    errors.lastname.length > 0 &&
+                    errors.lastname.map((err) => err)
+                  }
                   name="lastname"
                   type="lastname"
                   label="Nom de famille"
@@ -355,6 +357,17 @@ export default function UserProfilePage() {
                   onChange={changeField}
                 />
                 <TextField
+                  error={
+                    errors &&
+                    hasKey(errors, 'firstname') &&
+                    errors.firstname.length > 0
+                  }
+                  helperText={
+                    errors &&
+                    hasKey(errors, 'firstname') &&
+                    errors.firstname.length > 0 &&
+                    errors.firstname.map((err) => err)
+                  }
                   name="firstname"
                   type="firstname"
                   label="Prénom"
@@ -371,6 +384,14 @@ export default function UserProfilePage() {
             </StyleRow>
             <StyleRow>
               <TextField
+                error={
+                  errors && hasKey(errors, 'email') && errors.email.length > 0
+                }
+                helperText={
+                  errors && hasKey(errors, 'email') && errors.email.length > 0
+                    ? errors.email.map((err) => err)
+                    : 'Un nouvel email de confirmation vous sera envoyé après soumission.'
+                }
                 name="email"
                 type="email"
                 label="Email"
@@ -379,7 +400,6 @@ export default function UserProfilePage() {
                 value={email}
                 sx={{ flexGrow: 1 }}
                 onChange={changeField}
-                helperText="Un nouvel email de confirmation vous sera envoyé après soumission."
               />
             </StyleRow>
             <Stack
