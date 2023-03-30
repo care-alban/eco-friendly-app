@@ -17,7 +17,7 @@ import RichTextEditor from '../RichTextEditor';
 
 import {
   getAdvices,
-  onInputChange,
+  advicesOnInputChange,
   toggleShowAdviceForm,
   toManageAdvice,
 } from '../../actions/advicesActions';
@@ -39,10 +39,10 @@ export default function FormAdvice() {
 
   /* link field to state */
   const changeField = (e) => {
-    dispatch(onInputChange(e.target.value, e.target.name));
+    dispatch(advicesOnInputChange(e.target.value, e.target.name));
   };
   const handleRichTextEditorChange = (value) => {
-    dispatch(onInputChange(value, 'content'));
+    dispatch(advicesOnInputChange(value, 'content'));
   };
 
   /* Submit form */
@@ -63,9 +63,9 @@ export default function FormAdvice() {
       }
     }
     if (buttonName === 'cancel') {
-      dispatch(onInputChange('', 'title'));
-      dispatch(onInputChange('', 'category'));
-      dispatch(onInputChange('', 'content'));
+      dispatch(advicesOnInputChange('', 'title'));
+      dispatch(advicesOnInputChange('', 'category'));
+      dispatch(advicesOnInputChange('', 'content'));
     }
     dispatch(toggleShowAdviceForm());
   };

@@ -1,5 +1,5 @@
 import {
-  ON_INPUT_CHANGE,
+  ADVICES_ON_INPUT_CHANGE,
   GET_ADVICES_SUCCESS,
   GET_ADVICES_ERROR,
   GET_ADVICE_SUCCESS,
@@ -28,7 +28,7 @@ export const initialState = {
 
 const reducer = (state = initialState, action = {}) => {
   switch (action.type) {
-    case ON_INPUT_CHANGE:
+    case ADVICES_ON_INPUT_CHANGE:
       return {
         ...state,
         [action.identifier]: action.value,

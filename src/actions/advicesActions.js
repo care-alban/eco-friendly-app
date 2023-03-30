@@ -1,14 +1,14 @@
 /**
- * @name onInputChange
- * @description Action creator for input change
+ * @name advicesOnInputChange
+ * @description Action creator for input change in advices
  * @param {string} value
  * @param {string} identifier
  * @returns {object} action
  */
-export const ON_INPUT_CHANGE = 'ON_INPUT_CHANGE';
+export const ADVICES_ON_INPUT_CHANGE = 'ADVICES_ON_INPUT_CHANGE';
 
-export const onInputChange = (value, identifier) => ({
-  type: ON_INPUT_CHANGE,
+export const advicesOnInputChange = (value, identifier) => ({
+  type: ADVICES_ON_INPUT_CHANGE,
   value,
   identifier,
 });
