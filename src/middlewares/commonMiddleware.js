@@ -4,6 +4,9 @@ import {
   GET_ALL_CATEGORIES,
   getAllCategoriesSuccess,
   getAllCategoriesError,
+  GET_AVATARS,
+  getAvatarsSuccess,
+  getAvatarsError,
   GET_QUIZ_QUESTION,
   getQuizQuestionSuccess,
   getQuizQuestionError,
@@ -25,6 +28,20 @@ const commonMiddleware = (store) => (next) => (action) => {
           })
           .catch((error) => {
             store.dispatch(getAllCategoriesError(error));
+          });
+      }
+      break;
+    case GET_AVATARS:
+      if (config.env === 'dev') {
+        store.dispatch(getAvatarsSuccess(data.avatars));
+      } else {
+        axios
+          .get(`${config.apiURL}/avatars`)
+          .then((response) => {
+            store.dispatch(getAvatarsSuccess(response.data));
+          })
+          .catch((error) => {
+            store.dispatch(getAvatarsError(error));
           });
       }
       break;

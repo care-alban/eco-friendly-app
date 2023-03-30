@@ -36,6 +36,43 @@ export const getAllCategoriesError = (error) => ({
 });
 
 /**
+ * @name getAvatars
+ * @description Get avatars
+ * @returns {Object} Action
+ */
+export const GET_AVATARS = 'GET_AVATARS';
+
+export const getAvatars = () => ({
+  type: GET_AVATARS,
+});
+
+/**
+ * @name getAvatarsSuccess
+ * @description Get avatars success
+ * @param {Object} avatars Avatars
+ * @returns {Object} Action
+ */
+export const GET_AVATARS_SUCCESS = 'GET_AVATARS_SUCCESS';
+
+export const getAvatarsSuccess = (avatars) => ({
+  type: GET_AVATARS_SUCCESS,
+  avatars,
+});
+
+/**
+ * @name getAvatarsError
+ * @description Get avatars error
+ * @param {Object} error Error
+ * @returns {Object} Action
+ */
+export const GET_AVATARS_ERROR = 'GET_AVATARS_ERROR';
+
+export const getAvatarsError = (error) => ({
+  type: GET_AVATARS_ERROR,
+  error,
+});
+
+/**
  * @name getQuizQuestion
  * @description Get quiz question
  * @returns {Object} Action

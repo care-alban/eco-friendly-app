@@ -2,12 +2,17 @@ import {
   SEARCH_BAR_ON_CHANGE,
   GET_ALL_CATEGORIES_SUCCESS,
   GET_ALL_CATEGORIES_ERROR,
+  GET_AVATARS_SUCCESS,
+  GET_AVATARS_ERROR,
   GET_QUIZ_QUESTION_SUCCESS,
   GET_QUIZ_QUESTION_ERROR,
 } from '../actions/commonActions';
 
+import data from '../data';
+
 export const initialState = {
   categories: [],
+  avatars: [],
   quiz: {},
   searchValue: '',
   messages: {
@@ -31,32 +36,17 @@ const reducer = (state = initialState, action = {}) => {
     case GET_ALL_CATEGORIES_ERROR:
       return {
         ...state,
-        categories: [
-          {
-            id: 1,
-            name: 'Mobilité',
-            tagline: 'Nisi repudiandae explicabo velit culpa.',
-            slug: 'mobilite',
-          },
-          {
-            id: 2,
-            name: 'Maison',
-            tagline: 'Quas placeat autem et dolores quos.',
-            slug: 'maison',
-          },
-          {
-            id: 3,
-            name: 'Santé',
-            tagline: 'Veritatis aut saepe quia error quia maiores sed.',
-            slug: 'sante',
-          },
-          {
-            id: 4,
-            name: 'Energie',
-            tagline: 'Consequatur ipsam porro porro temporibus.',
-            slug: 'energie',
-          },
-        ],
+        categories: data.categories,
+      };
+    case GET_AVATARS_SUCCESS:
+      return {
+        ...state,
+        avatars: action.avatars,
+      };
+    case GET_AVATARS_ERROR:
+      return {
+        ...state,
+        avatars: data.avatars,
       };
     case GET_QUIZ_QUESTION_SUCCESS:
       return {
