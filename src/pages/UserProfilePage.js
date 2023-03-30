@@ -163,11 +163,20 @@ export default function UserProfilePage() {
     dispatch(onSettingsUpdate());
   };
 
+  /**
+   * @name hasKey
+   * @description Check if an object has a key
+   * @param {object} obj
+   * @param {string} key
+   * @returns {boolean}
+   */
+  const hasKey = (obj, key) => Object.prototype.hasOwnProperty.call(obj, key);
+
   useEffect(() => {
-    if (errors && errors.email.length > 0) {
+    if (errors && hasKey(errors, 'email') && errors.email.length > 0) {
       console.log(errors.email);
     }
-  }, [email]);
+  }, [errors]);
 
   const handlePasswordUpdate = (e) => {
     e.preventDefault();
@@ -197,6 +206,7 @@ export default function UserProfilePage() {
   };
 
   const initializeFields = () => {
+    dispatch(clearMessages());
     dispatch(userOnInputChange(user.avatar, 'avatar'));
     dispatch(userOnInputChange(user.nickname, 'nickname'));
     dispatch(userOnInputChange(user.email, 'email'));
@@ -299,9 +309,14 @@ export default function UserProfilePage() {
             </StyledBadge>
             <StyleRow>
               <TextField
-                error={errors && errors.nickname.length > 0}
+                error={
+                  errors &&
+                  hasKey(errors, 'nickname') &&
+                  errors.nickname.length > 0
+                }
                 helperText={
                   errors &&
+                  hasKey(errors, 'nickname') &&
                   errors.nickname.length > 0 &&
                   errors.nickname.map((err) => err)
                 }
