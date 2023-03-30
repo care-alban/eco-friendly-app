@@ -1,14 +1,14 @@
 /**
- * @name onInputChange
- * @description Action creator for input change
+ * @name userOnInputChange
+ * @description Action creator for input change in user form
  * @param {string} value
  * @param {string} identifier
  * @returns {object} action
  */
-export const ON_INPUT_CHANGE = 'ON_INPUT_CHANGE';
+export const USER_ON_INPUT_CHANGE = 'USER_ON_INPUT_CHANGE';
 
-export const onInputChange = (value, identifier) => ({
-  type: ON_INPUT_CHANGE,
+export const userOnInputChange = (value, identifier) => ({
+  type: USER_ON_INPUT_CHANGE,
   value,
   identifier,
 });

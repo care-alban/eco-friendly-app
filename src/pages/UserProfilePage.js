@@ -29,7 +29,7 @@ import Loader from '../components/Loader';
 import AdvicesMediumCard from '../components/Cards/AdvicesMediumCard';
 
 import {
-  onInputChange,
+  userOnInputChange,
   onGetAdvices,
   onSettingsUpdate,
   onEmailUpdate,
@@ -146,7 +146,7 @@ export default function UserProfilePage() {
 
   /* link field to state */
   const changeField = (e) => {
-    dispatch(onInputChange(e.target.value, e.target.name));
+    dispatch(userOnInputChange(e.target.value, e.target.name));
   };
 
   const handleUpdateSubmit = (e) => {
@@ -186,11 +186,11 @@ export default function UserProfilePage() {
   }, [isLogged]);
 
   const initializeFields = () => {
-    dispatch(onInputChange(user.avatar, 'avatar'));
-    dispatch(onInputChange(user.nickname, 'nickname'));
-    dispatch(onInputChange(user.email, 'email'));
-    dispatch(onInputChange(user.firstname, 'firstname'));
-    dispatch(onInputChange(user.lastname, 'lastname'));
+    dispatch(userOnInputChange(user.avatar, 'avatar'));
+    dispatch(userOnInputChange(user.nickname, 'nickname'));
+    dispatch(userOnInputChange(user.email, 'email'));
+    dispatch(userOnInputChange(user.firstname, 'firstname'));
+    dispatch(userOnInputChange(user.lastname, 'lastname'));
   };
 
   useEffect(() => {

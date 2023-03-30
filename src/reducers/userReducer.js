@@ -1,5 +1,5 @@
 import {
-  ON_INPUT_CHANGE,
+  USER_ON_INPUT_CHANGE,
   ON_SIGN_IN_SUCCESS,
   ON_SIGN_IN_ERROR,
   ON_SETTINGS_UPDATE_SUCCESS,
@@ -47,7 +47,7 @@ export const initialState = {
 
 const reducer = (state = initialState, action = {}) => {
   switch (action.type) {
-    case ON_INPUT_CHANGE:
+    case USER_ON_INPUT_CHANGE:
       return {
         ...state,
         [action.identifier]: action.value,

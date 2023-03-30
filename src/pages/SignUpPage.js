@@ -24,7 +24,7 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import CheckIcon from '@mui/icons-material/Check';
 import Layout from '../components/Layout';
 
-import { onInputChange, onSignUp } from '../actions/userActions';
+import { userOnInputChange, onSignUp } from '../actions/userActions';
 
 const paperStyle = {
   padding: '2rem',
@@ -49,7 +49,7 @@ export default function SignUpPage() {
 
   /* link field to state */
   const changeField = (e) => {
-    dispatch(onInputChange(e.target.value, e.target.name));
+    dispatch(userOnInputChange(e.target.value, e.target.name));
   };
 
   const handleSubmit = (e) => {

@@ -24,7 +24,7 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
 import Layout from '../components/Layout';
 
-import { onInputChange, onPasswordUpdate } from '../actions/userActions';
+import { userOnInputChange, onPasswordUpdate } from '../actions/userActions';
 
 /* styles */
 const paperStyle = {
@@ -49,7 +49,7 @@ export default function PasswordResetPage() {
 
   /* link field to state */
   const changeField = (e) => {
-    dispatch(onInputChange(e.target.value, e.target.name));
+    dispatch(userOnInputChange(e.target.value, e.target.name));
   };
 
   const handleSubmit = (e) => {

@@ -16,7 +16,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import Layout from '../components/Layout';
 
-import { onInputChange, onSignIn } from '../actions/userActions';
+import { userOnInputChange, onSignIn } from '../actions/userActions';
 
 const paperStyle = {
   padding: '2rem',
@@ -38,7 +38,7 @@ export default function SignInPage() {
 
   /* link field to state */
   const changeField = (e) => {
-    dispatch(onInputChange(e.target.value, e.target.name));
+    dispatch(userOnInputChange(e.target.value, e.target.name));
   };
 
   const handleSubmit = (e) => {
