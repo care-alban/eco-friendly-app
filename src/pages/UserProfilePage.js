@@ -39,6 +39,8 @@ import {
   clearMessages,
 } from '../actions/userActions';
 
+import { getAvatars } from '../actions/commonActions';
+
 /* styles */
 const StyledBadge = styled(Badge)(({ theme }) => ({
   position: 'absolute',
@@ -99,42 +101,12 @@ function BpRadio(props) {
   );
 }
 
-const listAvatars = [
-  {
-    name: 'Ours',
-    url: 'https://cdn.eco-friendly.fr/assets/img/avatars/ours.png',
-  },
-  {
-    name: 'Mésange bleue',
-    url: 'https://cdn.eco-friendly.fr/assets/img/avatars/mesange-bleue.png',
-  },
-  {
-    name: 'Chevreuil',
-    url: 'https://cdn.eco-friendly.fr/assets/img/avatars/chevreuil.png',
-  },
-  {
-    name: 'Grenouille',
-    url: 'https://cdn.eco-friendly.fr/assets/img/avatars/grenouille.png',
-  },
-  {
-    name: 'Renard',
-    url: 'https://cdn.eco-friendly.fr/assets/img/avatars/renard.png',
-  },
-  {
-    name: 'Lièvre',
-    url: 'https://cdn.eco-friendly.fr/assets/img/avatars/lievre.png',
-  },
-  {
-    name: 'Papillon',
-    url: 'https://cdn.eco-friendly.fr/assets/img/avatars/papillon.png',
-  },
-];
-
 export default function UserProfilePage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [avatarSelectShow, setAvatarSelectShow] = useState(false);
   const [open, setOpen] = useState(false);
+  const avatars = useSelector((state) => state.common.avatars);
   const advices = useSelector((state) => state.user.advices);
   const isLoaded = useSelector((state) => state.user.isLoaded);
   const isUpdated = useSelector((state) => state.user.isUpdated);
@@ -209,6 +181,7 @@ export default function UserProfilePage() {
 
   useEffect(() => {
     dispatch(clearMessages());
+    dispatch(getAvatars());
     dispatch(onGetAdvices());
   }, []);
 
@@ -272,16 +245,16 @@ export default function UserProfilePage() {
                       onChange={changeField}
                       value={avatar}
                     >
-                      {listAvatars.map((itemAvatar) => (
+                      {avatars.map((item) => (
                         <FormControlLabel
-                          key={itemAvatar.name}
-                          value={itemAvatar.url}
+                          key={item.id}
+                          value={item.picture}
                           control={<BpRadio />}
                           labelPlacement="bottom"
                           label={
                             <Avatar
-                              alt={itemAvatar.name}
-                              src={itemAvatar.url}
+                              alt={item.name}
+                              src={item.picture}
                               sx={{ width: 80, height: 80 }}
                             />
                           }
