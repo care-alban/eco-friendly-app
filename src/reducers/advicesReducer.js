@@ -63,7 +63,6 @@ const reducer = (state = initialState, action = {}) => {
         title: action.advice.title || '',
         category: action.advice.category ? action.advice.category.id : '',
         content: action.advice.content || '',
-        advice: action.advice || {},
         showAdviceForm: !state.showAdviceForm,
       };
     case TO_MANAGE_ADVICE_SUCCESS:
