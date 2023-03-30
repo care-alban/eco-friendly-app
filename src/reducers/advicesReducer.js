@@ -46,7 +46,7 @@ const reducer = (state = initialState, action = {}) => {
     case GET_ADVICE_SUCCESS:
       return {
         ...state,
-        advice: action.advice,
+        advice: action.data,
       };
     case GET_ADVICE_ERROR:
       return {

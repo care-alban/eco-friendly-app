@@ -68,14 +68,14 @@ export const getAdvice = (id) => ({
 /**
  * @name getAdviceSuccess
  * @description Get advice success
- * @param {Object} advice Advice
+ * @param {Object} data Advice
  * @returns {Object} Action
  */
 export const GET_ADVICE_SUCCESS = 'GET_ADVICE_SUCCESS';
 
-export const getAdviceSuccess = (advice) => ({
+export const getAdviceSuccess = (data) => ({
   type: GET_ADVICE_SUCCESS,
-  advice,
+  data,
 });
 
 /**
