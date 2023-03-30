@@ -2,18 +2,17 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, Link as RouterLink } from 'react-router-dom';
 import {
-  Box,
-  Grid,
-  Paper,
   Avatar,
-  TextField,
+  Box,
   Button,
-  Typography,
+  FormHelperText,
+  Grid,
   Link,
+  Paper,
+  TextField,
+  Typography,
 } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import Layout from '../components/Layout';
 
 import { userOnInputChange, onSignIn } from '../actions/userActions';
@@ -35,6 +34,7 @@ export default function SignInPage() {
   const email = useSelector((state) => state.user.email);
   const password = useSelector((state) => state.user.password);
   const isLogged = useSelector((state) => state.user.isLogged);
+  const error = useSelector((state) => state.user.messages.error);
 
   /* link field to state */
   const changeField = (e) => {
@@ -86,10 +86,7 @@ export default function SignInPage() {
               fullWidth
               required
             />
-            <FormControlLabel
-              control={<Checkbox name="checkedB" color="primary" />}
-              label="Se souvenir de moi"
-            />
+            {error && <FormHelperText>{error}</FormHelperText>}
             <Button
               type="submit"
               color="primary"

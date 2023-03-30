@@ -70,7 +70,7 @@ const reducer = (state = initialState, action = {}) => {
         ...state,
         messages: {
           ...state.messages,
-          error: action.error.response.data.errors,
+          error: action.error.response.data.message,
         },
       };
     case ON_SETTINGS_UPDATE_SUCCESS:
