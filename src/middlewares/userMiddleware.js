@@ -18,6 +18,8 @@ import {
   onEmailVerificationSuccess,
   onEmailVerificationError,
   ON_PASSWORD_UPDATE,
+  onPasswordUpdateSuccess,
+  onPasswordUpdateError,
   ON_DELETE_ACCOUNT,
   onDeleteAccountSuccess,
   onDeleteAccountError,
@@ -171,10 +173,10 @@ const userMiddleware = (store) => (next) => (action) => {
           },
         )
         .then(() => {
-          store.dispatch(onEmailVerificationSuccess());
+          store.dispatch(onPasswordUpdateSuccess());
         })
         .catch((error) => {
-          store.dispatch(onEmailVerificationError(error));
+          store.dispatch(onPasswordUpdateError(error));
         });
       break;
     case ON_DELETE_ACCOUNT:
