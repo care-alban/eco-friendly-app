@@ -14,6 +14,7 @@ import {
   onSettingsUpdateError,
   ON_EMAIL_UPDATE,
   onEmailUpdateSuccess,
+  onEmailUpdateError,
   ON_EMAIL_VERIFICATION,
   onEmailVerificationSuccess,
   onEmailVerificationError,
@@ -134,6 +135,9 @@ const userMiddleware = (store) => (next) => (action) => {
           store.dispatch(
             onEmailUpdateSuccess(response.data.email, response.data.nickname),
           );
+        })
+        .catch((error) => {
+          store.dispatch(onEmailUpdateError(error));
         });
       break;
     case ON_EMAIL_VERIFICATION:
