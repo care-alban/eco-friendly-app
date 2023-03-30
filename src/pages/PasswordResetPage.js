@@ -40,8 +40,8 @@ const btnstyle = { margin: '1rem 0' };
 export default function PasswordResetPage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [token] = useSearchParams();
-  console.log(token);
+  const [searchParams] = useSearchParams();
+  const token = searchParams.get('token');
 
   const [error, setError] = useState(false); // password confirm
 
