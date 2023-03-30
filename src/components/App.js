@@ -32,7 +32,7 @@ function App() {
         <Route path="/inscription" element={<SignUpPage />} />
         <Route path="/enregistrement" element={<RegistrationPage />} />
         <Route path="/validation" element={<ValidationPage />} />
-        <Route path="/mot-de-passe/:token" element={<PasswordResetPage />} />
+        <Route path="/mot-de-passe" element={<PasswordResetPage />} />
         <Route path="/mentions-legales" element={<LegalNoticePage />} />
         {token && (
           <Route path="/utilisateurs/:nickname" element={<UserProfilePage />} />
