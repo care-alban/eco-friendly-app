@@ -136,7 +136,6 @@ export default function UserProfilePage() {
   const [open, setOpen] = useState(false);
   const advices = useSelector((state) => state.user.advices);
   const isLoaded = useSelector((state) => state.user.isLoaded);
-  const isLogged = useSelector((state) => state.user.isLogged);
   const avatar = useSelector((state) => state.user.avatar);
   const nickname = useSelector((state) => state.user.nickname);
   const email = useSelector((state) => state.user.email);
@@ -153,6 +152,8 @@ export default function UserProfilePage() {
     e.preventDefault();
     if (email !== user.email) {
       dispatch(onEmailUpdate());
+      dispatch(onLogOut());
+      navigate('/enregistrement', { replace: true });
       return;
     }
     dispatch(onSettingsUpdate());
@@ -161,6 +162,8 @@ export default function UserProfilePage() {
   const handlePasswordUpdate = (e) => {
     e.preventDefault();
     dispatch(onEmailVerification());
+    dispatch(onLogOut());
+    navigate('/enregistrement', { replace: true });
   };
 
   const handleDialogClickOpen = () => {
@@ -177,13 +180,6 @@ export default function UserProfilePage() {
     dispatch(onDeleteAccount());
     navigate('/', { replace: false });
   };
-
-  useEffect(() => {
-    if (!isLogged) {
-      dispatch(onLogOut());
-      navigate('/enregistrement', { replace: true });
-    }
-  }, [isLogged]);
 
   const initializeFields = () => {
     dispatch(userOnInputChange(user.avatar, 'avatar'));
