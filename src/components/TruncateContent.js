@@ -12,6 +12,7 @@ export default function TruncateContent({ children, lines }) {
     -webkit-box-orient: vertical;
     -webkit-hyphens: auto;
     hyphens: auto;
+    min-height: calc(${lines} * 1.8rem);
   `;
 
   return <Truncate>{children}</Truncate>;

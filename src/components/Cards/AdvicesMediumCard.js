@@ -3,6 +3,7 @@ import { Link as RouterLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import {
+  Avatar,
   Box,
   Button,
   Card,
@@ -93,20 +94,45 @@ export default function AdvicesMediumCard({ advice }) {
             </Typography>
           </TruncateContent>
           {advice.contributor && (
-            <Typography variant="body2" color="text.secondary" component="h6">
-              Proposé par{' '}
-              {user && user.id === advice.contributor.id
-                ? 'vous'
-                : advice.contributor.nickname}
-            </Typography>
+            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+              <Avatar
+                alt={`avatar de ${advice.contributor}`}
+                src={advice.contributor.avatar}
+                sx={{
+                  width: '4rem',
+                  height: '4rem',
+                  mr: 2,
+                  border: 2,
+                  borderColor: 'neutral.main',
+                }}
+              />
+              <Box>
+                <Typography
+                  variant="body2"
+                  color="text.secondary"
+                  component="h6"
+                >
+                  Proposé par{' '}
+                  {user && user.id === advice.contributor.id
+                    ? 'vous'
+                    : advice.contributor.nickname}
+                </Typography>
+                <Typography
+                  variant="body2"
+                  color="text.secondary"
+                  component="span"
+                >
+                  {advice.updated_at
+                    ? `Mis à jour le ${new Date(
+                        advice.updated_at,
+                      ).toLocaleDateString()}`
+                    : `Publié le ${new Date(
+                        advice.created_at,
+                      ).toLocaleDateString()}`}
+                </Typography>
+              </Box>
+            </Box>
           )}
-          <Typography variant="body2" color="text.secondary" component="span">
-            {advice.updated_at
-              ? `Mis à jour le ${new Date(
-                  advice.updated_at,
-                ).toLocaleDateString()}`
-              : `Publié le ${new Date(advice.created_at).toLocaleDateString()}`}
-          </Typography>
         </Box>
         <TruncateContent lines={3}>
           <div dangerouslySetInnerHTML={{ __html: advice.content }} />
@@ -141,6 +167,7 @@ AdvicesMediumCard.propTypes = {
     contributor: PropTypes.shape({
       id: PropTypes.number,
       nickname: PropTypes.string,
+      avatar: PropTypes.string,
     }),
     title: PropTypes.string.isRequired,
     updated_at: PropTypes.string,
@@ -158,6 +185,7 @@ AdvicesMediumCard.defaultProps = {
     contributor: {
       id: null,
       nickname: '',
+      avatar: '',
     },
     created_at: '',
     updated_at: '',
