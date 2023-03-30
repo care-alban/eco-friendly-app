@@ -432,7 +432,7 @@ export default function UserProfilePage() {
         <>
           {advices.length > 0 ? (
             <Typography variant="h5" component="h4" my={4}>
-              `Félicitations ! Vous avez déjà créé ${advices.length} conseil(s)`
+              {`Félicitations ! Vous avez déjà créé ${advices.length} conseil(s)`}
             </Typography>
           ) : (
             <>
