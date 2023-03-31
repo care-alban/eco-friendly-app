@@ -11,12 +11,14 @@ import {
   TO_DELETE_ADVICE_ERROR,
 } from '../actions/advicesActions';
 
+import { CLEAR_MESSAGES } from '../actions/commonActions';
+
 export const initialState = {
   list: [],
-  advice: {},
+  advice: null,
   messages: {
-    success: [],
-    error: [],
+    success: null,
+    error: null,
   },
   id: '',
   title: '',
@@ -91,7 +93,7 @@ const reducer = (state = initialState, action = {}) => {
     case TO_MANAGE_ADVICE_ERROR:
       return {
         ...state,
-        advice: {},
+        advice: null,
         messages: {
           ...state.messages,
           error: action.error.response.data.errors,
@@ -112,6 +114,15 @@ const reducer = (state = initialState, action = {}) => {
         messages: {
           ...state.messages,
           error: action.error.response.data.errors,
+        },
+      };
+    case CLEAR_MESSAGES:
+      return {
+        ...state,
+        messages: {
+          ...state.messages,
+          success: null,
+          error: null,
         },
       };
     default:

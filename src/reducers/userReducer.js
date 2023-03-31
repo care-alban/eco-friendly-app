@@ -17,8 +17,9 @@ import {
   ON_SIGN_UP_ERROR,
   ON_GET_ADVICES_SUCCESS,
   ON_GET_ADVICES_ERROR,
-  CLEAR_MESSAGES,
 } from '../actions/userActions';
+
+import { CLEAR_MESSAGES } from '../actions/commonActions';
 
 import { loadState } from '../utils/sessionStorage';
 
@@ -148,13 +149,14 @@ const reducer = (state = initialState, action = {}) => {
         },
         password: '',
         passwordConfirm: '',
+        isUpdated: true,
       };
     case ON_PASSWORD_UPDATE_ERROR:
       return {
         ...state,
         messages: {
           ...state.messages,
-          error: action.error.response.data.errors,
+          error: action.error,
         },
       };
     case ON_DELETE_ACCOUNT_SUCCESS:
