@@ -79,10 +79,6 @@ export default function FormAdvice() {
     }
   };
 
-  useEffect(() => {
-    dispatch(clearMessages());
-  }, []);
-
   /* Actions if the form is successfully submitted */
   useEffect(() => {
     dispatch(getAdvices());

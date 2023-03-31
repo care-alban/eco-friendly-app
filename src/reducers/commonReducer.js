@@ -16,8 +16,8 @@ export const initialState = {
   quiz: {},
   searchValue: '',
   messages: {
-    success: [],
-    error: [],
+    success: null,
+    error: null,
   },
 };
 
