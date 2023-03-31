@@ -1,14 +1,12 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import {
   Avatar,
-  Box,
   Button,
   Container,
-  FormHelperText,
   Grid,
   IconButton,
   InputAdornment,
@@ -26,6 +24,10 @@ import Layout from '../components/Layout';
 
 import { userOnInputChange, onPasswordUpdate } from '../actions/userActions';
 
+import { clearMessages } from '../actions/commonActions';
+
+import { hasKey } from '../utils';
+
 /* styles */
 const paperStyle = {
   padding: '2rem',
@@ -34,7 +36,6 @@ const paperStyle = {
   maxWidth: '380px',
   margin: '1.4rem auto',
 };
-const TextFieldStyle = { margin: '0.5rem 0' };
 const btnstyle = { margin: '1rem 0' };
 
 export default function PasswordResetPage() {
@@ -42,27 +43,34 @@ export default function PasswordResetPage() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const token = searchParams.get('token');
-
-  const [error, setError] = useState(false); // password confirm
-
   const password = useSelector((state) => state.user.password);
   const passwordConfirm = useSelector((state) => state.user.passwordConfirm);
+  const isUpdated = useSelector((state) => state.user.isUpdated);
+  const [error, setError] = useState(false); // password confirm
+  const errors = useSelector((state) => state.user.messages.error);
 
   /* link field to state */
   const changeField = (e) => {
+    dispatch(clearMessages());
     dispatch(userOnInputChange(e.target.value, e.target.name));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    dispatch(clearMessages());
     setError(false);
     if (password !== passwordConfirm) {
       setError(true);
-      return;
+      return null;
     }
-    dispatch(onPasswordUpdate(token));
-    navigate('/connexion', { replace: true });
+    return dispatch(onPasswordUpdate(token));
   };
+
+  useEffect(() => {
+    if (isUpdated) {
+      navigate('/connexion', { replace: true });
+    }
+  }, [isUpdated]);
 
   return (
     <Layout>
@@ -77,7 +85,11 @@ export default function PasswordResetPage() {
         </Grid>
         <Paper elevation={10} sx={paperStyle}>
           <form noValidate autoComplete="off" onSubmit={handleSubmit}>
-            <AddPassword onChange={changeField} value={password} />
+            <AddPassword
+              onChange={changeField}
+              value={password}
+              errors={errors}
+            />
             <PasswordConfirm
               onChange={changeField}
               value={passwordConfirm}
@@ -108,38 +120,44 @@ export default function PasswordResetPage() {
   );
 }
 
-function AddPassword({ onChange, value }) {
+function AddPassword({ onChange, value, errors }) {
   return (
-    <Box sx={TextFieldStyle}>
-      <TextField
-        name="password"
-        onChange={onChange}
-        value={value}
-        type="password"
-        label="Mot de passe"
-        placeholder="Mot de passe"
-        variant="outlined"
-        fullWidth
-        required
-        InputProps={{
-          startAdornment: (
-            <InputAdornment position="start">
-              <KeyIcon />
-            </InputAdornment>
-          ),
-        }}
-      />
-      <FormHelperText id="component-helper-text" sx={{ margin: '0.5rem 0' }}>
-        8 caractères minimum dont une majuscule, une minuscule, un chiffre et un
-        caractère spécial.
-      </FormHelperText>
-    </Box>
+    <TextField
+      error={errors && hasKey(errors, 'password') && errors.password.length > 0}
+      helperText={
+        errors && hasKey(errors, 'password') && errors.password.length > 0
+          ? errors.password.map((err) => err)
+          : '8 caractères minimum dont une majuscule, une minuscule, un chiffre et un caractère spécial.'
+      }
+      name="password"
+      type="password"
+      label="Mot de passe"
+      placeholder="Mot de passe"
+      variant="outlined"
+      fullWidth
+      required
+      onChange={onChange}
+      value={value}
+      InputProps={{
+        startAdornment: (
+          <InputAdornment position="start">
+            <KeyIcon />
+          </InputAdornment>
+        ),
+      }}
+      margin="dense"
+    />
   );
 }
 
 AddPassword.propTypes = {
   onChange: PropTypes.func.isRequired,
   value: PropTypes.string.isRequired,
+  errors: PropTypes.object,
+};
+
+AddPassword.defaultProps = {
+  errors: {},
 };
 
 function PasswordConfirm({ onChange, value, error }) {
@@ -152,43 +170,34 @@ function PasswordConfirm({ onChange, value, error }) {
   };
 
   return (
-    <Box sx={TextFieldStyle}>
-      <TextField
-        error={error}
-        name="passwordConfirm"
-        onChange={onChange}
-        value={value}
-        type={showPassword ? 'text' : 'password'}
-        label="Confirmation"
-        placeholder="Mot de passe"
-        variant="outlined"
-        fullWidth
-        required
-        InputProps={{
-          endAdornment: (
-            <InputAdornment position="end">
-              <IconButton
-                aria-label="toggle password visibility"
-                onClick={handleClickShowPassword}
-                onMouseDown={handleMouseDownPassword}
-                edge="end"
-              >
-                {showPassword ? <VisibilityOff /> : <Visibility />}
-              </IconButton>
-            </InputAdornment>
-          ),
-        }}
-      />
-      {error && (
-        <FormHelperText
-          error={error}
-          id="component-helper-text"
-          sx={{ margin: '0.5rem 0' }}
-        >
-          Les mots de passe ne correspondent pas.
-        </FormHelperText>
-      )}
-    </Box>
+    <TextField
+      error={error}
+      helperText={error && 'Les mots de passe ne correspondent pas.'}
+      name="passwordConfirm"
+      onChange={onChange}
+      value={value}
+      type={showPassword ? 'text' : 'password'}
+      label="Confirmation"
+      placeholder="Mot de passe"
+      variant="outlined"
+      fullWidth
+      required
+      InputProps={{
+        endAdornment: (
+          <InputAdornment position="end">
+            <IconButton
+              aria-label="toggle password visibility"
+              onClick={handleClickShowPassword}
+              onMouseDown={handleMouseDownPassword}
+              edge="end"
+            >
+              {showPassword ? <VisibilityOff /> : <Visibility />}
+            </IconButton>
+          </InputAdornment>
+        ),
+      }}
+      margin="dense"
+    />
   );
 }
 

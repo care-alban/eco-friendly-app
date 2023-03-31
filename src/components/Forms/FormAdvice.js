@@ -4,6 +4,7 @@ import {
   Box,
   Button,
   FormControl,
+  FormHelperText,
   InputLabel,
   MenuItem,
   Paper,
@@ -22,6 +23,10 @@ import {
   toManageAdvice,
 } from '../../actions/advicesActions';
 
+import { clearMessages } from '../../actions/commonActions';
+
+import { hasKey } from '../../utils';
+
 export default function FormAdvice() {
   const dispatch = useDispatch();
   /* Get the button name clicked */
@@ -36,12 +41,16 @@ export default function FormAdvice() {
   const content = useSelector((state) => state.advices.content);
   /* Control if the form is successfully submitted */
   const isSubmitted = useSelector((state) => state.advices.isSubmitted);
+  const errors = useSelector((state) => state.advices.messages.error);
 
   /* link field to state */
   const changeField = (e) => {
+    dispatch(clearMessages());
     dispatch(advicesOnInputChange(e.target.value, e.target.name));
   };
+
   const handleRichTextEditorChange = (value) => {
+    dispatch(clearMessages());
     dispatch(advicesOnInputChange(value, 'content'));
   };
 
@@ -66,13 +75,18 @@ export default function FormAdvice() {
       dispatch(advicesOnInputChange('', 'title'));
       dispatch(advicesOnInputChange('', 'category'));
       dispatch(advicesOnInputChange('', 'content'));
+      dispatch(toggleShowAdviceForm());
     }
-    dispatch(toggleShowAdviceForm());
   };
+
+  useEffect(() => {
+    dispatch(clearMessages());
+  }, []);
 
   /* Actions if the form is successfully submitted */
   useEffect(() => {
     dispatch(getAdvices());
+    dispatch(toggleShowAdviceForm());
   }, [isSubmitted]);
 
   return (
@@ -99,6 +113,15 @@ export default function FormAdvice() {
             }}
           >
             <TextField
+              error={
+                errors && hasKey(errors, 'title') && errors.title.length > 0
+              }
+              helperText={
+                errors &&
+                hasKey(errors, 'title') &&
+                errors.title.length > 0 &&
+                errors.title.map((err) => err)
+              }
               type="text"
               name="title"
               label="Titre du conseil"
@@ -118,7 +141,7 @@ export default function FormAdvice() {
               id="category"
               label="Catégorie"
               required
-              value={category}
+              value={categories.length > 0 ? categories[0].id : ''}
               onChange={changeField}
             >
               {categories.map((item) => (
@@ -135,6 +158,16 @@ export default function FormAdvice() {
             value={content}
             onChange={handleRichTextEditorChange}
           />
+          <FormHelperText
+            error={
+              errors && hasKey(errors, 'content') && errors.content.length > 0
+            }
+          >
+            {errors &&
+              hasKey(errors, 'content') &&
+              errors.content.length > 0 &&
+              errors.content.map((err) => err)}
+          </FormHelperText>
         </FormControl>
         <Stack
           spacing={2}
