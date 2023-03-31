@@ -5,10 +5,10 @@ import {
   Button,
   FormControl,
   FormHelperText,
-  InputLabel,
-  MenuItem,
+  // InputLabel,
+  // MenuItem,
   Paper,
-  Select,
+  // Select,
   Stack,
   TextField,
   Typography,
@@ -34,7 +34,7 @@ export default function FormAdvice() {
   /* Get the state of the form */
   const isShow = useSelector((state) => state.advices.showAdviceForm);
   /* Control fields */
-  const categories = useSelector((state) => state.common.categories);
+  // const categories = useSelector((state) => state.common.categories);
   const id = useSelector((state) => state.advices.id);
   const title = useSelector((state) => state.advices.title);
   const category = useSelector((state) => state.advices.category);
@@ -78,6 +78,10 @@ export default function FormAdvice() {
       dispatch(toggleShowAdviceForm());
     }
   };
+
+  useEffect(() => {
+    dispatch(clearMessages());
+  }, []);
 
   /* Actions if the form is successfully submitted */
   useEffect(() => {
@@ -129,7 +133,7 @@ export default function FormAdvice() {
               onChange={changeField}
             />
           </FormControl>
-          <FormControl sx={{ width: { sx: '100%', md: '20%' }, marginTop: 2 }}>
+          {/* <FormControl sx={{ width: { sx: '100%', md: '20%' }, marginTop: 2 }}>
             <InputLabel id="category-label">Catégorie</InputLabel>
             <Select
               name="category"
@@ -146,7 +150,7 @@ export default function FormAdvice() {
                 </MenuItem>
               ))}
             </Select>
-          </FormControl>
+          </FormControl> */}
         </Box>
         <FormControl sx={{ width: '100%', marginTop: 2 }}>
           <RichTextEditor
