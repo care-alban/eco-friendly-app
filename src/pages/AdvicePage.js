@@ -42,9 +42,9 @@ export default function AdvicePage() {
       behavior: 'smooth',
     });
     dispatch(getAdvice(id));
-  }, [id]);
+  }, []);
 
-  if (Object.keys(advice).length === 0) {
+  if (!advice) {
     return (
       <Layout>
         <Loader />
