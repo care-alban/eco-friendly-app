@@ -1,3 +1,4 @@
+import { toast } from 'react-toastify';
 import {
   USER_ON_INPUT_CHANGE,
   ON_SIGN_IN_SUCCESS,
@@ -56,6 +57,7 @@ const reducer = (state = initialState, action = {}) => {
         [action.identifier]: action.value,
       };
     case ON_SIGN_IN_SUCCESS:
+      toast.success('Bienvenue !  Vous êtes maintenant connecté !');
       return {
         ...state,
         data: action.user,
