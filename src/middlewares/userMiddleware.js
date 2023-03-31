@@ -161,27 +161,31 @@ const userMiddleware = (store) => (next) => (action) => {
         });
       break;
     case ON_PASSWORD_UPDATE:
-      axios
-        .post(
-          `${config.apiURL}/reset-password/reset/${action.token.replace(
-            /"/g,
-            '',
-          )}`,
-          {
-            password: store.getState().user.password,
-          },
-          {
-            headers: {
-              Authorization: `Bearer ${store.getState().user.token}`,
+      if (action.token === null || action.token === '') {
+        store.dispatch(onPasswordUpdateError(null));
+      } else {
+        axios
+          .post(
+            `${config.apiURL}/reset-password/reset/${action.token.replace(
+              /"/g,
+              '',
+            )}`,
+            {
+              password: store.getState().user.password,
             },
-          },
-        )
-        .then(() => {
-          store.dispatch(onPasswordUpdateSuccess());
-        })
-        .catch((error) => {
-          store.dispatch(onPasswordUpdateError(error));
-        });
+            {
+              headers: {
+                Authorization: `Bearer ${store.getState().user.token}`,
+              },
+            },
+          )
+          .then(() => {
+            store.dispatch(onPasswordUpdateSuccess());
+          })
+          .catch((error) => {
+            store.dispatch(onPasswordUpdateError(error.response.data.errors));
+          });
+      }
       break;
     case ON_DELETE_ACCOUNT:
       axios
