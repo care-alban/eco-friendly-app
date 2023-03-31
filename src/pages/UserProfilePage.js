@@ -36,10 +36,9 @@ import {
   onEmailVerification,
   onDeleteAccount,
   onLogOut,
-  clearMessages,
 } from '../actions/userActions';
 
-import { getAvatars } from '../actions/commonActions';
+import { getAvatars, clearMessages } from '../actions/commonActions';
 
 import { hasKey } from '../utils';
 

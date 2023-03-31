@@ -22,11 +22,9 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import CheckIcon from '@mui/icons-material/Check';
 import Layout from '../components/Layout';
 
-import {
-  userOnInputChange,
-  onSignUp,
-  clearMessages,
-} from '../actions/userActions';
+import { userOnInputChange, onSignUp } from '../actions/userActions';
+
+import { clearMessages } from '../actions/commonActions';
 
 import { hasKey } from '../utils';
 
@@ -172,7 +170,11 @@ function AddEmail({ onChange, value, errors }) {
 AddEmail.propTypes = {
   onChange: PropTypes.func.isRequired,
   value: PropTypes.string.isRequired,
-  errors: PropTypes.object.isRequired,
+  errors: PropTypes.object,
+};
+
+AddEmail.defaultProps = {
+  errors: {},
 };
 
 function AddPassword({ onChange, value, errors }) {
@@ -208,7 +210,11 @@ function AddPassword({ onChange, value, errors }) {
 AddPassword.propTypes = {
   onChange: PropTypes.func.isRequired,
   value: PropTypes.string.isRequired,
-  errors: PropTypes.object.isRequired,
+  errors: PropTypes.object,
+};
+
+AddPassword.defaultProps = {
+  errors: {},
 };
 
 function PasswordConfirm({ onChange, value, error }) {
@@ -296,5 +302,9 @@ function AddNickname({ onChange, value, errors }) {
 AddNickname.propTypes = {
   onChange: PropTypes.func.isRequired,
   value: PropTypes.string.isRequired,
-  errors: PropTypes.object.isRequired,
+  errors: PropTypes.object,
+};
+
+AddNickname.defaultProps = {
+  errors: {},
 };
