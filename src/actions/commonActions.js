@@ -121,3 +121,14 @@ export const searchBarOnChange = (value) => ({
   type: SEARCH_BAR_ON_CHANGE,
   value,
 });
+
+/**
+ * @clearMessages
+ * @description Action to clear messages
+ * @returns {Object} action
+ */
+export const CLEAR_MESSAGES = 'CLEAR_MESSAGES';
+
+export const clearMessages = () => ({
+  type: CLEAR_MESSAGES,
+});
