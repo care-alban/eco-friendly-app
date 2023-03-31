@@ -5,10 +5,10 @@ import {
   Button,
   FormControl,
   FormHelperText,
-  // InputLabel,
-  // MenuItem,
+  InputLabel,
+  MenuItem,
   Paper,
-  // Select,
+  Select,
   Stack,
   TextField,
   Typography,
@@ -34,7 +34,7 @@ export default function FormAdvice() {
   /* Get the state of the form */
   const isShow = useSelector((state) => state.advices.showAdviceForm);
   /* Control fields */
-  // const categories = useSelector((state) => state.common.categories);
+  const categories = useSelector((state) => state.common.categories);
   const id = useSelector((state) => state.advices.id);
   const title = useSelector((state) => state.advices.title);
   const category = useSelector((state) => state.advices.category);
@@ -57,6 +57,7 @@ export default function FormAdvice() {
   /* Submit form */
   const handleSubmit = (e) => {
     e.preventDefault();
+    dispatch(clearMessages());
     if (buttonName === 'publish') {
       if (id) {
         dispatch(toManageAdvice({ title, category, content }, id, 1));
@@ -85,8 +86,10 @@ export default function FormAdvice() {
 
   /* Actions if the form is successfully submitted */
   useEffect(() => {
+    if (!errors && isShow) {
+      dispatch(toggleShowAdviceForm());
+    }
     dispatch(getAdvices());
-    dispatch(toggleShowAdviceForm());
   }, [isSubmitted]);
 
   return (
@@ -133,7 +136,7 @@ export default function FormAdvice() {
               onChange={changeField}
             />
           </FormControl>
-          {/* <FormControl sx={{ width: { sx: '100%', md: '20%' }, marginTop: 2 }}>
+          <FormControl sx={{ width: { sx: '100%', md: '20%' }, marginTop: 2 }}>
             <InputLabel id="category-label">Catégorie</InputLabel>
             <Select
               name="category"
@@ -141,7 +144,7 @@ export default function FormAdvice() {
               id="category"
               label="Catégorie"
               required
-              value={categories.length > 0 ? categories[0].id : ''}
+              value={categories}
               onChange={changeField}
             >
               {categories.map((item) => (
@@ -150,7 +153,7 @@ export default function FormAdvice() {
                 </MenuItem>
               ))}
             </Select>
-          </FormControl> */}
+          </FormControl>
         </Box>
         <FormControl sx={{ width: '100%', marginTop: 2 }}>
           <RichTextEditor
