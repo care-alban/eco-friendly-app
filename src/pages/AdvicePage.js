@@ -42,7 +42,7 @@ export default function AdvicePage() {
       behavior: 'smooth',
     });
     dispatch(getAdvice(id));
-  }, []);
+  }, [id]);
 
   if (!advice) {
     return (
