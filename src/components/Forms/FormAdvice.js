@@ -57,19 +57,24 @@ export default function FormAdvice() {
   /* Submit form */
   const handleSubmit = (e) => {
     e.preventDefault();
+    let advice = { title, category, content };
+    /* if category='' => category=null */
+    if (category === '') {
+      advice = { ...advice, category: null };
+    }
     dispatch(clearMessages());
     if (buttonName === 'publish') {
       if (id) {
-        dispatch(toManageAdvice({ title, category, content }, id, 1));
+        dispatch(toManageAdvice(advice, id, 1));
       } else {
-        dispatch(toManageAdvice({ title, category, content }, null, 1));
+        dispatch(toManageAdvice(advice, null, 1));
       }
     }
     if (buttonName === 'save') {
       if (id) {
-        dispatch(toManageAdvice({ title, category, content }, id, 0));
+        dispatch(toManageAdvice(advice, id, 0));
       } else {
-        dispatch(toManageAdvice({ title, category, content }, null, 0));
+        dispatch(toManageAdvice(advice, null, 0));
       }
     }
     if (buttonName === 'cancel') {
@@ -153,6 +158,18 @@ export default function FormAdvice() {
                 </MenuItem>
               ))}
             </Select>
+            <FormHelperText
+              error={
+                errors &&
+                hasKey(errors, 'category') &&
+                errors.category.length > 0
+              }
+            >
+              {errors &&
+                hasKey(errors, 'category') &&
+                errors.category.length > 0 &&
+                errors.category.map((err) => err)}
+            </FormHelperText>
           </FormControl>
         </Box>
         <FormControl sx={{ width: '100%', marginTop: 2 }}>
