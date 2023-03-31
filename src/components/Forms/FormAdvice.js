@@ -144,7 +144,7 @@ export default function FormAdvice() {
               id="category"
               label="Catégorie"
               required
-              value={categories}
+              value={category}
               onChange={changeField}
             >
               {categories.map((item) => (
