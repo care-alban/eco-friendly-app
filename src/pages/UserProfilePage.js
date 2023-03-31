@@ -41,6 +41,8 @@ import {
 
 import { getAvatars } from '../actions/commonActions';
 
+import { hasKey } from '../utils';
+
 /* styles */
 const StyledBadge = styled(Badge)(({ theme }) => ({
   position: 'absolute',
@@ -133,15 +135,6 @@ export default function UserProfilePage() {
     }
     dispatch(onSettingsUpdate());
   };
-
-  /**
-   * @name hasKey
-   * @description Check if an object has a key
-   * @param {object} obj
-   * @param {string} key
-   * @returns {boolean}
-   */
-  const hasKey = (obj, key) => Object.prototype.hasOwnProperty.call(obj, key);
 
   const handlePasswordUpdate = (e) => {
     e.preventDefault();

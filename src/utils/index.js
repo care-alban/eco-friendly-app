@@ -59,9 +59,19 @@ const searchValueInArray = (array, value, key) => {
   return null;
 };
 
+/**
+ * @name hasKey
+ * @description Check if an object has a key
+ * @param {object} obj
+ * @param {string} key
+ * @returns {boolean}
+ */
+const hasKey = (obj, key) => Object.prototype.hasOwnProperty.call(obj, key);
+
 export {
   getFisrtArrayItem,
   getArrayItems,
   randomlyMixSeveralArrays,
   searchValueInArray,
+  hasKey,
 };
