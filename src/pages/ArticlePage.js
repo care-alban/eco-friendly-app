@@ -41,7 +41,7 @@ export default function ArticlePage() {
     dispatch(getArticle(id));
   }, [id]);
 
-  if (Object.keys(article).length === 0 || articles.length < 4) {
+  if (!article || articles.length < 4) {
     return (
       <Layout>
         <Loader />

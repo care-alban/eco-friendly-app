@@ -7,10 +7,10 @@ import {
 
 export const initialState = {
   list: [],
-  article: {},
+  article: null,
   messages: {
-    success: [],
-    error: [],
+    success: null,
+    error: null,
   },
 };
 
