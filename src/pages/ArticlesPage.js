@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { Box, Button, Grid } from '@mui/material';
@@ -10,13 +10,42 @@ import { getArticles } from '../actions/articlesActions';
 
 export default function ArticlesPage() {
   const dispatch = useDispatch();
-  const articles = useSelector((state) => state.articles.list);
+  const [page, setPage] = useState(1);
+  const [articles, setArticles] = useState([]);
+
+  const articlesList = useSelector((state) => state.articles.list);
 
   useEffect(() => {
-    dispatch(getArticles());
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: 'smooth',
+    });
   }, []);
 
-  if (Object.keys(articles).length === 0) {
+  useEffect(() => {
+    const params = [{ name: 'page', value: page }];
+    dispatch(getArticles(params));
+  }, [page]);
+
+  useEffect(() => {
+    if (articlesList.length === 0) {
+      return;
+    }
+    setArticles([
+      ...articles,
+      /* Filter the articles to avoid duplicates */
+      ...articlesList.filter(
+        (item) => !articles.find((article) => article.id === item.id),
+      ),
+    ]);
+  }, [articlesList]);
+
+  const handlePageChange = () => {
+    setPage(page + 1);
+  };
+
+  if (articles.length === 0) {
     return (
       <Layout>
         <Loader />
@@ -49,7 +78,9 @@ export default function ArticlesPage() {
           justifyContent: 'flex-end',
         }}
       >
-        <Button variant="contained">Voir plus d'articles...</Button>
+        <Button onClick={handlePageChange} variant="contained">
+          Voir plus d'articles...
+        </Button>
       </Box>
     </Layout>
   );
