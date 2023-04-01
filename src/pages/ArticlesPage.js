@@ -46,13 +46,57 @@ export default function ArticlesPage() {
     if (articlesList.length === 0) {
       return;
     }
+    if (category !== 'All') {
+      setArticles([
+        ...articles,
+        ...articlesList
+          .filter((article) => article.category.id === category)
+          .filter(
+            (item) => !articles.find((article) => article.id === item.id),
+          ),
+      ]);
+      return;
+    }
+    if (sortBy === 'desc') {
+      setArticles([
+        ...articles,
+        ...articlesList
+          .filter((item) => !articles.find((article) => article.id === item.id))
+          .sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at)),
+      ]);
+      return;
+    }
+    if (sortBy === 'asc') {
+      setArticles([
+        ...articles,
+        ...articlesList
+          .filter((item) => !articles.find((article) => article.id === item.id))
+          .sort((a, b) => new Date(a.updated_at) - new Date(b.updated_at)),
+      ]);
+      return;
+    }
+    if (sortBy === 'author') {
+      setArticles([
+        ...articles,
+        ...articlesList
+          .filter((item) => !articles.find((article) => article.id === item.id))
+          .sort((a, b) => a.author.nickname.localeCompare(b.author.nickname)),
+      ]);
+      return;
+    }
     setArticles([
       ...articles,
-      /* Filter the articles to avoid duplicates */
       ...articlesList.filter(
         (item) => !articles.find((article) => article.id === item.id),
       ),
     ]);
+    // setArticles([
+    //   ...articles,
+    //   /* Filter the articles to avoid duplicates */
+    //   ...articlesList.filter(
+    //     (item) => !articles.find((article) => article.id === item.id),
+    //   ),
+    // ]);
   }, [articlesList]);
 
   /* controls */
@@ -73,21 +117,21 @@ export default function ArticlesPage() {
 
   const changeFieldSortBy = (e) => {
     setSortBy(e.target.value);
-    if (e.target.value === 'desc') {
+    if (sortBy === 'desc') {
       setArticles(
         articles.sort(
           (a, b) => new Date(b.updated_at) - new Date(a.updated_at),
         ),
       );
     }
-    if (e.target.value === 'asc') {
+    if (sortBy === 'asc') {
       setArticles(
         articles.sort(
           (a, b) => new Date(a.updated_at) - new Date(b.updated_at),
         ),
       );
     }
-    if (e.target.value === 'author') {
+    if (sortBy === 'author') {
       setArticles(
         articles.sort((a, b) =>
           a.author.nickname.localeCompare(b.author.nickname),
