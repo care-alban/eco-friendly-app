@@ -1,9 +1,21 @@
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { Box, Button, Grid } from '@mui/material';
+import {
+  Box,
+  Button,
+  FormControl,
+  Grid,
+  IconButton,
+  InputLabel,
+  MenuItem,
+  Select,
+  TextField,
+} from '@mui/material';
 
-import { Hero, Layout, Loader, SearchBar } from '../components';
+import SearchIcon from '@mui/icons-material/Search';
+
+import { Hero, Layout, Loader } from '../components';
 import { ArticlesMediumCard } from '../components/Cards';
 
 import { getArticles } from '../actions/articlesActions';
@@ -12,7 +24,9 @@ export default function ArticlesPage() {
   const dispatch = useDispatch();
   const [page, setPage] = useState(1);
   const [articles, setArticles] = useState([]);
-
+  const [category, setCategory] = useState('All');
+  const [sortBy, setSortBy] = useState('desc');
+  const categories = useSelector((state) => state.common.categories);
   const articlesList = useSelector((state) => state.articles.list);
 
   useEffect(() => {
@@ -41,10 +55,48 @@ export default function ArticlesPage() {
     ]);
   }, [articlesList]);
 
+  /* controls */
   const handlePageChange = () => {
     setPage(page + 1);
   };
 
+  const changeFieldCategories = (e) => {
+    setCategory(e.target.value);
+    if (e.target.value === 'All') {
+      setArticles(articles);
+      return;
+    }
+    setArticles(
+      articles.filter((article) => article.category.id === e.target.value),
+    );
+  };
+
+  const changeFieldSortBy = (e) => {
+    setSortBy(e.target.value);
+    if (e.target.value === 'desc') {
+      setArticles(
+        articles.sort(
+          (a, b) => new Date(b.updated_at) - new Date(a.updated_at),
+        ),
+      );
+    }
+    if (e.target.value === 'asc') {
+      setArticles(
+        articles.sort(
+          (a, b) => new Date(a.updated_at) - new Date(b.updated_at),
+        ),
+      );
+    }
+    if (e.target.value === 'author') {
+      setArticles(
+        articles.sort((a, b) =>
+          a.author.nickname.localeCompare(b.author.nickname),
+        ),
+      );
+    }
+  };
+
+  /* loader */
   if (articles.length === 0) {
     return (
       <Layout>
@@ -52,6 +104,7 @@ export default function ArticlesPage() {
       </Layout>
     );
   }
+
   return (
     <Layout>
       <Hero
@@ -59,8 +112,76 @@ export default function ArticlesPage() {
         subtitle="Découvrez tous nos articles"
         image="https://cdn.eco-friendly.fr/assets/img/misc/articles.webp"
       />
-      <Box sx={{ flexGrow: 1, marginY: 2, marginX: 0 }}>
-        <SearchBar list={articles} keys={['title', 'content']} />
+      <Box
+        sx={{
+          marginY: 2,
+          marginX: 0,
+          display: 'flex',
+          flexDirection: { xs: 'column', sm: 'row' },
+        }}
+      >
+        <Box position="relative" sx={{ flexGrow: 1 }}>
+          <TextField
+            id="search-bar"
+            className="text"
+            onInput={(e) => {
+              console.log(e.target.value);
+            }}
+            label="Rechercher"
+            variant="outlined"
+            placeholder="Recherche..."
+            size="small"
+            fullWidth
+          />
+          <IconButton
+            type="submit"
+            aria-label="search"
+            sx={{
+              position: 'absolute',
+              right: 0,
+              top: 0,
+              bottom: 0,
+              m: 'auto',
+            }}
+          >
+            <SearchIcon />
+          </IconButton>
+        </Box>
+        <FormControl sx={{ mx: 2 }}>
+          <InputLabel id="category-label">Catégorie</InputLabel>
+          <Select
+            name="category"
+            labelId="category-label"
+            id="category"
+            label="Catégorie"
+            value={category}
+            onChange={changeFieldCategories}
+            size="small"
+          >
+            <MenuItem value="All">Toutes les catégories</MenuItem>
+            {categories.map((item) => (
+              <MenuItem key={item.id} value={item.id}>
+                {item.name}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+        <FormControl>
+          <InputLabel id="category-label">Trier par</InputLabel>
+          <Select
+            name="sortby"
+            labelId="sortby-label"
+            id="sortby"
+            label="Trier par"
+            value={sortBy}
+            onChange={changeFieldSortBy}
+            size="small"
+          >
+            <MenuItem value="desc">le plus récent</MenuItem>
+            <MenuItem value="asc">le plus ancien</MenuItem>
+            <MenuItem value="author">auteur</MenuItem>
+          </Select>
+        </FormControl>
       </Box>
       <Grid container spacing={2}>
         {articles.map((article) => (
