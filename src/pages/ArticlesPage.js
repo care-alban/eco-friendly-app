@@ -11,6 +11,7 @@ import {
   MenuItem,
   Select,
   TextField,
+  Typography,
 } from '@mui/material';
 
 import SearchIcon from '@mui/icons-material/Search';
@@ -193,6 +194,21 @@ export default function ArticlesPage() {
       <Grid container spacing={2}>
         {articles.map((article) => (
           <Grid item xs={12} sm={6} md={4} lg={3} key={`${article.id}`}>
+            <Typography
+              variant="h6"
+              component="h6"
+              sx={{
+                position: 'absolute',
+                zIndex: 1,
+                margin: 2,
+                color: 'white',
+                backgroundColor: 'secondary.light',
+                borderRadius: '0.375rem',
+                padding: '0 0.375rem',
+              }}
+            >
+              {article.category.name}
+            </Typography>
             <ArticlesMediumCard article={article} />
           </Grid>
         ))}
