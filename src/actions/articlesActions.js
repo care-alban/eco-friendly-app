@@ -15,15 +15,15 @@ export const getArticles = (params = []) => ({
  * @name getArticlesSuccess
  * @description Get articles success
  * @param {Object} data Data
- * @param {Number} page Page
+ * @param {Array} params Params to send
  * @returns {Object} Action
  */
 export const GET_ARTICLES_SUCCESS = 'GET_ARTICLES_SUCCESS';
 
-export const getArticlesSuccess = (data, page = null) => ({
+export const getArticlesSuccess = (data, params = []) => ({
   type: GET_ARTICLES_SUCCESS,
   data,
-  page,
+  params,
 });
 
 /**

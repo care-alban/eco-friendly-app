@@ -7,8 +7,13 @@ import {
 
 export const initialState = {
   list: [],
-  listPerPage: [],
-  page: 1,
+  articlesFiltered: [],
+  filtersParams: {
+    page: 1,
+    category: 'All',
+    sortBy: 'desc',
+    search: '',
+  },
   article: null,
   messages: {
     success: null,
@@ -18,21 +23,34 @@ export const initialState = {
 
 const reducer = (state = initialState, action = {}) => {
   switch (action.type) {
-    case GET_ARTICLES_SUCCESS:
-      if (action.page) {
+    case GET_ARTICLES_SUCCESS: {
+      const { params } = action;
+      const page = params.find((param) => param.name === 'page');
+      if (page) {
+        const category = params.find((param) => param.name === 'category');
+        const sortBy = params.find((param) => param.name === 'order');
+        const search = params.find((param) => param.name === 'search');
         return {
           ...state,
-          listPerPage:
-            action.page === 1
+          filtersParams: {
+            ...state.filtersParams,
+            page: page.value,
+            category: category ? category.value : 'All',
+            sortBy: sortBy ? sortBy.value : 'desc',
+            search: search ? search.value : '',
+          },
+          articlesFiltered:
+            page.value === 1
               ? action.data
-              : [...state.listPerPage, ...action.data],
-          page: action.page,
+              : [...state.articlesFiltered, ...action.data],
+          list: [],
         };
       }
       return {
         ...state,
         list: action.data,
       };
+    }
     case GET_ARTICLES_ERROR:
       return {
         ...state,

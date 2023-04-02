@@ -22,13 +22,28 @@ import { getArticles } from '../actions/articlesActions';
 
 export default function ArticlesPage() {
   const dispatch = useDispatch();
+  const categories = useSelector((state) => state.common.categories);
+  const filteredPage = useSelector(
+    (state) => state.articles.filtersParams.page,
+  );
+  const filteredCategory = useSelector(
+    (state) => state.articles.filtersParams.category,
+  );
+  const filteredSortBy = useSelector(
+    (state) => state.articles.filtersParams.sortBy,
+  );
+  const filteredSearch = useSelector(
+    (state) => state.articles.filtersParams.search,
+  );
+  const articlesFiltered = useSelector(
+    (state) => state.articles.articlesFiltered,
+  );
+
   const [page, setPage] = useState(1);
   const [category, setCategory] = useState('All');
   const [sortBy, setSortBy] = useState('desc');
   const [search, setSearch] = useState('');
   const [articles, setArticles] = useState([]);
-  const categories = useSelector((state) => state.common.categories);
-  const articlesList = useSelector((state) => state.articles.listPerPage);
 
   useEffect(() => {
     window.scrollTo({
@@ -36,6 +51,11 @@ export default function ArticlesPage() {
       left: 0,
       behavior: 'smooth',
     });
+    setPage(filteredPage);
+    setCategory(filteredCategory);
+    setSortBy(filteredSortBy);
+    setSearch(filteredSearch);
+    setArticles(articlesFiltered);
   }, []);
 
   useEffect(() => {
@@ -43,6 +63,7 @@ export default function ArticlesPage() {
       { name: 'page', value: page },
       { name: 'sorttype', value: 'updated_at' },
     ];
+
     if (category !== 'All') {
       params.push({ name: 'category', value: category });
     }
@@ -56,8 +77,8 @@ export default function ArticlesPage() {
   }, [page, category]);
 
   useEffect(() => {
-    setArticles(articlesList);
-  }, [articlesList]);
+    setArticles(articlesFiltered);
+  }, [articlesFiltered]);
 
   /* controls */
   const handlePageChange = () => {
@@ -77,20 +98,10 @@ export default function ArticlesPage() {
   const handleSubmit = (e) => {
     e.preventDefault();
     setPage(1);
-    if (search !== '') {
-      const params = [
-        { name: 'page', value: page },
-        { name: 'sorttype', value: 'updated_at' },
-      ];
-      if (category !== 'All') {
-        params.push({ name: 'category', value: category });
-      }
-      dispatch(getArticles(params));
-    }
   };
 
   /* loader */
-  if (articles.length === 0) {
+  if (!articlesFiltered.length > 0 && !articles.length > 0) {
     return (
       <Layout>
         <Loader />
@@ -118,6 +129,7 @@ export default function ArticlesPage() {
             <TextField
               id="search-bar"
               className="text"
+              value={search}
               onInput={(e) => {
                 setSearch(e.target.value);
               }}
