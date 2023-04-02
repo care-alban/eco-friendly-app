@@ -7,6 +7,8 @@ import {
 
 export const initialState = {
   list: [],
+  listPerPage: [],
+  page: 1,
   article: null,
   messages: {
     success: null,
@@ -17,6 +19,16 @@ export const initialState = {
 const reducer = (state = initialState, action = {}) => {
   switch (action.type) {
     case GET_ARTICLES_SUCCESS:
+      if (action.page) {
+        return {
+          ...state,
+          listPerPage:
+            action.page === 1
+              ? action.data
+              : [...state.listPerPage, ...action.data],
+          page: action.page,
+        };
+      }
       return {
         ...state,
         list: action.data,

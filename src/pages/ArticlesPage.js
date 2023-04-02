@@ -23,11 +23,11 @@ import { getArticles } from '../actions/articlesActions';
 export default function ArticlesPage() {
   const dispatch = useDispatch();
   const [page, setPage] = useState(1);
-  const [articles, setArticles] = useState([]);
   const [category, setCategory] = useState('All');
   const [sortBy, setSortBy] = useState('desc');
+  const [articles, setArticles] = useState([]);
   const categories = useSelector((state) => state.common.categories);
-  const articlesList = useSelector((state) => state.articles.list);
+  const articlesList = useSelector((state) => state.articles.listPerPage);
 
   useEffect(() => {
     window.scrollTo({
@@ -38,65 +38,21 @@ export default function ArticlesPage() {
   }, []);
 
   useEffect(() => {
-    const params = [{ name: 'page', value: page }];
+    const params = [
+      { name: 'page', value: page },
+      { name: 'sorttype', value: 'updated_at' },
+    ];
+    if (category !== 'All') {
+      params.push({ name: 'category', value: category });
+    }
+    if (sortBy !== 'desc') {
+      params.push({ name: 'order', value: sortBy });
+    }
     dispatch(getArticles(params));
-  }, [page]);
+  }, [page, category]);
 
   useEffect(() => {
-    if (articlesList.length === 0) {
-      return;
-    }
-    if (category !== 'All') {
-      setArticles([
-        ...articles,
-        ...articlesList
-          .filter((article) => article.category.id === category)
-          .filter(
-            (item) => !articles.find((article) => article.id === item.id),
-          ),
-      ]);
-      return;
-    }
-    if (sortBy === 'desc') {
-      setArticles([
-        ...articles,
-        ...articlesList
-          .filter((item) => !articles.find((article) => article.id === item.id))
-          .sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at)),
-      ]);
-      return;
-    }
-    if (sortBy === 'asc') {
-      setArticles([
-        ...articles,
-        ...articlesList
-          .filter((item) => !articles.find((article) => article.id === item.id))
-          .sort((a, b) => new Date(a.updated_at) - new Date(b.updated_at)),
-      ]);
-      return;
-    }
-    if (sortBy === 'author') {
-      setArticles([
-        ...articles,
-        ...articlesList
-          .filter((item) => !articles.find((article) => article.id === item.id))
-          .sort((a, b) => a.author.nickname.localeCompare(b.author.nickname)),
-      ]);
-      return;
-    }
-    setArticles([
-      ...articles,
-      ...articlesList.filter(
-        (item) => !articles.find((article) => article.id === item.id),
-      ),
-    ]);
-    // setArticles([
-    //   ...articles,
-    //   /* Filter the articles to avoid duplicates */
-    //   ...articlesList.filter(
-    //     (item) => !articles.find((article) => article.id === item.id),
-    //   ),
-    // ]);
+    setArticles(articlesList);
   }, [articlesList]);
 
   /* controls */
@@ -105,39 +61,13 @@ export default function ArticlesPage() {
   };
 
   const changeFieldCategories = (e) => {
+    setPage(1);
     setCategory(e.target.value);
-    if (e.target.value === 'All') {
-      setArticles(articles);
-      return;
-    }
-    setArticles(
-      articles.filter((article) => article.category.id === e.target.value),
-    );
   };
 
   const changeFieldSortBy = (e) => {
     setSortBy(e.target.value);
-    if (sortBy === 'desc') {
-      setArticles(
-        articles.sort(
-          (a, b) => new Date(b.updated_at) - new Date(a.updated_at),
-        ),
-      );
-    }
-    if (sortBy === 'asc') {
-      setArticles(
-        articles.sort(
-          (a, b) => new Date(a.updated_at) - new Date(b.updated_at),
-        ),
-      );
-    }
-    if (sortBy === 'author') {
-      setArticles(
-        articles.sort((a, b) =>
-          a.author.nickname.localeCompare(b.author.nickname),
-        ),
-      );
-    }
+    articles.reverse();
   };
 
   /* loader */
@@ -223,7 +153,7 @@ export default function ArticlesPage() {
           >
             <MenuItem value="desc">le plus récent</MenuItem>
             <MenuItem value="asc">le plus ancien</MenuItem>
-            <MenuItem value="author">auteur</MenuItem>
+            {/* <MenuItem value="author">auteur</MenuItem> */}
           </Select>
         </FormControl>
       </Box>

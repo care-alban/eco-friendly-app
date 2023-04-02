@@ -22,9 +22,14 @@ const articlesMiddleware = (store) => (next) => (action) => {
         const paramsString = params
           .map((param) => `${param.name}=${param.value}`)
           .join('&');
+        const page = params.find((p) => p.name === 'page');
         axios
           .get(`${config.apiURL}/articles?${paramsString}`)
           .then((response) => {
+            if (page) {
+              store.dispatch(getArticlesSuccess(response.data, page.value));
+              return;
+            }
             store.dispatch(getArticlesSuccess(response.data));
           })
           .catch((error) => {
