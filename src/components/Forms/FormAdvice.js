@@ -197,7 +197,7 @@ export default function FormAdvice() {
         >
           <Button
             variant="contained"
-            color="secondary"
+            color="primary"
             type="submit"
             onClick={() => setButtonName('publish')}
           >
@@ -205,7 +205,7 @@ export default function FormAdvice() {
           </Button>
           <Button
             variant="contained"
-            color="primary"
+            color="secondary"
             type="submit"
             onClick={() => setButtonName('save')}
           >
