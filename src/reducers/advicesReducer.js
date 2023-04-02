@@ -24,6 +24,7 @@ export const initialState = {
   title: '',
   category: '',
   content: '',
+  status: 0,
   isSubmitted: false,
   showAdviceForm: false,
 };
@@ -61,10 +62,12 @@ const reducer = (state = initialState, action = {}) => {
     case TOGGLE_SHOW_ADVICE_FORM:
       return {
         ...state,
+        advice: action.advice || null,
         id: action.advice.id || '',
         title: action.advice.title || '',
         category: action.advice.category ? action.advice.category.id : '',
         content: action.advice.content || '',
+        status: action.advice.status || 0,
         showAdviceForm: !state.showAdviceForm,
       };
     case TO_MANAGE_ADVICE_SUCCESS:
