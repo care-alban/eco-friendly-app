@@ -1,12 +1,16 @@
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 import {
   Avatar,
   Badge,
   Box,
   Button,
+  Card,
+  CardActions,
+  CardContent,
   Dialog,
   DialogActions,
   DialogContent,
@@ -15,6 +19,7 @@ import {
   FormControl,
   FormControlLabel,
   Grid,
+  IconButton,
   Radio,
   RadioGroup,
   Stack,
@@ -23,10 +28,12 @@ import {
 } from '@mui/material';
 import { amber } from '@mui/material/colors';
 import { styled } from '@mui/material/styles';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 import Layout from '../components/Layout';
 import Loader from '../components/Loader';
-import AdvicesMediumCard from '../components/Cards/AdvicesMediumCard';
+import TruncateContent from '../components/TruncateContent';
 
 import {
   userOnInputChange,
@@ -37,6 +44,11 @@ import {
   onDeleteAccount,
   onLogOut,
 } from '../actions/userActions';
+
+import {
+  toggleShowAdviceForm,
+  toDeleteAdvice,
+} from '../actions/advicesActions';
 
 import { getAvatars, clearMessages } from '../actions/commonActions';
 
@@ -108,6 +120,7 @@ export default function UserProfilePage() {
   const [avatarSelectShow, setAvatarSelectShow] = useState(false);
   const [open, setOpen] = useState(false);
   const avatars = useSelector((state) => state.common.avatars);
+  const advicesList = useSelector((state) => state.advices.list);
   const advices = useSelector((state) => state.user.advices);
   const isLoaded = useSelector((state) => state.user.isLoaded);
   const isUpdated = useSelector((state) => state.user.isUpdated);
@@ -174,8 +187,11 @@ export default function UserProfilePage() {
   useEffect(() => {
     dispatch(clearMessages());
     dispatch(getAvatars());
-    dispatch(onGetAdvices());
   }, []);
+
+  useEffect(() => {
+    dispatch(onGetAdvices());
+  }, [advicesList]);
 
   useEffect(() => {
     dispatch(clearMessages());
@@ -474,7 +490,7 @@ export default function UserProfilePage() {
           <Grid container spacing={2}>
             {advices.map((advice) => (
               <Grid item xs={12} sm={6} md={4} lg={3} key={`${advice.id}`}>
-                <AdvicesMediumCard advice={advice} />
+                <AdvicesMediumCard advice={advice} user={user} />
               </Grid>
             ))}
           </Grid>
@@ -483,3 +499,178 @@ export default function UserProfilePage() {
     </Layout>
   );
 }
+
+function AdvicesMediumCard({ advice }) {
+  const dispatch = useDispatch();
+  const [open, setOpen] = useState(false);
+  /* Get the state of the form */
+  const isShow = useSelector((state) => state.advices.showAdviceForm);
+
+  const handleShowAdviceForm = () => {
+    /* Close and clear the form if is already open */
+    if (isShow) {
+      dispatch(toggleShowAdviceForm());
+    }
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: 'smooth',
+    });
+    dispatch(toggleShowAdviceForm(advice));
+  };
+
+  const handleDialogClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleDeleteAdvice = () => {
+    dispatch(toDeleteAdvice(advice.id));
+  };
+
+  return (
+    <Card
+      sx={{
+        boder: 1,
+        maxWidth: { xs: '100%', md: '100%' },
+        boxShadow: 'rgba(149, 157, 165, 0.2) 0px 8px 24px',
+      }}
+    >
+      <CardContent
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'space-between',
+          minHeight: 320,
+        }}
+      >
+        <Box>
+          <CardActions
+            sx={{
+              float: 'right',
+              padding: 0,
+            }}
+          >
+            <IconButton aria-label="delete" onClick={handleDialogClickOpen}>
+              <DeleteIcon />
+            </IconButton>
+            <Dialog
+              open={open}
+              onClose={handleClose}
+              aria-labelledby="alert-dialog-title"
+              aria-describedby="alert-dialog-description"
+            >
+              <DialogTitle id="alert-dialog-title">
+                Etes-vous sûr de vouloir supprimer ce conseil ?
+              </DialogTitle>
+              <DialogActions>
+                <Button onClick={handleClose}>Annuler</Button>
+                <Button onClick={handleDeleteAdvice} autoFocus>
+                  Supprimer
+                </Button>
+              </DialogActions>
+            </Dialog>
+            <IconButton
+              aria-label="edit"
+              color="primary"
+              onClick={handleShowAdviceForm}
+            >
+              <EditIcon />
+            </IconButton>
+          </CardActions>
+          <TruncateContent lines={2}>
+            <Typography
+              gutterBottom
+              variant="h6"
+              component="div"
+              sx={{ minHeight: { md: '4rem' } }}
+            >
+              {advice.title}
+            </Typography>
+          </TruncateContent>
+          <Typography variant="body2" color="text.secondary" component="span">
+            {advice.updated_at
+              ? `Mis à jour le ${new Date(
+                  advice.updated_at,
+                ).toLocaleDateString()}`
+              : `Publié le ${new Date(advice.created_at).toLocaleDateString()}`}
+          </Typography>
+        </Box>
+        <TruncateContent lines={3}>
+          <div dangerouslySetInnerHTML={{ __html: advice.content }} />
+        </TruncateContent>
+        <CardActions
+          sx={{
+            display: 'flex',
+            marginTop: 2,
+            justifyContent: 'space-between',
+          }}
+        >
+          <Typography
+            variant="body2"
+            component="h6"
+            sx={{
+              color: 'white',
+              borderRadius: '0.375rem',
+              padding: '0 0.375rem',
+              ...(advice.status
+                ? { backgroundColor: 'primary.light' }
+                : { backgroundColor: 'secondary.light' }),
+            }}
+          >
+            {advice.status ? 'publié' : 'En attente'}
+          </Typography>
+          <Button
+            component={RouterLink}
+            to={`/conseils/${advice.id}/${advice.slug}`}
+            color="secondary"
+            size="small"
+            variant="outlined"
+          >
+            En savoir plus
+          </Button>
+        </CardActions>
+      </CardContent>
+    </Card>
+  );
+}
+
+AdvicesMediumCard.propTypes = {
+  advice: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    slug: PropTypes.string.isRequired,
+    picture: PropTypes.string,
+    contributor: PropTypes.shape({
+      id: PropTypes.number,
+      nickname: PropTypes.string,
+      avatar: PropTypes.string,
+    }),
+    title: PropTypes.string.isRequired,
+    updated_at: PropTypes.string,
+    created_at: PropTypes.string,
+    content: PropTypes.string.isRequired,
+    status: PropTypes.number.isRequired,
+  }),
+  user: PropTypes.shape({
+    id: PropTypes.number,
+  }),
+};
+
+AdvicesMediumCard.defaultProps = {
+  advice: {
+    picture: null,
+    contributor: {
+      id: null,
+      nickname: '',
+      avatar: '',
+    },
+    created_at: '',
+    updated_at: '',
+  },
+  user: {
+    id: null,
+  },
+};
