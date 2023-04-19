@@ -102,7 +102,7 @@ export default function ArticlesPage() {
   };
 
   /* loader */
-  if (!articlesFiltered.length > 0 && !articles.length > 0) {
+  if (!articles.length > 0) {
     return (
       <Layout>
         <Loader />
