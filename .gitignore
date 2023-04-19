@@ -26,5 +26,3 @@ yarn-error.log*
 .idea
 .vscode
 
-# development docs
-/docs
