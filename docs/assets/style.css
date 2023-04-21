@@ -1,0 +1,131 @@
+:root {
+  --white: #fff;
+  --mainFontSize: 62.5%;
+  --mainColor: #bd93f9;
+  --mainColorLight: #cf96ff;
+  --mainColorDark: #8265ac;
+  --reactColor: #61dafb;
+  --floristColor: #8bc34a;
+
+  --r-main-font-size: var(--mainFontSize);
+}
+
+body {
+  font-size: var(--mainFontSize);
+  color: var(--white);
+  margin: 0;
+  padding: 0;
+}
+
+h1 {
+  color: var(--mainColorDark) !important;
+  font-size: 4.2rem !important;
+}
+
+h2 {
+  color: var(--mainColor) !important;
+  font-size: 3.6rem !important;
+}
+
+h3 {
+  color: var(--mainColorLight) !important;
+  font-size: 3rem !important;
+}
+
+h4 {
+  color: var(--white) !important;
+  font-size: 2.4rem !important;
+}
+
+h5 {
+  color: var(--white) !important;
+  font-size: 1.8rem !important;
+}
+
+h6 {
+  color: var(--white) !important;
+  font-size: 1.2rem !important;
+}
+
+p,
+ul,
+ol {
+  color: var(--white) !important;
+  font-size: 1.6rem !important;
+}
+
+ul,
+ol {
+  color: var(--white) !important;
+  font-size: 1.2rem !important;
+}
+
+a {
+  color: var(--mainColor) !important;
+}
+
+a:hover {
+  color: var(--mainColorLight) !important;
+}
+
+a:visited {
+  color: var(--mainColorDark) !important;
+}
+
+img.icon {
+  width: 52px;
+  height: auto;
+}
+
+.row {
+  margin: 0;
+  width: 100%;
+}
+
+.flex {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.flex-center {
+  justify-content: center;
+  align-items: center;
+}
+
+.flex-between {
+  justify-content: space-between;
+  align-items: center;
+}
+
+.flex-around {
+  justify-content: space-around;
+  align-items: center;
+}
+
+.flex-evenly {
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.flex-column {
+  flex-direction: column;
+}
+
+.florist {
+  color: var(--floristColor) !important;
+}
+
+.react {
+  color: var(--reactColor) !important;
+}
+
+.icon-react {
+  animation: rotate 15s infinite linear;
+}
+
+@keyframes rotate {
+  to {
+    transform: rotate(1turn);
+  }
+}

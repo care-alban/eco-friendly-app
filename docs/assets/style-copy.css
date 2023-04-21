@@ -1,0 +1,70 @@
+.subtitle {
+  font-size: 2.6rem;
+  color: #8bc34a !important;
+}
+
+.link {
+  font-size: 1.6rem !important;
+  color: white !important;
+}
+
+code {
+  font-size: 1rem;
+}
+
+h5 {
+  font-size: 2rem !important;
+}
+
+.oclock {
+  color: #0ac3a7 !important;
+}
+
+.eco-friendly {
+  color: #8bc34a !important;
+}
+
+.react {
+  animation: rotate 15s infinite linear;
+}
+
+.team img {
+  max-width: 380px;
+}
+
+.entities {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.flex {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.entities p {
+  text-align: left;
+  font-size: 1rem;
+}
+
+.entities .left {
+  width: 50%;
+}
+
+.entities .right {
+  width: 25%;
+}
+.entities .right .entity p {
+  margin-bottom: 0;
+}
+.entities .right .entity img {
+  margin: 0;
+}
+
+@keyframes rotate {
+  to {
+    transform: rotate(1turn);
+  }
+}
