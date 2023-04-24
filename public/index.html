@@ -9,6 +9,17 @@
       name="description"
       content="Site collaboratif pour la promotion de l'écologie et de l'écocitoyenneté."
     />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="
+    connect-src 'self' api.eco-friendly.fr;
+    default-src 'self'; 
+    style-src 'self' 'unsafe-inline';
+    img-src 'self' https://cdn.eco-friendly.fr https://fastly.picsum.photos/ https://picsum.photos/;
+    manifest-src 'self';
+    script-src-elem 'self';
+    "
+    />
     <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
     <!--
       manifest.json provides metadata used when your web app is installed on a
