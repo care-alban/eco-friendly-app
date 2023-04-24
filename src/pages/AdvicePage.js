@@ -44,7 +44,7 @@ export default function AdvicePage() {
     dispatch(getAdvice(id));
   }, [id]);
 
-  if (!advice) {
+  if (Object.keys(advice).length === 0) {
     return (
       <Layout>
         <Loader />
