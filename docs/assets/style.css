@@ -48,6 +48,11 @@ h6 {
   font-size: 1.2rem !important;
 }
 
+hr {
+  border: 1px solid var(--mainColor);
+  margin: 1rem 0;
+}
+
 p,
 strong,
 ul,
@@ -142,9 +147,33 @@ img.icon {
 }
 
 .fifty {
-  width: 50%;
+  width: calc(50% - 2rem);
 }
 
 .text-start {
   text-align: start;
+}
+
+.text-end {
+  text-align: end;
+}
+
+.p-1 {
+  padding: 0.5rem;
+}
+
+.p-2 {
+  padding: 1rem;
+}
+
+.p-3 {
+  padding: 1.5rem;
+}
+
+.p-4 {
+  padding: 2rem;
+}
+
+.text-sm {
+  font-size: 1rem !important;
 }
