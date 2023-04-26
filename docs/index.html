@@ -24,6 +24,7 @@
           <section data-auto-animate>
             <h1>Titre professionnel</h1>
             <h2>Développement Web et Web Mobile</h2>
+            <h3>PRÉSENTÉ ET SOUTENU PAR Alban Caré</h3>
           </section>
           <!-- Présentation de l’entreprise et/ou du service -->
           <section data-auto-animate>
@@ -509,15 +510,171 @@
         </section>
         <!-- Présentation des éléments les plus significatifs de l’interface de l’application -->
         <section>
-          <h2>Eléments les significatifs</h2>
-          <h3 class="florist">La récupération d'articles et conseils</h3>
-          <h3 class="florist">L'inscription</h3>
-          <h3 class="florist">L'ajout de conseil</h3>
+          <section data-auto-animate>
+            <h2>Eléments les significatifs</h2>
+            <h3 class="florist">La récupération d'articles</h3>
+            <h3 class="florist">L'ajout/édition d'un conseil</h3>
+          </section>
+          <section data-auto-animate>
+            <h3 class="florist">La récupération d'articles</h3>
+            <p>
+              La fonctionnalité de récupération des articles est l'une des
+              principales fonctionnalités de l'application eco-friendly. Elle
+              permet à l'utilisateur de visualiser les articles disponibles sur
+              la plateforme.
+            </p>
+            <img
+              src="./assets/images/features/articles.png"
+              alt="Page articles du site eco-friendly"
+            />
+          </section>
+          <section data-auto-animate>
+            <h3 class="florist">La récupération d'articles</h3>
+            <div class="row flex">
+              <div class="fifty">
+                <h4>Les Actions</h4>
+                <p class="text-start">
+                  Une <strong class="florist-alt">action</strong> est un objet
+                  JavaScript qui décrit un changement à apporter à l'état de
+                  l'application.
+                </p>
+                <p class="text-start">Il contient :</p>
+                <ul>
+                  <li>
+                    le type de l'action (une chaîne de caractères qui décrit le
+                    type de changement)
+                  </li>
+                  <li>
+                    des données supplémentaires (payload) qui contiennent les
+                    informations nécessaires pour effectuer le changement
+                  </li>
+                </ul>
+              </div>
+              <div class="fifty">
+                <img
+                  src="./assets/images/features/articlesActions.png"
+                  alt="Extrait du fichier articlesActions"
+                />
+              </div>
+            </div>
+          </section>
+          <section data-auto-animate>
+            <h3 class="florist">La récupération d'articles</h3>
+            <div class="row flex">
+              <div class="fifty text-start">
+                <h4>Le composant ArticlePage</h4>
+                <p>
+                  <strong class="florist-alt">“useSelector”</strong> et
+                  <strong class="florist-alt">“useDispatch”</strong> sont deux
+                  hooks fournis par la bibliothèque react-redux qui permettent
+                  de connecter les composants React à un store Redux.
+                </p>
+                <p>
+                  Le hook useSelector permet d’écouter des parties spécifiques
+                  de l'état stocké dans le store.
+                </p>
+                <p>
+                  Le hook useDispatch permet de récupérer la fonction dispatch
+                  de Redux dans un composant. Cette fonction permet de
+                  déclencher des actions qui mettront à jour l'état stocké dans
+                  le store.
+                </p>
+              </div>
+              <div class="fifty">
+                <img
+                  src="./assets/images/features/articlePage.png"
+                  alt="Extrait du fichier articlePage"
+                />
+              </div>
+            </div>
+          </section>
+          <section data-auto-animate>
+            <h3 class="florist">La récupération d'articles</h3>
+            <div class="row flex">
+              <div class="fifty text-start">
+                <h4>Le Middleware</h4>
+                <p>
+                  Les <strong class="florist-alt">middleware</strong> sont des
+                  fonctions qui interceptent les actions avant qu'elles
+                  n'atteignent le reducer et effectuent des traitements tels que
+                  les appels vers L’API.
+                </p>
+              </div>
+              <div class="fifty">
+                <img
+                  src="./assets/images/features/articlesMiddleware.png"
+                  alt="Extrait du fichier articlesMiddleware"
+                />
+              </div>
+            </div>
+          </section>
+          <section data-auto-animate>
+            <h3 class="florist">La récupération d'articles</h3>
+            <h4>Le Controller</h4>
+            <img
+              width="740px"
+              src="./assets/images/features/articleController.png"
+              alt="Extrait du fichier articleController"
+            />
+            <p class="text-start">
+              Les <strong class="florist-alt">contrôleurs</strong> sont des
+              classes qui traitent les demandes HTTP et contrôlent la logique
+              métier de l'application.
+            </p>
+            <p class="text-start">
+              Ils sont responsables de recevoir les requêtes des utilisateurs,
+              de traiter les données et de renvoyer une réponse.
+            </p>
+          </section>
+          <section data-auto-animate>
+            <h3 class="florist">La récupération d'articles</h3>
+            <div class="row flex">
+              <div class="fifty">
+                <img
+                  src="./assets/images/features/findAllWithParmeters.png"
+                  alt="Extrait du fichier articleRepository"
+                />
+              </div>
+              <div class="fifty text-start p-2">
+                <h4>Le Repository</h4>
+                <p>
+                  Les <strong class="florist-alt">référentiels</strong> sont des
+                  classes qui interagissent avec la base de données pour
+                  récupérer et modifier des données.
+                </p>
+                <p>
+                  Ils encapsulent la logique de récupération des données de la
+                  base de données pour rendre le code du contrôleur plus propre
+                  et plus lisible.
+                </p>
+              </div>
+            </div>
+          </section>
+          <section data-auto-animate>
+            <h3 class="florist">La récupération d'articles</h3>
+            <div class="row flex">
+              <div class="fifty text-start">
+                <h4>Le Reducer</h4>
+                <p>
+                  Le <strong class="florist-alt">reducer</strong> est une
+                  fonction qui reçoit les Actions et met à jour le state de
+                  l'application en fonction de l'action reçue
+                </p>
+              </div>
+              <div class="fifty">
+                <img
+                  width="340px"
+                  src="./assets/images/features/articlesReducer.png"
+                  alt="Actions de la page articles du site eco-friendly"
+                />
+              </div>
+            </div>
+          </section>
         </section>
         <!-- Présentation du jeu d’essai de la fonctionnalité la plus représentative et analyse des écarts éventuels -->
         <section>
           <h2>Jeu d’essai</h2>
-          <h3 class="florist">Authentification et</h3>
+          <h3 class="florist">Authentification de l'utilisateur et</h3>
           <h3 class="florist">enregistrement des données en session</h3>
           <a
             href="http://eco-friendly.fr"
@@ -572,7 +729,9 @@
                   site qui propose une liste de bibliothèque.
                 </p>
                 <p>Le choix s'est porté sur le site :</p>
-                <p class="florist-alt">best-rich-text-editor</p>
+                <p class="florist-alt">
+                  reactscript.com/best-rich-text-editor/
+                </p>
               </div>
               <div class="fifty">
                 <a
@@ -642,7 +801,10 @@
             <ol>
               <h3 class="florist">
                 Navigation sur le front office
-                <a href="http://eco-friendly.fr"
+                <a
+                  href="http://eco-friendly.fr"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   ><img
                     src="./assets/icons/link.svg"
                     alt="icone représentant un lien"
@@ -652,7 +814,10 @@
             <ol>
               <h3 class="florist">
                 Navigation sur le back office
-                <a href="https://backoffice.eco-friendly.fr/"
+                <a
+                  href="https://backoffice.eco-friendly.fr/"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   ><img
                     src="./assets/icons/link.svg"
                     alt="icone représentant un lien"
@@ -664,6 +829,8 @@
                 Documentation API - Swagger
                 <a
                   href="https://app.swaggerhub.com/apis-docs/Laure-Riglet/Eco-Friendly/2.0.0/"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   ><img
                     src="./assets/icons/link.svg"
                     alt="icone représentant un lien"
@@ -673,7 +840,10 @@
             <ol>
               <h3 class="florist">
                 Base de données - phpMyAdmin
-                <a href="https://eco-friendly.fr/phpmyadmin/"
+                <a
+                  href="https://eco-friendly.fr/phpmyadmin/"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   ><img
                     src="./assets/icons/link.svg"
                     alt="icone représentant un lien"

@@ -53,6 +53,10 @@ hr {
   margin: 1rem 0;
 }
 
+pre {
+  font-size: 1.8em !important;
+}
+
 p,
 strong,
 ul,
