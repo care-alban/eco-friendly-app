@@ -24,7 +24,7 @@
           <section data-auto-animate>
             <h1>Titre professionnel</h1>
             <h2>Développement Web et Web Mobile</h2>
-            <h3>PRÉSENTÉ ET SOUTENU PAR Alban Caré</h3>
+            <h3>Présenté et soutenu par Alban Caré</h3>
           </section>
           <!-- Présentation de l’entreprise et/ou du service -->
           <section data-auto-animate>
@@ -511,9 +511,9 @@
         <!-- Présentation des éléments les plus significatifs de l’interface de l’application -->
         <section>
           <section data-auto-animate>
-            <h2>Eléments les significatifs</h2>
+            <h2>Elément significatif</h2>
             <h3 class="florist">La récupération d'articles</h3>
-            <h3 class="florist">L'ajout/édition d'un conseil</h3>
+            <!-- <h3 class="florist">L'ajout/édition d'un conseil</h3> -->
           </section>
           <section data-auto-animate>
             <h3 class="florist">La récupération d'articles</h3>
@@ -792,6 +792,177 @@
                 /></a>
               </div>
             </div>
+          </section>
+        </section>
+        <!-- Vulnérabilités de sécurité et veille -->
+        <section>
+          <section data-auto-animate>
+            <h2>Vulnérabilités de sécurité et veille</h2>
+            <div class="row flex">
+              <div class="fragment fifty">
+                <img
+                  src="./assets/images/security/before.png"
+                  alt="Résultat de observatory.mozilla.org sans sécurité"
+                />
+              </div>
+              <div class="fragment fifty">
+                <img
+                  src="./assets/images/security/after.png"
+                  alt="Résultat de observatory.mozilla.org avec sécurité"
+                />
+              </div>
+            </div>
+          </section>
+          <section data-auto-animate>
+            <h3 class="florist">Vulnérabilités de sécurité : front-end</h3>
+            <ul>
+              <li>
+                L’utilisation de la librairie
+                <strong class="florist-alt">DOMPurify</strong> pour se prémunir
+                des attaques de types XSS (non implémentée)
+              </li>
+              <li>
+                L’utilisation de la librairie
+                <strong class="florist-alt">React-router-dom</strong> qui a
+                permis de restreindre l'accès aux pages en fonction des
+                permissions de l'utilisateur (ACL)
+              </li>
+              <li>
+                La
+                <strong class="florist-alt">validation des entrées</strong> de
+                formulaire (nativement ou grâce aux Regex) pour éviter les
+                attaques d'injection SQL et les erreurs de
+                <strong class="florist-alt">typage des données</strong> grâce
+                aux champs contrôlés.
+              </li>
+              <li>
+                La mise en place d'une
+                <strong class="florist-alt"
+                  >politique de mots de passe forte</strong
+                >
+                et la sécurisation par des
+                <strong class="florist-alt">jetons JWT tokens</strong> pour les
+                communications vers le serveur a été sécurisée
+              </li>
+              <li>
+                Configurer
+                <strong class="florist-alt">les en-têtes de sécurité</strong>
+                Content-Security-Policy
+              </li>
+            </ul>
+            <img
+              width="720px"
+              src="./assets/images/security/head.png"
+              alt="extrait de la balise meta"
+            />
+          </section>
+          <section data-auto-animate>
+            <h3 class="florist">Vulnérabilités de sécurité : back-end</h3>
+            <ul>
+              <li>
+                L’utilisation de la librairie
+                <a
+                  href="https://packagist.org/packages/ezyang/htmlpurifier"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  ><strong class="florist-alt">HTMLpurifier</strong></a
+                >
+                pour se prémunir des attaques de types XSS
+              </li>
+              <li>
+                L'utilisation du bundle
+                <strong class="florist-alt">nelmio/cors-bundle</strong> de
+                Symfony pour permettre de configurer les paramètres CORS
+              </li>
+              <li>
+                L'utilisation du bundle
+                <strong class="florist-alt"
+                  >lexik/jwt-authentication-bundle</strong
+                >
+                afin d'ajouter une authentification par jeton (token) JSON Web
+                Token (JWT)
+              </li>
+              <li>
+                L'utilisation du bundle
+                <strong class="florist-alt">symfony/security-bundle</strong>
+                qui fourni des fonctionnalités nécessaires pour la gestion des
+                autorisations d'accès aux routes (ACL, Access Control List), la
+                gestion des utilisateurs et des rôles (voters) ainsi qu'une
+                protection contre les attaques CSRF en générant des jetons
+                d'authentification (CSRF, Cross-Site Request Forgery) et en
+                vérifiant l'origine des requêtes
+              </li>
+              <li>
+                <strong class="florist-alt"
+                  >Limiter le nombre de requêtes</strong
+                >
+                par seconde faite à l'API (non implémenté) pour contrer les
+                attaques par déni de service (DoS, Denial of Service)
+              </li>
+            </ul>
+            <img
+              src="./assets/images/security/htmlpurifier.png"
+              alt="extrait du code php du controller adviceController.php"
+            />
+          </section>
+          <section data-auto-animate>
+            <h3 class="florist">Vulnérabilités de sécurité : serveur</h3>
+            <ul>
+              <li>
+                L’utilisation du
+                <strong class="florist-alt">protocole HTTPS</strong> pour
+                chiffrer les communications entre le client et le serveur, ce
+                qui permet d’éviter les attaques de type man-in-the-middle
+              </li>
+              <li>
+                Sécurisation de l’accès au serveur par SSH, avec exclusivité de
+                connexion par <strong class="florist-alt">clé SSH</strong> et
+                création d’un utilisateur unique aux droits limités pour chaque
+                application
+              </li>
+              <li>
+                <strong class="florist-alt">Mises à jour régulières</strong>,
+                pour remédier aux différentes failles de sécurités inhérentes
+                aux bibliothèques et aux frameworks utilisés
+              </li>
+              <li>
+                Surveillance des journaux
+                <strong class="florist-alt">Apache</strong> et
+                <strong class="florist-alt">PHP</strong> pour détecter les
+                attaques
+              </li>
+              <li>
+                <strong class="florist-alt">Sauvegardes régulières</strong> des
+                données et des fichiers de configuration
+              </li>
+              <li>
+                L'ajout d'un
+                <strong class="florist-alt"
+                  >module de configuration Apache</strong
+                >, appelé "mod_headers", permet de définir les en-têtes HTTP
+                envoyés avec les réponses du serveur.
+              </li>
+            </ul>
+            <img
+              src="./assets/images/security/apache.png"
+              alt="module apache mod_security"
+            />
+          </section>
+          <section data-auto-animate>
+            <h3 class="florist">Outils de veille</h3>
+            <ul>
+              <li>
+                Effectuer des
+                <strong class="florist-alt">tests de sécurité réguliers</strong>
+                :
+                <a
+                  href="https://observatory.mozilla.org/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >observatory.mozilla.org</a
+                >
+              </li>
+            </ul>
           </section>
         </section>
         <!-- Démonstration -->
